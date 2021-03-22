@@ -68,8 +68,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
             */
-
-
             MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
             newsListView=(ListView)findViewById(R.id.newsListView);
             newsListView.setAdapter(newsAdapter);
@@ -80,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
                     Uri uri = Uri.parse(news.get(position).getLink());
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
+
                 }
             });
 
