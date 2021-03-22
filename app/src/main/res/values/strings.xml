@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TFGprueba2</string>
+    <string name="ldap_number">LDAP</string>
+    <string name="ldap_password">Contraseña</string>
+    <string name="login_button">Entrar</string>
+    <string name="wait_txt">Un momento...</string>
+    <string name="texto_prueba">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec diam tristique, tristique eros non, accumsan dui.</string>
+
+
+</resources>
