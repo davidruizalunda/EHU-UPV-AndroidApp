@@ -56,17 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         textView4 = (TextView)findViewById(R.id.textView4);
         loading = (ImageView)findViewById(R.id.loadingGIF);
 
-
-
     }
 
 
     public void login(View view) {
+
         loading.setBackgroundResource(R.drawable.loading);
         AnimationDrawable animationDrawable = (AnimationDrawable) loading.getBackground();
-
-        Intent home = new Intent(this, HomeActivity.class);
-        startActivity(home);
 
         Thread hilo = new Thread(new Runnable() {
             @Override
@@ -88,31 +84,24 @@ public class LoginActivity extends AppCompatActivity {
                         if(logeado){
                             textView4.setText("Bien");
                             loading.setBackground(null);
-                            /*
-                            Intent home = new Intent(this, HomeActivity.class);
+
+                            Intent home = new Intent(view.getContext(), HomeActivity.class); //En vez de Intent home = new Intent(this, HomeActivity.class);
                             startActivity(home);
 
-                             */
+
                         }else {
                             textView4.setText("Mal");
                             loading.setBackground(null);
                         }
-
                     }
                 });
 
-
             }
         });
-        Log.d("LOGEADO: ", logeado + "");
         hilo.start();
         hilo2.start();
 
-
-
-
     }
-
 
 
 }

@@ -16,9 +16,7 @@ public class BusinessLogic {
 
         DataAccess dataAccess = new DataAccess();
         Message[] messages = dataAccess.getMessages();
-
         Correow[] correows = new Correow[numMails];
-
 
         int x = numMails-1;
         for (int i = messages.length - numMails ; i < messages.length; i++) {

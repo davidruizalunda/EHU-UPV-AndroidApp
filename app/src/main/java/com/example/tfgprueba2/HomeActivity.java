@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,28 +33,64 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private EditText ldap, password;
-    private TextView urlprueba;
+    private TextView urlprueba, textView3, textView5;
     private ListView mailListView, newsListView;
+    private final int TIEMPO = 5000;
+    Handler h = new Handler();
+    int i = 0;
+    int cont = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        textView3 = (TextView)findViewById(R.id.textView3);
+        textView5 = (TextView)findViewById(R.id.textView5);
+        tarea();
 
-        RSSReader lectorRSS = new RSSReader(getApplicationContext());
-        lectorRSS.execute();
+    }
 
-        try{
-            BusinessLogic businessLogic = new BusinessLogic();
+    public void tarea(){
+        final Handler handler = new Handler();
 
-            Correow[] correows = businessLogic.getCorreows(10);
-            ArrayList<News> news = businessLogic.getEHUnews(getApplicationContext());
+        handler.postDelayed(new Runnable() {
+            public void run() {
 
-            Log.d("tamaño: ", news.size()+"");
-            for(int i=0; i<news.size(); i++){
-               System.out.println(news.get(i).getDate());
+                medio();
+                handler.postDelayed(this, TIEMPO);
             }
 
+        }, 0);
+    }
+    public void medio() {
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RSSReader lectorRSS = new RSSReader(getApplicationContext());
+                lectorRSS.execute();
 
+                try {
+                    BusinessLogic businessLogic = new BusinessLogic();
+                    Correow[] correows = businessLogic.getCorreows(10);
+                    ArrayList<News> news = businessLogic.getEHUnews(getApplicationContext());
+                    h.post(new Runnable() {
+                               @Override
+                               public void run() {
+
+                                   cont++;
+                                   textView5.setText("Count: " + cont);
+                                   actualizar(correows, news);
+                               }
+                           });
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        hilo.start();
+    }
+    public void actualizar(Correow[] correows, ArrayList<News> news){
             MyMailsListAdapter mailsAdapter=new MyMailsListAdapter(this, correows);
             mailListView=(ListView)findViewById(R.id.mailListView);
             mailListView.setAdapter(mailsAdapter);
@@ -68,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
             */
+
             MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
             newsListView=(ListView)findViewById(R.id.newsListView);
             newsListView.setAdapter(newsAdapter);
@@ -81,23 +119,6 @@ public class HomeActivity extends AppCompatActivity {
 
                 }
             });
-
-
-
-
-        } catch (NoSuchProviderException e) {
-            Toast.makeText(this, "ERROR NoSuchProviderException", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            Toast.makeText(this, "ERROR MessagingException", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (Exception e) {
-            Toast.makeText(this, "ERROR EXCEPTION", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
-
-
     }
 
     public void onEgelaButtonClick(View view){

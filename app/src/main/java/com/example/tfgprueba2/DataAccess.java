@@ -1,10 +1,12 @@
 package com.example.tfgprueba2;
 
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Properties;
 
+import javax.mail.AuthenticationFailedException;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,12 +16,15 @@ import javax.mail.Store;
 
 public class DataAccess {
     private static Store store;
+    private static Folder emailFolder;
+    private static String ldap, password;
     
-    public boolean login(String ldap, String password){
+    public boolean login(String ldap, String password) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-
+            this.ldap = ldap;
+            this.password = password;
             Properties properties = new Properties();
             properties.put("mail.imap.host", "ikasle.ehu.eus");
             properties.put("mail.imap.port", "993");
@@ -27,27 +32,37 @@ public class DataAccess {
             Session emailSession = Session.getDefaultInstance(properties);
 
             store = emailSession.getStore("imaps");
-            store.connect("ikasle.ehu.eus", ldap, password);
+            store.connect("ikasle.ehu.eus", "877955", "0k9Hj88s0");
+            Log.d("LOGEADO", "sds");
 
             return true;
-        /*
-        } catch (NoSuchProviderException e) {
 
-        } catch (MessagingException e) {
-            button.setText("Entrar");
-            Toast.makeText(this, "Comprueba tu usuario y/o contraseña y vuelve a intentarlo.", Toast.LENGTH_LONG).show();
+        }catch (AuthenticationFailedException e){
+            Log.d("Autenti", "sds");
             e.printStackTrace();
-
-         */
-        } catch (Exception e) {
+            return false;
+        }catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
     }
 
-    public Message[] getMessages() throws MessagingException {
-        Folder emailFolder = store.getFolder("INBOX");
-        emailFolder.open(Folder.READ_ONLY);
-        return emailFolder.getMessages();
+    public Message[] getMessages() {
+        try{
+            if (emailFolder != null && emailFolder.isOpen()){
+                emailFolder.close(true);
+                Log.d("Estado: ", "Close");
+            }
+            emailFolder = store.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY);
+            Log.d("Estado: ", "Open");
+            return emailFolder.getMessages();
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
