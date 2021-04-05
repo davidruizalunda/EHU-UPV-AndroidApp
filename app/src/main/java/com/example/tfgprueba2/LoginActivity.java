@@ -14,7 +14,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText ldap, password;
     Handler h = new Handler();
     private boolean logeado = false;
-    private ImageView loading;
+    private ImageView loadingGif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +23,15 @@ public class LoginActivity extends AppCompatActivity {
 
         ldap = findViewById(R.id.ldap_number);
         password = findViewById(R.id.ldap_password);
-        loading = findViewById(R.id.loadingGIF);
+        loadingGif = findViewById(R.id.loadingGIF);
 
     }
 
 
     public void login(View view) {
 
-        loading.setBackgroundResource(R.drawable.loading);
-        AnimationDrawable animationDrawable = (AnimationDrawable) loading.getBackground();
+        loadingGif.setBackgroundResource(R.drawable.loading);
+        AnimationDrawable animationDrawable = (AnimationDrawable) loadingGif.getBackground();
 
         Thread thread1 = new Thread(animationDrawable::start);
 
@@ -42,13 +42,13 @@ public class LoginActivity extends AppCompatActivity {
             }
             h.post(() -> {
                 if(logeado){
-                    loading.setBackground(null);
+                    loadingGif.setBackground(null);
                     Intent home = new Intent(view.getContext(), HomeActivity.class); //En vez de Intent home = new Intent(this, HomeActivity.class);
                     startActivity(home);
 
 
                 }else {
-                    loading.setBackground(null);
+                    loadingGif.setBackground(null);
                 }
             });
 

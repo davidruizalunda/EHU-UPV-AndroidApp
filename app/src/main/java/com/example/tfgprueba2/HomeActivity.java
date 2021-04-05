@@ -2,10 +2,14 @@ package com.example.tfgprueba2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -20,7 +24,8 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView textView5;
-    private final int TIEMPO = 5000;
+    private Dialog popupCorreow;
+    private final int TIEMPO = 60000;
     Handler h = new Handler();
     int cont = 0;
 
@@ -29,22 +34,22 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         textView5 = findViewById(R.id.textView5);
-        tarea();
+        popupCorreow = new Dialog(this);
+        updateAutomatically();
 
     }
 
-    public void tarea(){
-        final Handler handler = new Handler();
-
-        handler.postDelayed(new Runnable() {
+    public void updateAutomatically(){
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
             public void run() {
-                medio();
-                handler.postDelayed(this, TIEMPO);
+                updateDataCorreowsNews();
+                h.postDelayed(this, TIEMPO);
             }
 
         }, 0);
     }
-    public void medio() {
+    public void updateDataCorreowsNews() {
         Thread thread = new Thread(() -> {
             RSSReader lectorRSS = new RSSReader(getApplicationContext());
             lectorRSS.execute();
@@ -56,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                 h.post(() -> {
                     cont++;
                     textView5.setText("Count: " + cont);
-                    updateCorreowsNews(correows, news);
+                    updateAdaptersCorreowsNews(correows, news);
                 });
 
             }catch (Exception e){
@@ -65,21 +70,27 @@ public class HomeActivity extends AppCompatActivity {
         });
         thread.start();
     }
-    public void updateCorreowsNews(Correow[] correows, ArrayList<News> news){
+    public void updateAdaptersCorreowsNews(Correow[] correows, ArrayList<News> news){
             MyMailsListAdapter mailsAdapter=new MyMailsListAdapter(this, correows);
             ListView mailListView = findViewById(R.id.mailListView);
             mailListView.setAdapter(mailsAdapter);
 
-            /*
-            mailListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Uri uri = Uri.parse(links.get(position));
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
+            mailListView.setOnItemClickListener((parent, view, position, id) -> {
+                popupCorreow.setContentView(R.layout.correows_popup);
+                popupCorreow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                TextView from = popupCorreow.findViewById(R.id.from_popup);
+                TextView subject = popupCorreow.findViewById(R.id.subject_popup);
+                TextView date = popupCorreow.findViewById(R.id.date_popup);
+                TextView content = popupCorreow.findViewById(R.id.content_popup);
+
+                from.setText(correows[position].getFrom());
+                subject.setText(correows[position].getSubject());
+                date.setText(correows[position].getDate());
+                content.setText(correows[position].getContents());
+
+                popupCorreow.show();
             });
-            */
 
             MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
             ListView newsListView = findViewById(R.id.newsListView);
