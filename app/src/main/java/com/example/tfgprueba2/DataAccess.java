@@ -2,29 +2,22 @@ package com.example.tfgprueba2;
 
 import android.os.StrictMode;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.Properties;
-
 import javax.mail.AuthenticationFailedException;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
-    private static String ldap, password;
-    
+
     public boolean login(String ldap, String password) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            this.ldap = ldap;
-            this.password = password;
             Properties properties = new Properties();
             properties.put("mail.imap.host", "ikasle.ehu.eus");
             properties.put("mail.imap.port", "993");
@@ -32,13 +25,16 @@ public class DataAccess {
             Session emailSession = Session.getDefaultInstance(properties);
 
             store = emailSession.getStore("imaps");
-            store.connect("ikasle.ehu.eus", "877955", "0k9Hj88s0");
+            store.connect("ikasle.ehu.eus", ldap, password);
             Log.d("LOGEADO", "sds");
 
             return true;
 
         }catch (AuthenticationFailedException e){
             Log.d("Autenti", "sds");
+            e.printStackTrace();
+            return false;
+        }catch (MessagingException e) { //Investigar nested exception
             e.printStackTrace();
             return false;
         }catch (Exception e) {

@@ -1,12 +1,8 @@
 package com.example.tfgprueba2;
 
 import android.content.Context;
-import android.util.Log;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeUtility;
@@ -25,7 +21,7 @@ public class BusinessLogic {
             String from = message.getFrom()[0].toString();
             String data = message.getSentDate().toString();
             String content = message.getContent().toString();
-            String subject = message.getSubject().toString();
+            String subject = message.getSubject();
 
             Correow correow = new Correow();
             correow.setFrom(MimeUtility.decodeText(from).split("<")[0]);
@@ -45,10 +41,10 @@ public class BusinessLogic {
         return correows;
     }
 
-    public ArrayList<News> getEHUnews(Context context){
-        RSSReader lectorRSS = new RSSReader(context);
-        lectorRSS.execute();
-        return lectorRSS.getNoticias();
+    public ArrayList<News> getEHUNews(Context context){
+        RSSReader rssReader = new RSSReader(context);
+        rssReader.execute();
+        return rssReader.getNoticias();
     }
 
 
