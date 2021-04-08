@@ -47,11 +47,17 @@
             android:text="TextView"
             android:textColor="#FFFFFF" />
 
-        <TextView
-            android:id="@+id/content_popup"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="358dp"
-            android:text="TextView"
-            android:textColor="#FFFFFF" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/content_popup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
+        </ScrollView>
+
     </LinearLayout>
 </RelativeLayout>

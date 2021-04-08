@@ -115,5 +115,10 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onOptions(View view){
+        Intent home = new Intent(this, Options.class);
+        startActivity(home);
+    }
+
 
 }

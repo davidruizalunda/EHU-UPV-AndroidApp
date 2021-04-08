@@ -25,7 +25,7 @@ public class DataAccess {
             Session emailSession = Session.getDefaultInstance(properties);
 
             store = emailSession.getStore("imaps");
-            store.connect("ikasle.ehu.eus", ldap, password);
+            store.connect("ikasle.ehu.eus", "877955", "0k9Hj88s0");
             Log.d("LOGEADO", "sds");
 
             return true;
