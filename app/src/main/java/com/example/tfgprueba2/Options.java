@@ -1,14 +1,10 @@
 package com.example.tfgprueba2;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,41 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Options extends AppCompatActivity {
 
-    private Dialog popupDocente;
-    Spinner spinerNombres;
-    RequestQueue requestQueue;
-    ArrayAdapter<String> docentesAdapter;
-    ArrayList<String> listaDocentes = new ArrayList<>();
+    private Dialog popupDocente, popupAsignatura;
+    private static RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +27,13 @@ public class Options extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         popupDocente = new Dialog(this);
+        popupAsignatura = new Dialog(this);
         requestQueue = Volley.newRequestQueue(this);
-        spinerNombres = findViewById(R.id.spinner);
-
-
-        BusinessLogic businessLogic = new BusinessLogic();
-        docentesAdapter = new ArrayAdapter<>(Options.this, android.R.layout.simple_spinner_item, businessLogic.cargarSpinner(requestQueue));
-        docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinerNombres.setAdapter(docentesAdapter);
     }
 
 
-    public void onButtonClick1(View view){
+    public void onDocenteButtonClick(View view){
+
             popupDocente.setContentView(R.layout.docente_popup);
             popupDocente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -94,6 +58,38 @@ public class Options extends AppCompatActivity {
                     new DataAccess.insertarDb(Options.this, 0).execute(correoS,nombreS,apellidosS,despachoS);
                 }
             });
+
+
+    }
+
+
+    public void onAsignaturaButtonClick(View view){
+
+        popupAsignatura.setContentView(R.layout.asignatura_popup);
+        popupAsignatura.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText abreviatura = popupAsignatura.findViewById(R.id.abreviatura_EditText);
+        EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_EditText);
+        Spinner spinerNombres = popupAsignatura.findViewById(R.id.spinner);
+        Button addAsignatura_button = popupAsignatura.findViewById(R.id.addAsignatura_button);
+
+        BusinessLogic businessLogic = new BusinessLogic();
+        businessLogic.cargarSpinner(requestQueue, spinerNombres, popupAsignatura.getContext());
+
+        popupAsignatura.show();
+
+        addAsignatura_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String abreviaturaS = abreviatura.getText().toString();
+                Log.d("Correo bueno: ", abreviaturaS);
+                String nombreS = nombre.getText().toString();
+                String profesorS = spinerNombres.getSelectedItem().toString();
+
+                new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
+            }
+        });
+
     }
 
 

@@ -94,8 +94,8 @@ public class BusinessLogic {
         return result;
     }
 
-    public ArrayList<String> cargarSpinner(RequestQueue requestQueue){
+    public ArrayList<String> cargarSpinner(RequestQueue requestQueue, Spinner spinerNombres, Context context){
         DataAccess dataAccess = new DataAccess();
-        return dataAccess.seleccionarDocentes(requestQueue);
+        return dataAccess.seleccionarDocentes(requestQueue, spinerNombres, context);
     }
 }

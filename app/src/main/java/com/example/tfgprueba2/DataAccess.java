@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -90,7 +92,7 @@ public class DataAccess {
         }
     }
 
-    public ArrayList<String> seleccionarDocentes(RequestQueue requestQueue){
+    public ArrayList<String> seleccionarDocentes(RequestQueue requestQueue, Spinner spinner, Context context){
         ArrayList<String> listaDocentes = new ArrayList<>();
         String url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -102,6 +104,10 @@ public class DataAccess {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String docentes = jsonObject.optString("correo_EHU");
                         listaDocentes.add(docentes);
+
+                        ArrayAdapter<String> docentesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaDocentes); //Error .getContext
+                        docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(docentesAdapter);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -165,9 +171,10 @@ public class DataAccess {
 
                 }else if(tabla==1) { //Insertar en Asignatura
                     String abreviaturaS = strings[0];
-                    Log.d("Correo: ", strings[0]);
+                    Log.d("abrevi: ", strings[0]);
                     String nombreS = strings[1];
                     String profesorS = strings[2];
+                    Log.d("profesor ", strings[2]);
 
                     data =
                             URLEncoder.encode("abreviatura", "UTF-8") + "=" + URLEncoder.encode(abreviaturaS, "UTF-8") + "&" +
