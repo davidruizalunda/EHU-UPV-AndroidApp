@@ -61,33 +61,11 @@ public class Options extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         spinerNombres = findViewById(R.id.spinner);
 
-        String url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("docentes");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String docentes = jsonObject.optString("correo_EHU");
-                        listaDocentes.add(docentes);
-                        docentesAdapter = new ArrayAdapter<>(Options.this, android.R.layout.simple_spinner_item, listaDocentes);
-                        docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinerNombres.setAdapter(docentesAdapter);
 
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
+        BusinessLogic businessLogic = new BusinessLogic();
+        docentesAdapter = new ArrayAdapter<>(Options.this, android.R.layout.simple_spinner_item, businessLogic.cargarSpinner(requestQueue));
+        docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinerNombres.setAdapter(docentesAdapter);
     }
 
 
@@ -113,7 +91,7 @@ public class Options extends AppCompatActivity {
                     String despachoS = despacho.getText().toString();
 
                     Log.d("Correo bueno2: ", correoS);
-                    new DataAccess.insertarDocente(Options.this).execute(correoS,nombreS,apellidosS,despachoS);
+                    new DataAccess.insertarDb(Options.this, 0).execute(correoS,nombreS,apellidosS,despachoS);
                 }
             });
     }

@@ -1,6 +1,16 @@
 package com.example.tfgprueba2;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,6 +19,9 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
 public class BusinessLogic {
@@ -81,8 +94,8 @@ public class BusinessLogic {
         return result;
     }
 
-
-
-
-
+    public ArrayList<String> cargarSpinner(RequestQueue requestQueue){
+        DataAccess dataAccess = new DataAccess();
+        return dataAccess.seleccionarDocentes(requestQueue);
+    }
 }
