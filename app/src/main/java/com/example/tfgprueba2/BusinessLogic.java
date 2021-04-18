@@ -1,18 +1,20 @@
 package com.example.tfgprueba2;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.ArrayAdapter;
+import android.os.Build;
 import android.widget.Spinner;
 
-import com.android.volley.Request;
+import androidx.annotation.RequiresApi;
+
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -20,11 +22,14 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-
 public class BusinessLogic {
+    private final List<Docente> listaDocentes = new ArrayList<>();
+    private final List<Asignatura> listaAsignaturas = new ArrayList<>();
+
+    public List<Docente> getListaDocentes() {
+            return listaDocentes;
+    }
+
     public Correow[] getCorreows(int numMails) throws MessagingException, IOException {
 
         DataAccess dataAccess = new DataAccess();
@@ -94,8 +99,69 @@ public class BusinessLogic {
         return result;
     }
 
-    public ArrayList<String> cargarSpinner(RequestQueue requestQueue, Spinner spinerNombres, Context context){
+    public void cargarSpinner(RequestQueue requestQueue, Spinner spinerNombres, Context context){
         DataAccess dataAccess = new DataAccess();
-        return dataAccess.seleccionarDocentes(requestQueue, spinerNombres, context);
+        dataAccess.seleccionarDocentes(requestQueue, spinerNombres, context);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean obtenerDocentes(){
+        listaDocentes.clear();
+        DataAccess dataAccess = new DataAccess();
+        String data=dataAccess.seleccionarTabla(0);
+        if(!data.equalsIgnoreCase("")){
+            JSONObject json;
+            try {
+                json = new JSONObject(data);
+                JSONArray jsonArray = json.optJSONArray("docentes");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
+                    Docente docente=new Docente(
+                            jsonArrayChild.optString("correo_EHU"),
+                            jsonArrayChild.optString("nombre"),
+                            jsonArrayChild.optString("apellidos"),
+                            null
+                    );
+                    listaDocentes.add(docente);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean obtenerAsignaturas(){
+        listaAsignaturas.clear();
+        DataAccess dataAccess = new DataAccess();
+        String data=dataAccess.seleccionarTabla(1);
+        if(!data.equalsIgnoreCase("")){
+            JSONObject json;
+            try {
+                json = new JSONObject(data);
+                JSONArray jsonArray = json.optJSONArray("docentes");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
+                    Docente docente=new Docente(
+                            jsonArrayChild.optString("correo_EHU"),
+                            jsonArrayChild.optString("nombre"),
+                            jsonArrayChild.optString("apellidos"),
+                            null
+                    );
+                    listaDocentes.add(docente);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
 }

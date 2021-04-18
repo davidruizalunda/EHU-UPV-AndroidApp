@@ -32,6 +32,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.AuthenticationFailedException;
 import javax.mail.Folder;
@@ -43,6 +44,7 @@ import javax.mail.Store;
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
+    private List<Docente> listaDocentes;
 
     public boolean login(String ldap, String password) {
         try {
@@ -92,36 +94,97 @@ public class DataAccess {
         }
     }
 
-    public ArrayList<String> seleccionarDocentes(RequestQueue requestQueue, Spinner spinner, Context context){
-        ArrayList<String> listaDocentes = new ArrayList<>();
+    public ArrayList<Docente> seleccionarDocente(){
+
+        return null;
+    }
+
+
+
+    public void seleccionarDocentes(RequestQueue requestQueue, Spinner spinner, Context context){
+        ArrayList<Docente> listaDocentes1 = new ArrayList<>();
         String url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+
                     JSONArray jsonArray = response.getJSONArray("docentes");
+                    System.out.println("Data: " + jsonArray);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String docentes = jsonObject.optString("correo_EHU");
-                        listaDocentes.add(docentes);
+                        Docente docente = new Docente(jsonObject.optString("correo_EHU"), "no importa", "no importa", "no importa");
+                        listaDocentes1.add(docente);
 
-                        ArrayAdapter<String> docentesAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaDocentes); //Error .getContext
-                        docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(docentesAdapter);
+                        for(int x=0 ; x < listaDocentes1.size(); x++){
+                            System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                for(int x=0 ; x < listaDocentes1.size(); x++){
+                    System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x+x);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                /*
+                	while($columna=mysqli_fetch_array($resultado)){
+		array_push($docentes['docentes'], array(
+			'correo_EHU' => $columna['correo_EHU'],
+			'nombre' => $columna['nombre'],
+			'apellidos' => $columna['apellidos'],
+			'despacho' => $columna['despacho']
+		));
+	}
+                 */
 
             }
         });
         requestQueue.add(jsonObjectRequest);
-        return listaDocentes;
+        System.out.println("//////////SASDASDA////////");
+        for(int x=0 ; x < listaDocentes1.size(); x++){
+            System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x+x);
+        }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public String seleccionarTabla(int tabla){
+        String sele_url;
+        if (tabla == 0) {
+            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
+        } else if (tabla == 1) {
+            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarAsignaturas.php";
+        }else{
+            sele_url = "";
+        }
+
+        String resultado="";
+        try {
+            URL url = new URL(sele_url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine())!=null){
+                stringBuilder.append(line);
+            }
+            resultado = stringBuilder.toString();
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return resultado;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return resultado;
+        }
     }
 
     public static class insertarDb extends AsyncTask<String, Void, String> {
@@ -165,9 +228,9 @@ public class DataAccess {
 
                     data =
                             URLEncoder.encode("correo_EHU", "UTF-8") + "=" + URLEncoder.encode(correoS, "UTF-8") + "&" +
-                            URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
-                            URLEncoder.encode("apellidos", "UTF-8") + "=" + URLEncoder.encode(apellidosS, "UTF-8") + "&" +
-                            URLEncoder.encode("n_despacho", "UTF-8") + "=" + URLEncoder.encode(despachoS, "UTF-8");
+                                    URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
+                                    URLEncoder.encode("apellidos", "UTF-8") + "=" + URLEncoder.encode(apellidosS, "UTF-8") + "&" +
+                                    URLEncoder.encode("n_despacho", "UTF-8") + "=" + URLEncoder.encode(despachoS, "UTF-8");
 
                 }else if(tabla==1) { //Insertar en Asignatura
                     String abreviaturaS = strings[0];
@@ -178,8 +241,8 @@ public class DataAccess {
 
                     data =
                             URLEncoder.encode("abreviatura", "UTF-8") + "=" + URLEncoder.encode(abreviaturaS, "UTF-8") + "&" +
-                            URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
-                            URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8");
+                                    URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
+                                    URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8");
                 }else{
                     data = "";
                 }

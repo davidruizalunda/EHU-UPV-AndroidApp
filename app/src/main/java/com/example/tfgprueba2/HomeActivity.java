@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,7 +26,8 @@ Contraseña: Tu contraseña
 public class HomeActivity extends AppCompatActivity {
     private TextView textView5;
     private Dialog popupCorreow;
-    private final int TIEMPO = 60000;
+    private final int TIEMPO = 5000;
+    private boolean terminado;
     Handler h = new Handler();
     int cont = 0;
 
@@ -35,20 +37,28 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         textView5 = findViewById(R.id.textView5);
         popupCorreow = new Dialog(this);
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        terminado = false;
         updateAutomatically();
-
     }
 
     public void updateAutomatically(){
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
             public void run() {
-                updateDataCorreowsNews();
-                h.postDelayed(this, TIEMPO);
+                if(!terminado){
+                    Log.d("update ", "//////////////////////////////");
+                    updateDataCorreowsNews();
+                    h.postDelayed(this, TIEMPO);
+                }
             }
 
         }, 0);
     }
+
     public void updateDataCorreowsNews() {
         Thread thread = new Thread(() -> {
             RSSReader lectorRSS = new RSSReader(getApplicationContext());
@@ -59,8 +69,6 @@ public class HomeActivity extends AppCompatActivity {
                 Correow[] correows = businessLogic.getCorreows(10);
                 ArrayList<News> news = businessLogic.getEHUNews(getApplicationContext());
                 h.post(() -> {
-                    cont++;
-                    textView5.setText("Count: " + cont);
                     updateAdaptersCorreowsNews(correows, news);
                 });
 
@@ -70,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         thread.start();
     }
+
     public void updateAdaptersCorreowsNews(Correow[] correows, ArrayList<News> news){
             MyMailsListAdapter mailsAdapter=new MyMailsListAdapter(this, correows);
             ListView mailListView = findViewById(R.id.mailListView);
@@ -116,6 +125,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onOptions(View view){
+        terminado = true;
+        Log.d("Estas", "vivo");
         Intent home = new Intent(this, Options.class);
         startActivity(home);
     }
