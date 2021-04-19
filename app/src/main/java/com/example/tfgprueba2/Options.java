@@ -4,14 +4,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,9 +20,6 @@ import android.widget.Spinner;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Options extends AppCompatActivity {
@@ -32,7 +27,9 @@ public class Options extends AppCompatActivity {
     private Dialog popupDocente, popupAsignatura, popupTutorias, popupClase;
     private static RequestQueue requestQueue;
     Handler h = new Handler();
-    private Spinner spinerNombres;
+    private Spinner spinerNombres, spinnerAsignaturas;
+    private List<Docente> listaDocentes;
+    private List<Asignatura> listaAsignaturas;
 
 
     @Override
@@ -88,16 +85,15 @@ public class Options extends AppCompatActivity {
         EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_EditText);
         spinerNombres = popupAsignatura.findViewById(R.id.spinner);
         Button addAsignatura_button = popupAsignatura.findViewById(R.id.addAsignatura_button);
-        new Seleccionar().execute();
+        new seleccionarDb(0).execute();
         popupAsignatura.show();
 
         addAsignatura_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String abreviaturaS = abreviatura.getText().toString();
-                Log.d("Correo bueno: ", abreviaturaS);
                 String nombreS = nombre.getText().toString();
-                String profesorS = spinerNombres.getSelectedItem().toString();
+                String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
 
                 new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
             }
@@ -109,13 +105,54 @@ public class Options extends AppCompatActivity {
         popupTutorias.setContentView(R.layout.tutoria_popup);
         popupTutorias.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText horaInicio = popupTutorias.findViewById(R.id.horaInicio_editTextTime);
+        EditText horaInicioTutoria = popupTutorias.findViewById(R.id.horaInicioTutoria_editTextTime);
+        EditText horaFinTutoria = popupTutorias.findViewById(R.id.horaFinTutoria_editTextTime);
         spinerNombres = popupTutorias.findViewById(R.id.spinner);
         Spinner spinnerDias = popupTutorias.findViewById(R.id.spinner2);
+        Button addTutorias_button = popupTutorias.findViewById(R.id.addTutoria_button);
+
         cargarSpinnerDias(spinnerDias);
-        new Seleccionar().execute();
+        new seleccionarDb(0).execute();
         popupTutorias.show();
 
+        addTutorias_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
+                String horaFinTutoriaS = horaFinTutoria.getText().toString();
+                String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
+                String diaS = spinnerDias.getSelectedItem().toString();
+                new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
+            }
+        });
+
+    }
+
+    public void onClaseButtonClick(View view){
+        popupClase.setContentView(R.layout.clase_popup);
+        popupClase.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText horaInicioClase = popupClase.findViewById(R.id.horaInicioClase_editTextTime);
+        EditText horaFinClase = popupClase.findViewById(R.id.horaFinClase_editTextTime);
+        EditText aula = popupClase.findViewById(R.id.aula_editTextText);
+        Spinner spinnerDias = popupClase.findViewById(R.id.spinner3);
+        spinnerAsignaturas = popupClase.findViewById(R.id.spinner4);
+        Button addClase_button = popupClase.findViewById(R.id.addClase_button);
+        cargarSpinnerDias(spinnerDias);
+        new seleccionarDb(1).execute();
+        popupClase.show();
+        addClase_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String horaInicioClaseS = horaInicioClase.getText().toString();
+                String horaFinClaseS = horaFinClase.getText().toString();
+                String aulaS = aula.getText().toString();
+                String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getCorreo_EHU();
+                String diaS = spinnerDias.getSelectedItem().toString();
+                new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS);
+            }
+        });
     }
 
     private void cargarSpinnerDias(Spinner spinnerDias) {
@@ -125,43 +162,55 @@ public class Options extends AppCompatActivity {
         spinnerDias.setAdapter(diasAdapter);
     }
 
-    public void onClaseButtonClick(View view){
-        popupClase.setContentView(R.layout.clase_popup);
-        popupClase.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        Spinner spinnerDias = popupClase.findViewById(R.id.spinner3);
-        cargarSpinnerDias(spinnerDias);
-        popupClase.show();
-    }
-
-    class Seleccionar extends AsyncTask<String,String,String> {
+    class seleccionarDb extends AsyncTask<String,String,String> {
         private List<Docente> docentes;
         private int tabla;
+
+        public seleccionarDb(int tabla) {
+            this.tabla = tabla;
+        }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
             BusinessLogic businessLogic = new BusinessLogic();
-
-            if(businessLogic.obtenerDocentes()){
-                runOnUiThread(new Runnable(){
-                    @Override
-                    public void run() {
-                        cargarSpinnerNombres(businessLogic.getListaDocentes());
-                    }
-                });
+            if (tabla == 0){
+                if(businessLogic.obtenerDocentes()){
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            listaDocentes = businessLogic.getListaDocentes();
+                            cargarSpinnerNombres();
+                        }
+                    });
+                }
+            }else if(tabla == 1){
+                if(businessLogic.obtenerAsignaturas()){
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            Log.d("AQUI: ", "Asignatura");
+                            listaAsignaturas = businessLogic.getListaAsignaturas();
+                            cargarSpinnerAsignaturas();
+                        }
+                    });
+                }
             }
+
             return null;
         }
     }
 
-    private void cargarSpinnerNombres(List<Docente> listaDocentes) {
-        ArrayList<String> correos = new ArrayList<>();
-        for(int x=0; x<listaDocentes.size(); x++){
-            correos.add(listaDocentes.get(x).getApellidos() + ", " + listaDocentes.get(x).getNombre());
+    private void cargarSpinnerAsignaturas() {
+        ArrayAdapter<Asignatura> asignaturasAdapter = new ArrayAdapter<>(popupClase.getContext(), android.R.layout.simple_spinner_item, listaAsignaturas);
+        asignaturasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        asignaturasAdapter.notifyDataSetChanged();
+        spinnerAsignaturas.setAdapter(asignaturasAdapter);
+    }
 
-        }
-        ArrayAdapter<String> docentesAdapter = new ArrayAdapter<>(popupAsignatura.getContext(), android.R.layout.simple_spinner_item, correos);
+    private void cargarSpinnerNombres() {
+        ArrayAdapter<Docente> docentesAdapter = new ArrayAdapter<>(popupAsignatura.getContext(), android.R.layout.simple_spinner_item, listaDocentes);
         docentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         docentesAdapter.notifyDataSetChanged();
         spinerNombres.setAdapter(docentesAdapter);

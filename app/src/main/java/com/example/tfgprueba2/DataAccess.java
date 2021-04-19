@@ -45,6 +45,7 @@ public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
     private List<Docente> listaDocentes;
+    private List<Asignatura> listaAsignaturas;
 
     public boolean login(String ldap, String password) {
         try {
@@ -95,7 +96,6 @@ public class DataAccess {
     }
 
     public ArrayList<Docente> seleccionarDocente(){
-
         return null;
     }
 
@@ -179,6 +179,7 @@ public class DataAccess {
             bufferedReader.close();
             inputStream.close();
             httpURLConnection.disconnect();
+            Log.d("RESULTADO: ", resultado);
             return resultado;
 
         }catch (Exception e){
@@ -205,8 +206,12 @@ public class DataAccess {
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarDocente.php";
             }else if(tabla==1){ //Insertar en Asignatura
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarAsignatura.php";
+            }else if(tabla==2){
+                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
+            }else if(tabla==3){
+                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTutoria.php";
             }else{
-                insertar_url = "";
+                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
             }
 
             String resultado;
@@ -228,22 +233,49 @@ public class DataAccess {
 
                     data =
                             URLEncoder.encode("correo_EHU", "UTF-8") + "=" + URLEncoder.encode(correoS, "UTF-8") + "&" +
-                                    URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
-                                    URLEncoder.encode("apellidos", "UTF-8") + "=" + URLEncoder.encode(apellidosS, "UTF-8") + "&" +
-                                    URLEncoder.encode("n_despacho", "UTF-8") + "=" + URLEncoder.encode(despachoS, "UTF-8");
+                            URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
+                            URLEncoder.encode("apellidos", "UTF-8") + "=" + URLEncoder.encode(apellidosS, "UTF-8") + "&" +
+                            URLEncoder.encode("n_despacho", "UTF-8") + "=" + URLEncoder.encode(despachoS, "UTF-8");
 
-                }else if(tabla==1) { //Insertar en Asignatura
+                }
+                else if(tabla==1) { //Insertar en Asignatura
                     String abreviaturaS = strings[0];
-                    Log.d("abrevi: ", strings[0]);
                     String nombreS = strings[1];
                     String profesorS = strings[2];
-                    Log.d("profesor ", strings[2]);
 
                     data =
                             URLEncoder.encode("abreviatura", "UTF-8") + "=" + URLEncoder.encode(abreviaturaS, "UTF-8") + "&" +
-                                    URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
-                                    URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8");
-                }else{
+                            URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
+                            URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8");
+                }
+                else if(tabla==2){
+                    String horaInicioS = strings[0];
+                    String horaFinS = strings[1];
+                    String aulaS = strings[2];
+                    String asig_idS = strings[3];
+                    String diaS = strings[4];
+
+                    data =
+                            URLEncoder.encode("horaInicio", "UTF-8") + "=" + URLEncoder.encode(horaInicioS, "UTF-8") + "&" +
+                            URLEncoder.encode("horaFin", "UTF-8") + "=" + URLEncoder.encode(horaFinS, "UTF-8") + "&" +
+                            URLEncoder.encode("aula", "UTF-8") + "=" + URLEncoder.encode(aulaS, "UTF-8") + "&" +
+                            URLEncoder.encode("asig_id", "UTF-8") + "=" + URLEncoder.encode(asig_idS, "UTF-8") + "&" +
+                            URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
+                }
+                else if(tabla==3) {
+                    String horaInicioS = strings[0];
+                    String horaFinS = strings[1];
+                    String profesorS = strings[2];
+                    String diaS = strings[3];
+
+                    data =
+                            URLEncoder.encode("horaInicio", "UTF-8") + "=" + URLEncoder.encode(horaInicioS, "UTF-8") + "&" +
+                            URLEncoder.encode("horaFin", "UTF-8") + "=" + URLEncoder.encode(horaFinS, "UTF-8") + "&" +
+                            URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8") + "&" +
+                            URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
+
+                }
+                else{
                     data = "";
                 }
 

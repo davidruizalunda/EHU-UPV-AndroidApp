@@ -1,5 +1,7 @@
 package com.example.tfgprueba2;
 
+import androidx.annotation.NonNull;
+
 public class Docente {
     private String correo_EHU;
     private String nombre;
@@ -43,5 +45,11 @@ public class Docente {
 
     public void setDespacho(String despacho) {
         this.despacho = despacho;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return apellidos + ", " + nombre;
     }
 }

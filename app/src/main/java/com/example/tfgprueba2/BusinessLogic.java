@@ -2,6 +2,7 @@ package com.example.tfgprueba2;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
@@ -28,6 +29,10 @@ public class BusinessLogic {
 
     public List<Docente> getListaDocentes() {
             return listaDocentes;
+    }
+
+    public List<Asignatura> getListaAsignaturas() {
+        return listaAsignaturas;
     }
 
     public Correow[] getCorreows(int numMails) throws MessagingException, IOException {
@@ -143,16 +148,16 @@ public class BusinessLogic {
             JSONObject json;
             try {
                 json = new JSONObject(data);
-                JSONArray jsonArray = json.optJSONArray("docentes");
+                JSONArray jsonArray = json.optJSONArray("asignaturas");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
-                    Docente docente=new Docente(
-                            jsonArrayChild.optString("correo_EHU"),
+                    Asignatura asignatura=new Asignatura(
+                            jsonArrayChild.optString("abreviatura"),
                             jsonArrayChild.optString("nombre"),
-                            jsonArrayChild.optString("apellidos"),
-                            null
+                            jsonArrayChild.optString("profesor1")
                     );
-                    listaDocentes.add(docente);
+                    Log.d("ASIGNATURA: ", jsonArrayChild.optString("nombre"));
+                    listaAsignaturas.add(asignatura);
                 }
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

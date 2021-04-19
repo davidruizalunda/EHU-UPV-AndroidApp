@@ -52,7 +52,7 @@
         android:textColor="#FFFFFF" />
 
     <EditText
-        android:id="@+id/horaInicio_editTextTime"
+        android:id="@+id/horaInicioTutoria_editTextTime"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -78,7 +78,7 @@
         android:textColor="#FFFFFF" />
 
     <EditText
-        android:id="@+id/horaFin_editTextTime"
+        android:id="@+id/horaFinTutoria_editTextTime"
         android:layout_width="129dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
