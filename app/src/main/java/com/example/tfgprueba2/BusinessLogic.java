@@ -3,11 +3,8 @@ package com.example.tfgprueba2;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
-
-import com.android.volley.RequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,27 +84,23 @@ public class BusinessLogic {
 
     private String getTextFromMimeMultipart(
             MimeMultipart mimeMultipart)  throws MessagingException, IOException{
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int count = mimeMultipart.getCount();
         for (int i = 0; i < count; i++) {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType("text/plain")) {
-                result = result + "\n" + bodyPart.getContent();
+                result.append("\n").append(bodyPart.getContent());
                 break; // without break same text appears twice in my tests
             } else if (bodyPart.isMimeType("text/html")) {
                 String html = (String) bodyPart.getContent();
-                result = result + "\n" + org.jsoup.Jsoup.parse(html).text();
+                result.append("\n").append(org.jsoup.Jsoup.parse(html).text());
             } else if (bodyPart.getContent() instanceof MimeMultipart){
-                result = result + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
+                result.append(getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent()));
             }
         }
-        return result;
+        return result.toString();
     }
 
-    public void cargarSpinner(RequestQueue requestQueue, Spinner spinerNombres, Context context){
-        DataAccess dataAccess = new DataAccess();
-        dataAccess.seleccionarDocentes(requestQueue, spinerNombres, context);
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean obtenerDocentes(){
@@ -137,7 +130,6 @@ public class BusinessLogic {
         }
         return false;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean obtenerAsignaturas(){

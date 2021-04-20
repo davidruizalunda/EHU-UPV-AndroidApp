@@ -1,15 +1,11 @@
 package com.example.tfgprueba2;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,16 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 public class Options extends AppCompatActivity {
 
     private Dialog popupDocente, popupAsignatura, popupTutorias, popupClase;
-    private static RequestQueue requestQueue;
-    Handler h = new Handler();
     private Spinner spinerNombres, spinnerAsignaturas;
     private List<Docente> listaDocentes;
     private List<Asignatura> listaAsignaturas;
@@ -41,8 +35,6 @@ public class Options extends AppCompatActivity {
         popupAsignatura = new Dialog(this);
         popupTutorias = new Dialog(this);
         popupClase = new Dialog(this);
-
-        requestQueue = Volley.newRequestQueue(this);
 
     }
 
@@ -60,18 +52,15 @@ public class Options extends AppCompatActivity {
 
             popupDocente.show();
 
-            addDocente_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String correoS = correo_EHU.getText().toString();
-                    Log.d("Correo bueno: ", correoS);
-                    String nombreS = nombre.getText().toString();
-                    String apellidosS = apellidos.getText().toString();
-                    String despachoS = despacho.getText().toString();
+            addDocente_button.setOnClickListener(v -> {
+                String correoS = correo_EHU.getText().toString();
+                Log.d("Correo bueno: ", correoS);
+                String nombreS = nombre.getText().toString();
+                String apellidosS = apellidos.getText().toString();
+                String despachoS = despacho.getText().toString();
 
-                    Log.d("Correo bueno2: ", correoS);
-                    new DataAccess.insertarDb(Options.this, 0).execute(correoS,nombreS,apellidosS,despachoS);
-                }
+                Log.d("Correo bueno2: ", correoS);
+                new DataAccess.insertarDb(Options.this, 0).execute(correoS,nombreS,apellidosS,despachoS);
             });
 
     }
@@ -88,15 +77,12 @@ public class Options extends AppCompatActivity {
         new seleccionarDb(0).execute();
         popupAsignatura.show();
 
-        addAsignatura_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String abreviaturaS = abreviatura.getText().toString();
-                String nombreS = nombre.getText().toString();
-                String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
+        addAsignatura_button.setOnClickListener(v -> {
+            String abreviaturaS = abreviatura.getText().toString();
+            String nombreS = nombre.getText().toString();
+            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
 
-                new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
-            }
+            new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
         });
 
     }
@@ -115,15 +101,12 @@ public class Options extends AppCompatActivity {
         new seleccionarDb(0).execute();
         popupTutorias.show();
 
-        addTutorias_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
-                String horaFinTutoriaS = horaFinTutoria.getText().toString();
-                String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
-                String diaS = spinnerDias.getSelectedItem().toString();
-                new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
-            }
+        addTutorias_button.setOnClickListener(v -> {
+            String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
+            String horaFinTutoriaS = horaFinTutoria.getText().toString();
+            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
+            String diaS = spinnerDias.getSelectedItem().toString();
+            new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
         });
 
     }
@@ -141,17 +124,13 @@ public class Options extends AppCompatActivity {
         cargarSpinnerDias(spinnerDias);
         new seleccionarDb(1).execute();
         popupClase.show();
-        addClase_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String horaInicioClaseS = horaInicioClase.getText().toString();
-                String horaFinClaseS = horaFinClase.getText().toString();
-                String aulaS = aula.getText().toString();
-                String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID() + "";
-                String diaS = spinnerDias.getSelectedItem().toString();
-                new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS,asignaturaS);
-            }
+        addClase_button.setOnClickListener(v -> {
+            String horaInicioClaseS = horaInicioClase.getText().toString();
+            String horaFinClaseS = horaFinClase.getText().toString();
+            String aulaS = aula.getText().toString();
+            String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID() + "";
+            String diaS = spinnerDias.getSelectedItem().toString();
+            new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS,asignaturaS);
         });
     }
 
@@ -163,8 +142,7 @@ public class Options extends AppCompatActivity {
     }
 
     class seleccionarDb extends AsyncTask<String,String,String> {
-        private List<Docente> docentes;
-        private int tabla;
+        private final int tabla;
 
         public seleccionarDb(int tabla) {
             this.tabla = tabla;
@@ -177,23 +155,17 @@ public class Options extends AppCompatActivity {
             BusinessLogic businessLogic = new BusinessLogic();
             if (tabla == 0){
                 if(businessLogic.obtenerDocentes()){
-                    runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-                            listaDocentes = businessLogic.getListaDocentes();
-                            cargarSpinnerNombres();
-                        }
+                    runOnUiThread(() -> {
+                        listaDocentes = businessLogic.getListaDocentes();
+                        cargarSpinnerNombres();
                     });
                 }
             }else if(tabla == 1){
                 if(businessLogic.obtenerAsignaturas()){
-                    runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-                            Log.d("AQUI: ", "Asignatura");
-                            listaAsignaturas = businessLogic.getListaAsignaturas();
-                            cargarSpinnerAsignaturas();
-                        }
+                    runOnUiThread(() -> {
+                        Log.d("AQUI: ", "Asignatura");
+                        listaAsignaturas = businessLogic.getListaAsignaturas();
+                        cargarSpinnerAsignaturas();
                     });
                 }
             }
