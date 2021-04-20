@@ -154,7 +154,8 @@ public class BusinessLogic {
                     Asignatura asignatura=new Asignatura(
                             jsonArrayChild.optString("abreviatura"),
                             jsonArrayChild.optString("nombre"),
-                            jsonArrayChild.optString("profesor1")
+                            jsonArrayChild.optString("profesor1"),
+                            jsonArrayChild.optString("asig_id")
                     );
                     Log.d("ASIGNATURA: ", jsonArrayChild.optString("nombre"));
                     listaAsignaturas.add(asignatura);

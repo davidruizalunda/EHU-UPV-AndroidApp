@@ -130,16 +130,6 @@ public class DataAccess {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                /*
-                	while($columna=mysqli_fetch_array($resultado)){
-		array_push($docentes['docentes'], array(
-			'correo_EHU' => $columna['correo_EHU'],
-			'nombre' => $columna['nombre'],
-			'apellidos' => $columna['apellidos'],
-			'despacho' => $columna['despacho']
-		));
-	}
-                 */
 
             }
         });
@@ -252,15 +242,15 @@ public class DataAccess {
                     String horaInicioS = strings[0];
                     String horaFinS = strings[1];
                     String aulaS = strings[2];
-                    String asig_idS = strings[3];
-                    String diaS = strings[4];
+                    String diaS = strings[3];
+                    String asig_idS = strings[4];
 
                     data =
                             URLEncoder.encode("horaInicio", "UTF-8") + "=" + URLEncoder.encode(horaInicioS, "UTF-8") + "&" +
                             URLEncoder.encode("horaFin", "UTF-8") + "=" + URLEncoder.encode(horaFinS, "UTF-8") + "&" +
                             URLEncoder.encode("aula", "UTF-8") + "=" + URLEncoder.encode(aulaS, "UTF-8") + "&" +
-                            URLEncoder.encode("asig_id", "UTF-8") + "=" + URLEncoder.encode(asig_idS, "UTF-8") + "&" +
-                            URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
+                            URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8") + "&" +
+                            URLEncoder.encode("asig_id", "UTF-8") + "=" + URLEncoder.encode(asig_idS, "UTF-8");
                 }
                 else if(tabla==3) {
                     String horaInicioS = strings[0];

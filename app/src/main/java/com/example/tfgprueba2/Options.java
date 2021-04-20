@@ -148,9 +148,9 @@ public class Options extends AppCompatActivity {
                 String horaInicioClaseS = horaInicioClase.getText().toString();
                 String horaFinClaseS = horaFinClase.getText().toString();
                 String aulaS = aula.getText().toString();
-                String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getCorreo_EHU();
+                String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID() + "";
                 String diaS = spinnerDias.getSelectedItem().toString();
-                new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS);
+                new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS,asignaturaS);
             }
         });
     }
