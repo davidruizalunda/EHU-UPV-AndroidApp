@@ -32,18 +32,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
+                android:id="@+id/seleccionDocente_textView"
+                android:layout_width="2dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/seleccion_actual" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/seleccionActualDocente_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,17 +57,17 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/nombreDocente" />
 
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/apellidosDocente" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,9 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="@string/nombreDocenteHint"
                 android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/apellidos_editText"
@@ -92,9 +92,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="@string/apellidosDocenteHint"
                 android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,17 +110,17 @@
 
             <TextView
                 android:id="@+id/textView20"
-                android:layout_width="wrap_content"
+                android:layout_width="62dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/correoDocente" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/despachoDocente" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,9 +134,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="@string/correoDocenteHint"
                 android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/despacho_editText"
@@ -143,14 +145,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="@string/despachoDocenteHint"
                 android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="11dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -158,11 +161,31 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner5"
-                android:layout_width="445dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="446dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/listaDocente" />
+
+                <Spinner
+                    android:id="@+id/spinner5"
+                    android:layout_width="match_parent"
+                    android:layout_height="11dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"></LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -174,19 +197,20 @@
                     android:id="@+id/emptyDocente_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:text="@string/empty_button"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/removeDocente_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:text="@string/remover_button" />
 
                 <Button
                     android:id="@+id/addDocente_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:text="@string/add_button" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

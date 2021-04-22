@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class Options extends AppCompatActivity {
             EditText nombre = popupDocente.findViewById(R.id.nombre_editText);
             EditText apellidos = popupDocente.findViewById(R.id.apellidos_editText);
             EditText despacho = popupDocente.findViewById(R.id.despacho_editText);
+            TextView seleccion = popupDocente.findViewById(R.id.seleccionActualDocente_textView);
             Button addDocente_button = popupDocente.findViewById(R.id.addDocente_button);
             Button emptyButton = popupDocente.findViewById(R.id.emptyDocente_button);
             Button removeButton = popupDocente.findViewById(R.id.removeDocente_button);
@@ -63,6 +65,7 @@ public class Options extends AppCompatActivity {
                     nombre.setText(listaDocentes.get(position).getNombre());
                     apellidos.setText(listaDocentes.get(position).getApellidos());
                     despacho.setText(listaDocentes.get(position).getDespacho());
+                    seleccion.setText(listaDocentes.get(position).toString());
                 }
 
                 @Override
@@ -75,6 +78,7 @@ public class Options extends AppCompatActivity {
                 nombre.setText("");
                 apellidos.setText("");
                 despacho.setText("");
+                seleccion.setText(R.string.nuevoDocente);
             });
 
             removeButton.setOnClickListener(v -> {

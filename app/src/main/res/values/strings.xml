@@ -3,8 +3,28 @@
     <string name="ldap_number">LDAP</string>
     <string name="ldap_password">Contraseña</string>
     <string name="login_button">Entrar</string>
-    <string name="wait_txt">Un momento...</string>
-    <string name="texto_prueba">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec diam tristique, tristique eros non, accumsan dui.</string>
+
+    <!-- Generales -->
+    <string name="seleccion_actual">Selección actual:</string>
+    <string name="empty_button">Vaciar campos</string>
+    <string name="remover_button">Eliminar</string>
+    <string name="add_button">Añadir</string>
+
+    <!-- Docente -->
+    <string name="nombreDocente">Nombre</string>
+    <string name="nombreDocenteHint">Nombre del profesor</string>
+
+    <string name="apellidosDocente">Apellidos</string>
+    <string name="apellidosDocenteHint">Apellidos del profesor</string>
+
+    <string name="correoDocente">Correo</string>
+    <string name="correoDocenteHint">Correo de la EHU</string>
+
+    <string name="despachoDocente">Despacho</string>
+    <string name="despachoDocenteHint">Número/nombre Despacho</string>
+
+    <string name="nuevoDocente">Nuevo docente</string>
+    <string name="listaDocente">Lista de docentes:</string>
 
 
 </resources>
