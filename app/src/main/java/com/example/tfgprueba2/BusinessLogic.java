@@ -23,6 +23,8 @@ import javax.mail.internet.MimeUtility;
 public class BusinessLogic {
     private final List<Docente> listaDocentes = new ArrayList<>();
     private final List<Asignatura> listaAsignaturas = new ArrayList<>();
+    private final List<Clase> listaClases = new ArrayList<>();
+    private final List<Tutoria> listaTutorias = new ArrayList<>();
 
     public List<Docente> getListaDocentes() {
             return listaDocentes;
@@ -30,6 +32,14 @@ public class BusinessLogic {
 
     public List<Asignatura> getListaAsignaturas() {
         return listaAsignaturas;
+    }
+
+    public List<Clase> getListaClases() {
+        return listaClases;
+    }
+
+    public List<Tutoria> getListaTutorias() {
+        return listaTutorias;
     }
 
     public Correow[] getCorreows(int numMails) throws MessagingException, IOException {
@@ -59,7 +69,6 @@ public class BusinessLogic {
             correows[x] = correow;
 
             x--;
-            //salida3.setText("Content: "+ message.getContent().toString() + "\n");
 
         }
         return correows;
@@ -82,8 +91,7 @@ public class BusinessLogic {
         return result;
     }
 
-    private String getTextFromMimeMultipart(
-            MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+    private String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
         StringBuilder result = new StringBuilder();
         int count = mimeMultipart.getCount();
         for (int i = 0; i < count; i++) {
@@ -100,7 +108,6 @@ public class BusinessLogic {
         }
         return result.toString();
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean obtenerDocentes(){
@@ -151,6 +158,65 @@ public class BusinessLogic {
                     );
                     Log.d("ASIGNATURA: ", jsonArrayChild.optString("nombre"));
                     listaAsignaturas.add(asignatura);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean obtenerClases(){
+        listaClases.clear();
+        DataAccess dataAccess = new DataAccess();
+        String data=dataAccess.seleccionarTabla(2);
+        if(!data.equalsIgnoreCase("")){
+            JSONObject json;
+            try {
+                json = new JSONObject(data);
+                JSONArray jsonArray = json.optJSONArray("clases");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
+                    Clase clase=new Clase(
+                            jsonArrayChild.optString("horaInicio"),
+                            jsonArrayChild.optString("horaFin"),
+                            jsonArrayChild.optString("aula"),
+                            jsonArrayChild.optString("dia"),
+                            jsonArrayChild.optString("asig_id")
+                    );
+                    listaClases.add(clase);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean obtenerTutorias(){
+        listaTutorias.clear();
+        DataAccess dataAccess = new DataAccess();
+        String data=dataAccess.seleccionarTabla(3);
+        if(!data.equalsIgnoreCase("")){
+            JSONObject json;
+            try {
+                json = new JSONObject(data);
+                JSONArray jsonArray = json.optJSONArray("tutorias");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
+                    Tutoria tutoria = new Tutoria(
+                            jsonArrayChild.optString("horaInicio"),
+                            jsonArrayChild.optString("horaFin"),
+                            jsonArrayChild.optString("profesor"),
+                            jsonArrayChild.optString("dia")
+                    );
+                    listaTutorias.add(tutoria);
                 }
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

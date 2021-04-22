@@ -5,20 +5,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,9 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
 import javax.mail.AuthenticationFailedException;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -44,8 +32,6 @@ import javax.mail.Store;
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
-    private List<Docente> listaDocentes;
-    private List<Asignatura> listaAsignaturas;
 
     public boolean login(String ldap, String password) {
         try {
@@ -95,12 +81,7 @@ public class DataAccess {
         }
     }
 
-    public ArrayList<Docente> seleccionarDocente(){
-        return null;
-    }
-
-
-
+    /*
     public void seleccionarDocentes(RequestQueue requestQueue, Spinner spinner, Context context){
         ArrayList<Docente> listaDocentes1 = new ArrayList<>();
         String url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
@@ -140,6 +121,8 @@ public class DataAccess {
         }
     }
 
+     */
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String seleccionarTabla(int tabla){
@@ -148,6 +131,10 @@ public class DataAccess {
             sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
         } else if (tabla == 1) {
             sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarAsignaturas.php";
+        }else  if (tabla == 2) {
+            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarClases.php";
+        }else  if (tabla == 3) {
+            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarTutorias.php";
         }else{
             sele_url = "";
         }
@@ -180,8 +167,8 @@ public class DataAccess {
 
     public static class insertarDb extends AsyncTask<String, Void, String> {
 
-        private WeakReference<Context> context;
-        private int tabla;
+        private final WeakReference<Context> context;
+        private final int tabla;
 
         public insertarDb(Context context, int tabla) {
             this.context = new WeakReference<>(context);
@@ -196,12 +183,12 @@ public class DataAccess {
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarDocente.php";
             }else if(tabla==1){ //Insertar en Asignatura
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarAsignatura.php";
-            }else if(tabla==2){
+            }else if(tabla==2){//Insertar en Clase
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
-            }else if(tabla==3){
+            }else if(tabla==3){//Insertar en Tutoria
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTutoria.php";
             }else{
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
+                insertar_url = "";
             }
 
             String resultado;
@@ -298,5 +285,62 @@ public class DataAccess {
         }
     }
 
+    public static class eliminarDb extends AsyncTask<String, Void, String> {
+
+        private final WeakReference<Context> context;
+        private final int tabla;
+
+        public eliminarDb(Context context, int tabla) {
+            this.context = new WeakReference<>(context);
+            this.tabla = tabla;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        protected String doInBackground(String... strings) {
+            String eliminar_url;
+            eliminar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/eliminar.php";
+            String resultado;
+            try{
+                URL url = new URL(eliminar_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+
+                String data;
+                String sentenciaS = strings[0];
+                Log.d("Sentencia: ", strings[0]);
+
+                data = URLEncoder.encode("sentencia", "UTF-8") + "=" + URLEncoder.encode(sentenciaS, "UTF-8");
+
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                StringBuilder stringBuilder = new StringBuilder();
+
+                String line;
+                while ((line = bufferedReader.readLine())!=null){
+                    stringBuilder.append(line);
+                }
+                resultado = stringBuilder.toString();
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+            }catch (Exception e){
+                e.printStackTrace();
+                resultado = "error";
+            }
+            return resultado;
+        }
+
+        protected void onPostExecute(String resultado){
+            Toast.makeText(context.get(), resultado, Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

@@ -16,7 +16,7 @@ public class CorreowPopup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.correows_popup);
+        setContentView(R.layout.popup_view_correows);
         from = findViewById(R.id.from_popup);
         subject = findViewById(R.id.subject_popup);
         date = findViewById(R.id.date_popup);

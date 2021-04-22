@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     public void login(View view) {
 
         loadingGif.setBackgroundResource(R.drawable.loading);

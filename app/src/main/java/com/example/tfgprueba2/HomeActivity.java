@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
             mailListView.setAdapter(mailsAdapter);
 
             mailListView.setOnItemClickListener((parent, view, position, id) -> {
-                popupCorreow.setContentView(R.layout.correows_popup);
+                popupCorreow.setContentView(R.layout.popup_view_correows);
                 popupCorreow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 TextView from = popupCorreow.findViewById(R.id.from_popup);
