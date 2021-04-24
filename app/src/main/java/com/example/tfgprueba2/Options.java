@@ -28,6 +28,7 @@ public class Options extends AppCompatActivity {
     private List<Asignatura> listaAsignaturas;
     private List<Clase> listaClases;
     private List<Tutoria> listaTutorias;
+    private String[] dias = {"Lunes","Martes", "Miercoles", "Jueves", "Viernes"};
 
 
     @Override
@@ -120,15 +121,13 @@ public class Options extends AppCompatActivity {
 
     public void onAddAsignaturaButtonClick(View view){
 
-        Docente docenteSeleccionado;
-
         popupAsignatura.setContentView(R.layout.popup_add_asignatura);
         popupAsignatura.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         EditText abreviatura = popupAsignatura.findViewById(R.id.abreviaturaAsignatura_editText);
         EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_editText);
         TextView seleccion = popupAsignatura.findViewById(R.id.seleccionActualAsignatura_textView);
-        TextView seleccionDocente = popupAsignatura.findViewById(R.id.docenteSeleccionado_textView);
+
         spinerNombres = popupAsignatura.findViewById(R.id.spinner10);
         spinnerAsignaturas = popupAsignatura.findViewById(R.id.spinner6);
 
@@ -148,19 +147,9 @@ public class Options extends AppCompatActivity {
 
 
                 String docenteSeleccionado = listaAsignaturas.get(position).getDocente1();
-
-                int i;
-                Log.d("Size: ",listaDocentes.size()+"");
-                for(i=0; i<listaDocentes.size(); i++){
-                    Log.d("Comparar esto: ", docenteSeleccionado);
-                    Log.d("Con esto: ", listaDocentes.get(i).getCorreo_EHU());
-                    if (docenteSeleccionado.equals(listaDocentes.get(i).getCorreo_EHU())){
-                        Log.d("LA I: ",i+"");
-                        break;
-                    }
-                }
-                Log.d("LA I 2: ",i+"");
-                spinerNombres.setSelection(i);
+                BusinessLogic businessLogic = new BusinessLogic();
+                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
+                seleccion.setText(spinnerAsignaturas.getSelectedItem().toString());
 
             }
 
@@ -173,7 +162,6 @@ public class Options extends AppCompatActivity {
             abreviatura.setText("");
             nombre.setText("");
             seleccion.setText(R.string.nuevaAsignatura);
-            seleccionDocente.setText(R.string.docenteNoSeleccionado);
         });
 
         removeAsignatura_button.setOnClickListener(v -> {
@@ -204,11 +192,11 @@ public class Options extends AppCompatActivity {
         EditText horaInicioTutoria = popupTutorias.findViewById(R.id.horaInicioTutoria_editTextTime);
         EditText horaFinTutoria = popupTutorias.findViewById(R.id.horaFinTutoria_editTextTime);
         TextView seleccion = popupTutorias.findViewById(R.id.seleccionActualTutoria_textView);
-        TextView seleccionDocente = popupTutorias.findViewById(R.id.docenteSeleccionado_textView);
 
         spinerNombres = popupTutorias.findViewById(R.id.spinner);
         spinnerTutorias = popupTutorias.findViewById(R.id.spinner6);
         Spinner spinnerDias = popupTutorias.findViewById(R.id.spinner2);
+
         Button addTutoria_button = popupTutorias.findViewById(R.id.addTutoria_button);
         Button emptyTutoria_button = popupTutorias.findViewById(R.id.emptyTutoria_button);
         Button removeTutoria_button = popupTutorias.findViewById(R.id.removeTutoria_button);
@@ -225,7 +213,14 @@ public class Options extends AppCompatActivity {
                 horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
                 horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
 
-                seleccionDocente.setText(listaTutorias.get(position).getHoraInicio());
+                BusinessLogic businessLogic = new BusinessLogic();
+
+                String diaSeleccionado = listaTutorias.get(position).getDia();
+                spinnerDias.setSelection(businessLogic.findDiaPosition(diaSeleccionado, dias));
+
+                String docenteSeleccionado = listaTutorias.get(position).getProfesor();
+                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
+
                 seleccion.setText(listaTutorias.get(position).toString());
             }
 
@@ -243,11 +238,10 @@ public class Options extends AppCompatActivity {
         removeTutoria_button.setOnClickListener(v -> {
             String horaInicio = horaInicioTutoria.getText().toString();
             String horaFin = horaFinTutoria.getText().toString();
-            String profesorS = listaAsignaturas.get(spinerNombres.getSelectedItemPosition()).getDocente1();
+            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
             String diaS = spinnerDias.getSelectedItem().toString();
 
             String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
-            Log.d("SENTENCIA: ", sentencia);
             new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
             horaInicioTutoria.setText("");
             horaFinTutoria.setText("");
@@ -261,6 +255,8 @@ public class Options extends AppCompatActivity {
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
             String diaS = spinnerDias.getSelectedItem().toString();
             new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
+            new seleccionarDb(0).execute();
+            new seleccionarDb(3).execute();
         });
 
     }
@@ -290,7 +286,7 @@ public class Options extends AppCompatActivity {
 
 
     private void cargarSpinnerDias(Spinner spinnerDias) {
-        String[] dias = {"Lunes","Martes", "Miercoles", "Jueves", "Viernes"};
+
         ArrayAdapter<String> diasAdapter = new ArrayAdapter<>(popupAsignatura.getContext(), android.R.layout.simple_spinner_item, dias);
         diasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDias.setAdapter(diasAdapter);

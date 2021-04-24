@@ -3,6 +3,7 @@ package com.example.tfgprueba2;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
 
@@ -229,4 +230,24 @@ public class BusinessLogic {
     }
 
 
+    public int finDocenteSpinnerPosition(String docenteSeleccionado, List<Docente> listaDocentesCargada) {
+        int i;
+        for(i=0; i<listaDocentesCargada.size(); i++){
+            if (docenteSeleccionado.equals(listaDocentesCargada.get(i).getCorreo_EHU())){
+                break;
+            }
+        }
+        return i;
+    }
+
+    public int findDiaPosition(String diaSeleccionado, String[] spinnerDias) {
+        int i;
+        for(i=0; i<spinnerDias.length; i++){
+            if (diaSeleccionado.equals(spinnerDias[i])){
+                break;
+            }
+        }
+        Log.d("LA I: ", i+"");
+        return i;
+    }
 }
