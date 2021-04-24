@@ -217,12 +217,13 @@ public class BusinessLogic {
                             jsonArrayChild.optString("dia")
                     );
                     listaTutorias.add(tutoria);
+                    Log.d("ESTPO:", jsonArray.toString());
                 }
+                return true;
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            return true;
         }
         return false;
     }

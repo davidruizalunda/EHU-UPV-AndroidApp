@@ -7,8 +7,22 @@
     <!-- Generales -->
     <string name="seleccion_actual">Selección actual:</string>
     <string name="empty_button">Vaciar campos</string>
-    <string name="remover_button">Eliminar</string>
+    <string name="remove_button">Eliminar</string>
     <string name="add_button">Añadir</string>
+
+    <string name="docenteSeleccionado">Docente seleccionado:</string>
+    <string name="docenteNoSeleccionado">Ningún docente seleccionado</string>
+
+    <string name="listaDocentes">Lista de docentes:</string>
+    <string name="listaAsignaturas">Lista de asignaturas:</string>
+    <string name="listaTutorias">Lista de tutorias:</string>
+    <string name="listaClases">Lista de clases:</string>
+
+    <string name="HoraDefault">00:00</string>
+    <string name="HoraInicio">Hora comienzo</string>
+    <string name="HoraFin">Hora fin</string>
+
+    <string name="dia">Día:</string>
 
     <!-- Docente -->
     <string name="nombreDocente">Nombre</string>
@@ -24,7 +38,22 @@
     <string name="despachoDocenteHint">Número/nombre Despacho</string>
 
     <string name="nuevoDocente">Nuevo docente</string>
-    <string name="listaDocente">Lista de docentes:</string>
 
+    <!-- Asignatura -->
+    <string name="abreviaturaAsignatura">Abreviatura</string>
+    <string name="abreviaturaAsignaturaHint">Nombre del profesor</string>
+
+    <string name="nombreAsignatura">Nombre</string>
+    <string name="nombreAsignaturaHint">Nombre de la asignatura</string>
+
+    <string name="nuevaAsignatura">Nueva asignatura</string>
+
+    <!-- Tutoria -->
+
+    <string name="nuevaTutoria">Nueva tutoría</string>
+
+    <!-- Clase -->
+
+    <string name="nuevaClase">Nueva clase</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.example.tfgprueba2;
 
+import androidx.annotation.NonNull;
+
 public class Tutoria {
     private String horaInicio;
     private String horaFin;
@@ -43,5 +45,11 @@ public class Tutoria {
 
     public void setDia(String dia) {
         this.dia = dia;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return horaInicio + "-" + horaFin + " ";
     }
 }

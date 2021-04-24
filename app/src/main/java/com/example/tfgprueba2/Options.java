@@ -23,7 +23,7 @@ import java.util.List;
 public class Options extends AppCompatActivity {
 
     private Dialog popupDocente, popupAsignatura, popupTutorias, popupClase;
-    private Spinner spinerNombres, spinnerAsignaturas;
+    private Spinner spinerNombres, spinnerAsignaturas, spinnerClases, spinnerTutorias;
     private List<Docente> listaDocentes;
     private List<Asignatura> listaAsignaturas;
     private List<Clase> listaClases;
@@ -46,10 +46,10 @@ public class Options extends AppCompatActivity {
             popupDocente.setContentView(R.layout.popup_add_docente);
             popupDocente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            EditText correo_EHU = popupDocente.findViewById(R.id.correo_editText);
-            EditText nombre = popupDocente.findViewById(R.id.nombre_editText);
-            EditText apellidos = popupDocente.findViewById(R.id.apellidos_editText);
-            EditText despacho = popupDocente.findViewById(R.id.despacho_editText);
+            EditText correo_EHU = popupDocente.findViewById(R.id.correoDocente_editText);
+            EditText nombre = popupDocente.findViewById(R.id.nombreDocente_editText);
+            EditText apellidos = popupDocente.findViewById(R.id.apellidosDocente_editText);
+            EditText despacho = popupDocente.findViewById(R.id.despachoDocente_editText);
             TextView seleccion = popupDocente.findViewById(R.id.seleccionActualDocente_textView);
             Button addDocente_button = popupDocente.findViewById(R.id.addDocente_button);
             Button emptyButton = popupDocente.findViewById(R.id.emptyDocente_button);
@@ -120,22 +120,79 @@ public class Options extends AppCompatActivity {
 
     public void onAddAsignaturaButtonClick(View view){
 
+        Docente docenteSeleccionado;
+
         popupAsignatura.setContentView(R.layout.popup_add_asignatura);
         popupAsignatura.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText abreviatura = popupAsignatura.findViewById(R.id.abreviatura_EditText);
-        EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_EditText);
-        spinerNombres = popupAsignatura.findViewById(R.id.spinner);
+        EditText abreviatura = popupAsignatura.findViewById(R.id.abreviaturaAsignatura_editText);
+        EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_editText);
+        TextView seleccion = popupAsignatura.findViewById(R.id.seleccionActualAsignatura_textView);
+        TextView seleccionDocente = popupAsignatura.findViewById(R.id.docenteSeleccionado_textView);
+        spinerNombres = popupAsignatura.findViewById(R.id.spinner10);
+        spinnerAsignaturas = popupAsignatura.findViewById(R.id.spinner6);
+
+        Button emptyAsignatura_button = popupAsignatura.findViewById(R.id.emptyAsignatura_button);
+        Button removeAsignatura_button = popupAsignatura.findViewById(R.id.removeAsignatura_button);
         Button addAsignatura_button = popupAsignatura.findViewById(R.id.addAsignatura_button);
+
         new seleccionarDb(0).execute();
+        new seleccionarDb(1).execute();
         popupAsignatura.show();
+
+        spinnerAsignaturas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                abreviatura.setText(listaAsignaturas.get(position).getAbreviatura());
+                nombre.setText(listaAsignaturas.get(position).getNombreAsignatura());
+
+
+                String docenteSeleccionado = listaAsignaturas.get(position).getDocente1();
+
+                int i;
+                Log.d("Size: ",listaDocentes.size()+"");
+                for(i=0; i<listaDocentes.size(); i++){
+                    Log.d("Comparar esto: ", docenteSeleccionado);
+                    Log.d("Con esto: ", listaDocentes.get(i).getCorreo_EHU());
+                    if (docenteSeleccionado.equals(listaDocentes.get(i).getCorreo_EHU())){
+                        Log.d("LA I: ",i+"");
+                        break;
+                    }
+                }
+                Log.d("LA I 2: ",i+"");
+                spinerNombres.setSelection(i);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        emptyAsignatura_button.setOnClickListener(v -> {
+            abreviatura.setText("");
+            nombre.setText("");
+            seleccion.setText(R.string.nuevaAsignatura);
+            seleccionDocente.setText(R.string.docenteNoSeleccionado);
+        });
+
+        removeAsignatura_button.setOnClickListener(v -> {
+            String asig_idS = String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID());
+            String sentencia = "DELETE FROM asignatura WHERE asig_id=" + asig_idS + ";";
+            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            abreviatura.setText("");
+            nombre.setText("");
+            new seleccionarDb(0).execute();
+            new seleccionarDb(1).execute();
+        });
 
         addAsignatura_button.setOnClickListener(v -> {
             String abreviaturaS = abreviatura.getText().toString();
             String nombreS = nombre.getText().toString();
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
-
             new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
+            new seleccionarDb(0).execute();
+            new seleccionarDb(1).execute();
         });
 
     }
@@ -146,15 +203,59 @@ public class Options extends AppCompatActivity {
 
         EditText horaInicioTutoria = popupTutorias.findViewById(R.id.horaInicioTutoria_editTextTime);
         EditText horaFinTutoria = popupTutorias.findViewById(R.id.horaFinTutoria_editTextTime);
+        TextView seleccion = popupTutorias.findViewById(R.id.seleccionActualTutoria_textView);
+        TextView seleccionDocente = popupTutorias.findViewById(R.id.docenteSeleccionado_textView);
+
         spinerNombres = popupTutorias.findViewById(R.id.spinner);
+        spinnerTutorias = popupTutorias.findViewById(R.id.spinner6);
         Spinner spinnerDias = popupTutorias.findViewById(R.id.spinner2);
-        Button addTutorias_button = popupTutorias.findViewById(R.id.addTutoria_button);
+        Button addTutoria_button = popupTutorias.findViewById(R.id.addTutoria_button);
+        Button emptyTutoria_button = popupTutorias.findViewById(R.id.emptyTutoria_button);
+        Button removeTutoria_button = popupTutorias.findViewById(R.id.removeTutoria_button);
+
 
         cargarSpinnerDias(spinnerDias);
         new seleccionarDb(0).execute();
+        new seleccionarDb(3).execute();
         popupTutorias.show();
 
-        addTutorias_button.setOnClickListener(v -> {
+        spinnerTutorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
+                horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
+
+                seleccionDocente.setText(listaTutorias.get(position).getHoraInicio());
+                seleccion.setText(listaTutorias.get(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        emptyTutoria_button.setOnClickListener(v -> {
+            horaInicioTutoria.setText("");
+            horaFinTutoria.setText("");
+            seleccion.setText(R.string.nuevaClase);
+        });
+
+        removeTutoria_button.setOnClickListener(v -> {
+            String horaInicio = horaInicioTutoria.getText().toString();
+            String horaFin = horaFinTutoria.getText().toString();
+            String profesorS = listaAsignaturas.get(spinerNombres.getSelectedItemPosition()).getDocente1();
+            String diaS = spinnerDias.getSelectedItem().toString();
+
+            String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
+            Log.d("SENTENCIA: ", sentencia);
+            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            horaInicioTutoria.setText("");
+            horaFinTutoria.setText("");
+            new seleccionarDb(0).execute();
+            new seleccionarDb(3).execute();
+        });
+
+        addTutoria_button.setOnClickListener(v -> {
             String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
             String horaFinTutoriaS = horaFinTutoria.getText().toString();
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
@@ -209,6 +310,13 @@ public class Options extends AppCompatActivity {
         spinerNombres.setAdapter(docentesAdapter);
     }
 
+    private void cargarSpinnerTutorias() {
+        ArrayAdapter<Tutoria> tutoriaAdapter = new ArrayAdapter<>(popupTutorias.getContext(), android.R.layout.simple_spinner_item, listaTutorias);
+        tutoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tutoriaAdapter.notifyDataSetChanged();
+        spinnerTutorias.setAdapter(tutoriaAdapter);
+    }
+
 
     class seleccionarDb extends AsyncTask<String,String,String> {
         private final int tabla;
@@ -237,15 +345,16 @@ public class Options extends AppCompatActivity {
                     });
                 }
             } else if(tabla == 2){
-                if(businessLogic.obtenerAsignaturas()){
+                if(businessLogic.obtenerClases()){
                     runOnUiThread(() -> {
                         listaClases = businessLogic.getListaClases();
                     });
                 }
             } else if(tabla == 3){
-                if(businessLogic.obtenerAsignaturas()){
+                if(businessLogic.obtenerTutorias()){
                     runOnUiThread(() -> {
                         listaTutorias = businessLogic.getListaTutorias();
+                        cargarSpinnerTutorias();
                     });
                 }
             }

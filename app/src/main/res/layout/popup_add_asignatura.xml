@@ -8,125 +8,168 @@
     android:background="@color/black"
     >
 
+    <LinearLayout
+    android:layout_width="334dp"
+    android:layout_height="334dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="70dp"
-        android:layout_height="19dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="265dp"
-        android:layout_marginRight="265dp"
-        android:layout_marginBottom="317dp"
-        android:text="Abreviatura"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/abreviatura_EditText"
-        android:layout_width="125dp"
-        android:layout_height="37dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="212dp"
-        android:layout_marginRight="212dp"
-        android:layout_marginBottom="275dp"
-        android:ems="10"
-        android:hint="Siglas asignatura"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textSize="12sp" />
+            <TextView
+                android:id="@+id/seleccionAsignatura_textView"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_weight="1"
+                android:text="@string/seleccion_actual" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/seleccionActualAsignatura_textView"
+                android:layout_width="95dp"
+                android:layout_height="40dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="277dp"
-        android:layout_marginRight="277dp"
-        android:layout_marginBottom="248dp"
-        android:text="Nombre"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/nombreAsignatura_EditText"
-        android:layout_width="202dp"
+        <TextView
+            android:id="@+id/tituloAbreviaturaAsignatura_textView"
+            android:layout_width="51dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/abreviaturaAsignatura" />
+
+        <TextView
+            android:id="@+id/tituloNombreAsignatura_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nombreAsignatura" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/abreviaturaAsignatura_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/abreviaturaAsignaturaHint"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/nombreAsignatura_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/nombreAsignaturaHint"
+            android:inputType="textPersonName"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="135dp"
-        android:layout_marginRight="135dp"
-        android:layout_marginBottom="204dp"
-        android:ems="10"
-        android:hint="Nombre asignatura"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textSize="12sp" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tituloListaDocentesAsignatura_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/listaDocentes" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="316dp"
-        android:text="Profesor"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/addAsignatura_button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="122dp"
-        android:layout_marginRight="122dp"
-        android:layout_marginBottom="141dp"
-        android:text="Guardar" />
+            <Spinner
+                android:id="@+id/spinner10"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="189dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="446dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/listaAsignaturas" />
+
+            <Spinner
+                android:id="@+id/spinner6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/emptyAsignatura_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_button"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/removeAsignatura_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/remove_button" />
+
+            <Button
+                android:id="@+id/addAsignatura_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_button" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
