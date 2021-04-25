@@ -247,7 +247,19 @@ public class BusinessLogic {
                 break;
             }
         }
-        Log.d("LA I: ", i+"");
+        return i;
+    }
+
+    public int asignaturaSpinnerPosition(String asignaturaSeleccionado, List<Asignatura> listaAsignaturas) {
+        int i;
+        for(i=0; i<listaAsignaturas.size(); i++){
+            Log.d("Comparar esto: ", asignaturaSeleccionado+"");
+            Log.d("Con esto: ", listaAsignaturas.get(i).getAsig_ID()+"");
+            if (asignaturaSeleccionado.equals(String.valueOf(listaAsignaturas.get(i).getAsig_ID()))){
+                Log.d("IGUAL: ", asignaturaSeleccionado+"");
+                break;
+            }
+        }
         return i;
     }
 }

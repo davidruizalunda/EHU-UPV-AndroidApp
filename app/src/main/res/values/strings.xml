@@ -54,6 +54,7 @@
 
     <!-- Clase -->
 
+    <string name="donde">Donde: </string>
     <string name="nuevaClase">Nueva clase</string>
 
 </resources>

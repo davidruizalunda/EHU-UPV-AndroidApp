@@ -60,6 +60,6 @@ public class Clase {
     @NonNull
     @Override
     public String toString() {
-        return super.toString();
+        return horaInicio + "-" + horaFin;
     }
 }

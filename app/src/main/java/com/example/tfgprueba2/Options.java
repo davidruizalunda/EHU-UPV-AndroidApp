@@ -232,7 +232,7 @@ public class Options extends AppCompatActivity {
         emptyTutoria_button.setOnClickListener(v -> {
             horaInicioTutoria.setText("");
             horaFinTutoria.setText("");
-            seleccion.setText(R.string.nuevaClase);
+            seleccion.setText(R.string.nuevaTutoria);
         });
 
         removeTutoria_button.setOnClickListener(v -> {
@@ -267,13 +267,68 @@ public class Options extends AppCompatActivity {
 
         EditText horaInicioClase = popupClase.findViewById(R.id.horaInicioClase_editTextTime);
         EditText horaFinClase = popupClase.findViewById(R.id.horaFinClase_editTextTime);
-        EditText aula = popupClase.findViewById(R.id.aula_editTextText);
+        EditText aula = popupClase.findViewById(R.id.dondeClase_editText);
+        TextView seleccion = popupClase.findViewById(R.id.seleccionActualClase_textView);
+
         Spinner spinnerDias = popupClase.findViewById(R.id.spinner3);
-        spinnerAsignaturas = popupClase.findViewById(R.id.spinner4);
+        spinnerAsignaturas = popupClase.findViewById(R.id.spinner11);
+        spinnerClases = popupClase.findViewById(R.id.spinnerlistaClasesClase);
+
+        Button emptyClase_button = popupClase.findViewById(R.id.emptyClase_button);
+        Button removeClase_button = popupClase.findViewById(R.id.removeClase_button);
         Button addClase_button = popupClase.findViewById(R.id.addClase_button);
+
+
         cargarSpinnerDias(spinnerDias);
         new seleccionarDb(1).execute();
+        new seleccionarDb(2).execute();
         popupClase.show();
+
+        spinnerClases.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                horaInicioClase.setText(listaClases.get(position).getHoraInicio());
+                horaFinClase.setText(listaClases.get(position).getHoraFin());
+                aula.setText(listaClases.get(position).getAula());
+
+                BusinessLogic businessLogic = new BusinessLogic();
+
+                String diaSeleccionado = listaClases.get(position).getDia();
+                spinnerDias.setSelection(businessLogic.findDiaPosition(diaSeleccionado, dias));
+
+                String asignaturaSeleccionado = listaClases.get(position).getAsig_id();
+                spinnerAsignaturas.setSelection(businessLogic.asignaturaSpinnerPosition(asignaturaSeleccionado, listaAsignaturas));
+
+                seleccion.setText(listaClases.get(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        emptyClase_button.setOnClickListener(v -> {
+            horaInicioClase.setText("");
+            horaFinClase.setText("");
+            aula.setText("");
+            seleccion.setText(R.string.nuevaClase);
+        });
+
+        removeClase_button.setOnClickListener(v -> {
+            String horaInicio = horaInicioClase.getText().toString();
+            String horaFin = horaFinClase.getText().toString();
+            String aulaS = aula.getText().toString();
+            int asig_idS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID();
+
+            String sentencia = "DELETE FROM clase WHERE horaInicio='" + horaInicio + "' AND aula ='" + aulaS + "'AND asig_id=" + asig_idS + ";";
+            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            horaInicioClase.setText("");
+            horaFinClase.setText("");
+            aula.setText("");
+            new seleccionarDb(1).execute();
+            new seleccionarDb(2).execute();
+        });
+
         addClase_button.setOnClickListener(v -> {
             String horaInicioClaseS = horaInicioClase.getText().toString();
             String horaFinClaseS = horaFinClase.getText().toString();
@@ -281,6 +336,8 @@ public class Options extends AppCompatActivity {
             String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID() + "";
             String diaS = spinnerDias.getSelectedItem().toString();
             new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS,asignaturaS);
+            new seleccionarDb(1).execute();
+            new seleccionarDb(2).execute();
         });
     }
 
@@ -311,6 +368,13 @@ public class Options extends AppCompatActivity {
         tutoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tutoriaAdapter.notifyDataSetChanged();
         spinnerTutorias.setAdapter(tutoriaAdapter);
+    }
+
+    private void cargarSpinnerClases() {
+        ArrayAdapter<Clase> claseAdapter = new ArrayAdapter<>(popupClase.getContext(), android.R.layout.simple_spinner_item, listaClases);
+        claseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        claseAdapter.notifyDataSetChanged();
+        spinnerClases.setAdapter(claseAdapter);
     }
 
 
@@ -344,6 +408,7 @@ public class Options extends AppCompatActivity {
                 if(businessLogic.obtenerClases()){
                     runOnUiThread(() -> {
                         listaClases = businessLogic.getListaClases();
+                        cargarSpinnerClases();
                     });
                 }
             } else if(tabla == 3){
