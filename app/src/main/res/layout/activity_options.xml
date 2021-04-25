@@ -7,8 +7,8 @@
     tools:context=".Options">
 
     <LinearLayout
-        android:layout_width="417dp"
-        android:layout_height="276dp"
+        android:layout_width="412dp"
+        android:layout_height="155dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,51 +56,6 @@
                 android:layout_weight="1"
                 android:onClick="onAddClaseButtonClick"
                 android:text="Añadir clase" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="21dp"
-            android:orientation="horizontal"></LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/eliminarDocente_button"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Eliminar Docente" />
-
-            <Button
-                android:id="@+id/eliminarAsignatura_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ELIMINAR ASIGNATURA" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/eliminarTutoria_button"
-                android:layout_width="157dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ELIMINAR TUTORIA" />
-
-            <Button
-                android:id="@+id/eliminarClase_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ELIMINAR CLASE" />
         </LinearLayout>
 
     </LinearLayout>

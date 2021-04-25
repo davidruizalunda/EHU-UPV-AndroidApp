@@ -32,6 +32,7 @@ import javax.mail.Store;
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
+    private static String ldap, password;
 
     public boolean login(String ldap, String password) {
         try {
@@ -187,6 +188,8 @@ public class DataAccess {
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
             }else if(tabla==3){//Insertar en Tutoria
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTutoria.php";
+            }else if(tabla==4){//Insertar en Usuario
+                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarUsuario.php";
             }else{
                 insertar_url = "";
             }
@@ -252,7 +255,15 @@ public class DataAccess {
                             URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
 
                 }
-                else{
+                else if(tabla==4) {
+
+                    String asig_IDS = strings[0];
+                    Log.d("Isertando usuario: ", asig_IDS);
+                    data =
+                            URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode("877955", "UTF-8") + "&" +
+                            URLEncoder.encode("asig_ID", "UTF-8") + "=" + URLEncoder.encode(asig_IDS, "UTF-8");
+
+                }else{
                     data = "";
                 }
 

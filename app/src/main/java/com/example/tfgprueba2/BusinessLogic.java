@@ -1,5 +1,6 @@
 package com.example.tfgprueba2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -261,5 +262,10 @@ public class BusinessLogic {
             }
         }
         return i;
+    }
+
+    public void insertIntoUsuario(Activity activity, String asig_ID) {
+        DataAccess dataAccess = new DataAccess();
+        new DataAccess.insertarDb(activity, 4).execute(asig_ID);
     }
 }

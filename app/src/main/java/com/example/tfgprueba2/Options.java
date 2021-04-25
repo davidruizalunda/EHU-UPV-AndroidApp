@@ -1,3 +1,4 @@
+
 package com.example.tfgprueba2;
 
 import android.app.Dialog;
@@ -28,8 +29,7 @@ public class Options extends AppCompatActivity {
     private List<Asignatura> listaAsignaturas;
     private List<Clase> listaClases;
     private List<Tutoria> listaTutorias;
-    private String[] dias = {"Lunes","Martes", "Miercoles", "Jueves", "Viernes"};
-
+    private String[] dias ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,15 @@ public class Options extends AppCompatActivity {
         popupAsignatura = new Dialog(this);
         popupTutorias = new Dialog(this);
         popupClase = new Dialog(this);
+
+        dias = new String[]{
+                this.getResources().getString(R.string.lunes),
+                this.getResources().getString(R.string.martes),
+                this.getResources().getString(R.string.miercoles),
+                this.getResources().getString(R.string.jueves),
+                this.getResources().getString(R.string.viernes)
+        };
+
     }
 
     public void onAddDocenteButtonClick(View view){
@@ -185,82 +194,6 @@ public class Options extends AppCompatActivity {
 
     }
 
-    public void onAddTutoriasButtonClick(View view){
-        popupTutorias.setContentView(R.layout.popup_add_tutoria);
-        popupTutorias.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        EditText horaInicioTutoria = popupTutorias.findViewById(R.id.horaInicioTutoria_editTextTime);
-        EditText horaFinTutoria = popupTutorias.findViewById(R.id.horaFinTutoria_editTextTime);
-        TextView seleccion = popupTutorias.findViewById(R.id.seleccionActualTutoria_textView);
-
-        spinerNombres = popupTutorias.findViewById(R.id.spinner);
-        spinnerTutorias = popupTutorias.findViewById(R.id.spinner6);
-        Spinner spinnerDias = popupTutorias.findViewById(R.id.spinner2);
-
-        Button addTutoria_button = popupTutorias.findViewById(R.id.addTutoria_button);
-        Button emptyTutoria_button = popupTutorias.findViewById(R.id.emptyTutoria_button);
-        Button removeTutoria_button = popupTutorias.findViewById(R.id.removeTutoria_button);
-
-
-        cargarSpinnerDias(spinnerDias);
-        new seleccionarDb(0).execute();
-        new seleccionarDb(3).execute();
-        popupTutorias.show();
-
-        spinnerTutorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
-                horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
-
-                BusinessLogic businessLogic = new BusinessLogic();
-
-                String diaSeleccionado = listaTutorias.get(position).getDia();
-                spinnerDias.setSelection(businessLogic.findDiaPosition(diaSeleccionado, dias));
-
-                String docenteSeleccionado = listaTutorias.get(position).getProfesor();
-                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
-
-                seleccion.setText(listaTutorias.get(position).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        emptyTutoria_button.setOnClickListener(v -> {
-            horaInicioTutoria.setText("");
-            horaFinTutoria.setText("");
-            seleccion.setText(R.string.nuevaTutoria);
-        });
-
-        removeTutoria_button.setOnClickListener(v -> {
-            String horaInicio = horaInicioTutoria.getText().toString();
-            String horaFin = horaFinTutoria.getText().toString();
-            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
-            String diaS = spinnerDias.getSelectedItem().toString();
-
-            String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
-            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
-            horaInicioTutoria.setText("");
-            horaFinTutoria.setText("");
-            new seleccionarDb(0).execute();
-            new seleccionarDb(3).execute();
-        });
-
-        addTutoria_button.setOnClickListener(v -> {
-            String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
-            String horaFinTutoriaS = horaFinTutoria.getText().toString();
-            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
-            String diaS = spinnerDias.getSelectedItem().toString();
-            new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
-            new seleccionarDb(0).execute();
-            new seleccionarDb(3).execute();
-        });
-
-    }
-
     public void onAddClaseButtonClick(View view){
         popupClase.setContentView(R.layout.popup_add_clase);
         popupClase.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -278,7 +211,6 @@ public class Options extends AppCompatActivity {
         Button removeClase_button = popupClase.findViewById(R.id.removeClase_button);
         Button addClase_button = popupClase.findViewById(R.id.addClase_button);
 
-
         cargarSpinnerDias(spinnerDias);
         new seleccionarDb(1).execute();
         new seleccionarDb(2).execute();
@@ -294,7 +226,7 @@ public class Options extends AppCompatActivity {
                 BusinessLogic businessLogic = new BusinessLogic();
 
                 String diaSeleccionado = listaClases.get(position).getDia();
-                spinnerDias.setSelection(businessLogic.findDiaPosition(diaSeleccionado, dias));
+                spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
 
                 String asignaturaSeleccionado = listaClases.get(position).getAsig_id();
                 spinnerAsignaturas.setSelection(businessLogic.asignaturaSpinnerPosition(asignaturaSeleccionado, listaAsignaturas));
@@ -334,13 +266,88 @@ public class Options extends AppCompatActivity {
             String horaFinClaseS = horaFinClase.getText().toString();
             String aulaS = aula.getText().toString();
             String asignaturaS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID() + "";
-            String diaS = spinnerDias.getSelectedItem().toString();
+            String diaS = String.valueOf(spinnerDias.getSelectedItemPosition());
             new DataAccess.insertarDb(Options.this, 2).execute(horaInicioClaseS,horaFinClaseS,aulaS,diaS,asignaturaS);
             new seleccionarDb(1).execute();
             new seleccionarDb(2).execute();
         });
     }
 
+    public void onAddTutoriasButtonClick(View view){
+        popupTutorias.setContentView(R.layout.popup_add_tutoria);
+        popupTutorias.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText horaInicioTutoria = popupTutorias.findViewById(R.id.horaInicioTutoria_editTextTime);
+        EditText horaFinTutoria = popupTutorias.findViewById(R.id.horaFinTutoria_editTextTime);
+        TextView seleccion = popupTutorias.findViewById(R.id.seleccionActualTutoria_textView);
+
+        spinerNombres = popupTutorias.findViewById(R.id.spinner);
+        spinnerTutorias = popupTutorias.findViewById(R.id.spinner6);
+        Spinner spinnerDias = popupTutorias.findViewById(R.id.spinner2);
+
+        Button addTutoria_button = popupTutorias.findViewById(R.id.addTutoria_button);
+        Button emptyTutoria_button = popupTutorias.findViewById(R.id.emptyTutoria_button);
+        Button removeTutoria_button = popupTutorias.findViewById(R.id.removeTutoria_button);
+
+
+        cargarSpinnerDias(spinnerDias);
+        new seleccionarDb(0).execute();
+        new seleccionarDb(3).execute();
+        popupTutorias.show();
+
+        spinnerTutorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
+                horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
+
+                BusinessLogic businessLogic = new BusinessLogic();
+
+                String diaSeleccionado = listaTutorias.get(position).getDia();
+                spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
+
+                String docenteSeleccionado = listaTutorias.get(position).getProfesor();
+                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
+
+                seleccion.setText(listaTutorias.get(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        emptyTutoria_button.setOnClickListener(v -> {
+            horaInicioTutoria.setText("");
+            horaFinTutoria.setText("");
+            seleccion.setText(R.string.nuevaTutoria);
+        });
+
+        removeTutoria_button.setOnClickListener(v -> {
+            String horaInicio = horaInicioTutoria.getText().toString();
+            String horaFin = horaFinTutoria.getText().toString();
+            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
+            String diaS = String.valueOf(spinnerDias.getSelectedItemPosition());
+
+            String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
+            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            horaInicioTutoria.setText("");
+            horaFinTutoria.setText("");
+            new seleccionarDb(0).execute();
+            new seleccionarDb(3).execute();
+        });
+
+        addTutoria_button.setOnClickListener(v -> {
+            String horaInicioTutoriaS = horaInicioTutoria.getText().toString();
+            String horaFinTutoriaS = horaFinTutoria.getText().toString();
+            String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
+            String diaS = String.valueOf(spinnerDias.getSelectedItemPosition());
+            new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
+            new seleccionarDb(0).execute();
+            new seleccionarDb(3).execute();
+        });
+
+    }
 
     private void cargarSpinnerDias(Spinner spinnerDias) {
 

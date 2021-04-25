@@ -125,8 +125,13 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onOptions(View view){
         terminado = true;
-        Log.d("Estas", "vivo");
         Intent home = new Intent(this, Options.class);
+        startActivity(home);
+    }
+
+    public void onPreferences(View view){
+        terminado = true;
+        Intent home = new Intent(this, PreferencesActivity.class);
         startActivity(home);
     }
 
