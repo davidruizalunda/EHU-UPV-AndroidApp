@@ -4,10 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,14 +11,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PreferencesActivity extends AppCompatActivity {
     private Spinner spinnerAsignaturas;
-    private List<Asignatura> listaAsignaturas;
+    private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +30,26 @@ public class PreferencesActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new seleccionarDb(this).execute();
+        new seleccionarDb(this, 1, false).execute();
+        new seleccionarDb(this, 1, true).execute();
     }
 
     public void onAddAsignaturaButton(View view) {
-        BusinessLogic businessLogic = new BusinessLogic();
-        businessLogic.insertIntoUsuario(PreferencesActivity.this , String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID()));
+        LogicForAdmin logicForAdmin = new LogicForAdmin();
+        logicForAdmin.insertIntoUsuario(PreferencesActivity.this , String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID()));
+        new seleccionarDb(this, 1, false).execute();
+        new seleccionarDb(this, 1, true).execute();
     }
 
-    public void cargarListViewAsignaturas(Context context){
+    public void cargarListViewAsignaturas(List<Asignatura> listaAsignaturasUsuario){
 
-        MySubjectsListAdapter subjectsAdapter=new MySubjectsListAdapter(this, listaAsignaturas);
+        MySubjectsListAdapter subjectsAdapter=new MySubjectsListAdapter(this, listaAsignaturasUsuario);
         ListView subjectListView = findViewById(R.id.asignaturasListView);
         subjectListView.setAdapter(subjectsAdapter);
-
-
     }
 
-    private void cargarSpinnerAsignaturas(Context context) {
-        ArrayAdapter<Asignatura> asignaturasAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaAsignaturas);
+    private void cargarSpinnerAsignaturas() {
+        ArrayAdapter<Asignatura> asignaturasAdapter = new ArrayAdapter<>(this , android.R.layout.simple_spinner_item, listaAsignaturas);
         asignaturasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         asignaturasAdapter.notifyDataSetChanged();
         spinnerAsignaturas.setAdapter(asignaturasAdapter);
@@ -61,25 +57,48 @@ public class PreferencesActivity extends AppCompatActivity {
 
     class seleccionarDb extends AsyncTask<String,String,String> {
         private Context context;
+        private int table;
+        private boolean usuario;
 
-        public seleccionarDb(Context context) {
+        public seleccionarDb(Context context, int table, boolean usuario) {
             this.context = context;
+            this.table = table;
+            this.usuario = usuario;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
-            BusinessLogic businessLogic = new BusinessLogic();
-            if(businessLogic.obtenerAsignaturas()){
-                runOnUiThread(() -> {
-                    listaAsignaturas = businessLogic.getListaAsignaturas();
-                    cargarSpinnerAsignaturas(context);
-                    cargarListViewAsignaturas(context);
-                });
+            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            if(table == 1 && !usuario){
+                if(logicForAdmin.obtenerAsignaturas(false)){
+                    runOnUiThread(() -> {
+                        listaAsignaturas = logicForAdmin.getListaAsignaturas();
+                        cargarSpinnerAsignaturas();
+
+                    });
+                }
+            }else if(table == 1 && usuario){
+                if(logicForAdmin.obtenerAsignaturas(true)){
+                    runOnUiThread(() -> {
+                        listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
+                        cargarListViewAsignaturas(listaAsignaturasUsuario);
+                    });
+                }
+            }else if(table == 2 && usuario){
+                if(logicForAdmin.obtenerClases(true)){
+                    runOnUiThread(() -> {
+                        listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
+                        cargarListViewAsignaturas(listaAsignaturasUsuario);
+                    });
+                }
             }
+
             return null;
         }
 
     }
+
+
 }

@@ -126,7 +126,7 @@ public class DataAccess {
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public String seleccionarTabla(int tabla){
+    public String seleccionarTabla(int tabla, Boolean usuario){
         String sele_url;
         if (tabla == 0) {
             sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
@@ -146,9 +146,22 @@ public class DataAccess {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
+
+            if(usuario){
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+                String data;
+                data = URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode("877955", "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+            }
+
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             StringBuilder stringBuilder = new StringBuilder();
+
             String line;
             while ((line = bufferedReader.readLine())!=null){
                 stringBuilder.append(line);
@@ -158,6 +171,7 @@ public class DataAccess {
             inputStream.close();
             httpURLConnection.disconnect();
             Log.d("RESULTADO: ", resultado);
+
             return resultado;
 
         }catch (Exception e){
@@ -247,12 +261,17 @@ public class DataAccess {
                     String horaFinS = strings[1];
                     String profesorS = strings[2];
                     String diaS = strings[3];
+                    Log.d("horaInicioS2: ",horaInicioS);
+                    Log.d("horaFinS2: ",horaFinS);
+                    Log.d("profesorS2: ",profesorS);
+                    Log.d("diaS2: ",diaS);
 
                     data =
                             URLEncoder.encode("horaInicio", "UTF-8") + "=" + URLEncoder.encode(horaInicioS, "UTF-8") + "&" +
                             URLEncoder.encode("horaFin", "UTF-8") + "=" + URLEncoder.encode(horaFinS, "UTF-8") + "&" +
                             URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8") + "&" +
                             URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
+                    Log.d("DATA: ", data);
 
                 }
                 else if(tabla==4) {

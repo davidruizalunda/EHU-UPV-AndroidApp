@@ -156,8 +156,8 @@ public class Options extends AppCompatActivity {
 
 
                 String docenteSeleccionado = listaAsignaturas.get(position).getDocente1();
-                BusinessLogic businessLogic = new BusinessLogic();
-                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
+                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                spinerNombres.setSelection(logicForAdmin.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
                 seleccion.setText(spinnerAsignaturas.getSelectedItem().toString());
 
             }
@@ -223,13 +223,13 @@ public class Options extends AppCompatActivity {
                 horaFinClase.setText(listaClases.get(position).getHoraFin());
                 aula.setText(listaClases.get(position).getAula());
 
-                BusinessLogic businessLogic = new BusinessLogic();
+                LogicForAdmin logicForAdmin = new LogicForAdmin();
 
                 String diaSeleccionado = listaClases.get(position).getDia();
                 spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
 
                 String asignaturaSeleccionado = listaClases.get(position).getAsig_id();
-                spinnerAsignaturas.setSelection(businessLogic.asignaturaSpinnerPosition(asignaturaSeleccionado, listaAsignaturas));
+                spinnerAsignaturas.setSelection(logicForAdmin.asignaturaSpinnerPosition(asignaturaSeleccionado, listaAsignaturas));
 
                 seleccion.setText(listaClases.get(position).toString());
             }
@@ -301,13 +301,13 @@ public class Options extends AppCompatActivity {
                 horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
                 horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
 
-                BusinessLogic businessLogic = new BusinessLogic();
+                LogicForAdmin logicForAdmin = new LogicForAdmin();
 
                 String diaSeleccionado = listaTutorias.get(position).getDia();
                 spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
 
                 String docenteSeleccionado = listaTutorias.get(position).getProfesor();
-                spinerNombres.setSelection(businessLogic.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
+                spinerNombres.setSelection(logicForAdmin.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
 
                 seleccion.setText(listaTutorias.get(position).toString());
             }
@@ -342,6 +342,10 @@ public class Options extends AppCompatActivity {
             String horaFinTutoriaS = horaFinTutoria.getText().toString();
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
             String diaS = String.valueOf(spinnerDias.getSelectedItemPosition());
+            Log.d("horaInicioTutoria: ", horaInicioTutoriaS);
+            Log.d("horaFinTutoriaS: ", horaFinTutoriaS);
+            Log.d("profesorS: ", profesorS);
+            Log.d("diaS: ", diaS);
             new DataAccess.insertarDb(Options.this, 3).execute(horaInicioTutoriaS,horaFinTutoriaS,profesorS,diaS);
             new seleccionarDb(0).execute();
             new seleccionarDb(3).execute();
@@ -396,32 +400,32 @@ public class Options extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
-            BusinessLogic businessLogic = new BusinessLogic();
+            LogicForAdmin logicForAdmin = new LogicForAdmin();
             if (tabla == 0){
-                if(businessLogic.obtenerDocentes()){
+                if(logicForAdmin.obtenerDocentes()){
                     runOnUiThread(() -> {
-                        listaDocentes = businessLogic.getListaDocentes();
+                        listaDocentes = logicForAdmin.getListaDocentes();
                         cargarSpinnerDocentes();
                     });
                 }
             } else if(tabla == 1){
-                if(businessLogic.obtenerAsignaturas()){
+                if(logicForAdmin.obtenerAsignaturas(false)){
                     runOnUiThread(() -> {
-                        listaAsignaturas = businessLogic.getListaAsignaturas();
+                        listaAsignaturas = logicForAdmin.getListaAsignaturas();
                         cargarSpinnerAsignaturas();
                     });
                 }
             } else if(tabla == 2){
-                if(businessLogic.obtenerClases()){
+                if(logicForAdmin.obtenerClases(true)){
                     runOnUiThread(() -> {
-                        listaClases = businessLogic.getListaClases();
+                        listaClases = logicForAdmin.getListaClases();
                         cargarSpinnerClases();
                     });
                 }
             } else if(tabla == 3){
-                if(businessLogic.obtenerTutorias()){
+                if(logicForAdmin.obtenerTutorias()){
                     runOnUiThread(() -> {
-                        listaTutorias = businessLogic.getListaTutorias();
+                        listaTutorias = logicForAdmin.getListaTutorias();
                         cargarSpinnerTutorias();
                     });
                 }

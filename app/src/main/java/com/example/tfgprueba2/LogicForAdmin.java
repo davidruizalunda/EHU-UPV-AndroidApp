@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
 
@@ -22,7 +21,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-public class BusinessLogic {
+public class LogicForAdmin {
     private final List<Docente> listaDocentes = new ArrayList<>();
     private final List<Asignatura> listaAsignaturas = new ArrayList<>();
     private final List<Clase> listaClases = new ArrayList<>();
@@ -115,7 +114,7 @@ public class BusinessLogic {
     public boolean obtenerDocentes(){
         listaDocentes.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(0);
+        String data=dataAccess.seleccionarTabla(0, false);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
@@ -141,10 +140,10 @@ public class BusinessLogic {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean obtenerAsignaturas(){
+    public boolean obtenerAsignaturas(Boolean usuario){
         listaAsignaturas.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(1);
+        String data=dataAccess.seleccionarTabla(1, usuario);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
@@ -171,10 +170,10 @@ public class BusinessLogic {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean obtenerClases(){
+    public boolean obtenerClases(boolean usuario){
         listaClases.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(2);
+        String data=dataAccess.seleccionarTabla(2, usuario);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
@@ -204,7 +203,7 @@ public class BusinessLogic {
     public boolean obtenerTutorias(){
         listaTutorias.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(3);
+        String data=dataAccess.seleccionarTabla(3, false);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
@@ -229,7 +228,6 @@ public class BusinessLogic {
         }
         return false;
     }
-
 
     public int finDocenteSpinnerPosition(String docenteSeleccionado, List<Docente> listaDocentesCargada) {
         int i;
@@ -265,7 +263,6 @@ public class BusinessLogic {
     }
 
     public void insertIntoUsuario(Activity activity, String asig_ID) {
-        DataAccess dataAccess = new DataAccess();
         new DataAccess.insertarDb(activity, 4).execute(asig_ID);
     }
 }

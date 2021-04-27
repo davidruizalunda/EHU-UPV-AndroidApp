@@ -64,9 +64,9 @@ public class HomeActivity extends AppCompatActivity {
             lectorRSS.execute();
 
             try {
-                BusinessLogic businessLogic = new BusinessLogic();
-                Correow[] correows = businessLogic.getCorreows(10);
-                ArrayList<News> news = businessLogic.getEHUNews(getApplicationContext());
+                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                Correow[] correows = logicForAdmin.getCorreows(10);
+                ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
                 h.post(() -> {
                     updateAdaptersCorreowsNews(correows, news);
                 });
