@@ -43,9 +43,9 @@ public class PreferencesActivity extends AppCompatActivity {
 
     public void cargarListViewAsignaturas(List<Asignatura> listaAsignaturasUsuario){
 
-        MySubjectsListAdapter subjectsAdapter=new MySubjectsListAdapter(this, listaAsignaturasUsuario);
-        ListView subjectListView = findViewById(R.id.asignaturasListView);
-        subjectListView.setAdapter(subjectsAdapter);
+        //MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaAsignaturasUsuario);
+       // ListView subjectListView = findViewById(R.id.asignaturasListView);
+        //subjectListView.setAdapter(subjectsAdapter);
     }
 
     private void cargarSpinnerAsignaturas() {

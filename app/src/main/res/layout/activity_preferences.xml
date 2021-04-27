@@ -27,40 +27,6 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="205dp"
-                android:layout_height="389dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.939"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-                <TextView
-                    android:id="@+id/listaAsignaturasPreferencias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mis asignaturas:"
-                    android:textSize="24sp" />
-
-                <RelativeLayout
-                    android:layout_width="189dp"
-                    android:layout_height="349dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp">
-
-                    <ListView
-                        android:id="@+id/asignaturasListView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="187dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
