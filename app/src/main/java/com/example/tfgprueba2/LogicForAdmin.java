@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +74,7 @@ public class LogicForAdmin {
             x--;
 
         }
+        dataAccess.closeFolderCorreow();
         return correows;
     }
 
@@ -264,5 +267,10 @@ public class LogicForAdmin {
 
     public void insertIntoUsuario(Activity activity, String asig_ID) {
         new DataAccess.insertarDb(activity, 4).execute(asig_ID);
+    }
+
+    public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarAsignaturaUsuario(context, asig_idS);
     }
 }

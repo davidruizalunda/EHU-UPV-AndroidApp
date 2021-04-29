@@ -46,14 +46,11 @@ public class DataAccess {
 
             store = emailSession.getStore("imaps");
             store.connect("ikasle.ehu.eus", "877955", "0k9Hj88s0");
-            Log.d("LOGEADO", "sds");
-
             return true;
 
         }catch (AuthenticationFailedException e){
-            Log.d("Autenti", "sds");
             e.printStackTrace();
-            return false;
+           return false;
         }catch (MessagingException e) { //Investigar nested exception
             e.printStackTrace();
             return false;
@@ -66,10 +63,6 @@ public class DataAccess {
 
     public Message[] getMessages() {
         try{
-            if (emailFolder != null && emailFolder.isOpen()){
-                emailFolder.close(true);
-                Log.d("Estado: ", "Close");
-            }
             emailFolder = store.getFolder("INBOX");
             emailFolder.open(Folder.READ_ONLY);
             Log.d("Estado: ", "Open");
@@ -79,6 +72,13 @@ public class DataAccess {
         }catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void closeFolderCorreow() throws MessagingException {
+        if (emailFolder != null && emailFolder.isOpen()){
+            emailFolder.close(true);
+            Log.d("Estado: ", "Close");
         }
     }
 
@@ -178,6 +178,11 @@ public class DataAccess {
             e.printStackTrace();
             return resultado;
         }
+    }
+
+    public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
+        String sentencia = "DELETE FROM usuario WHERE asig_id=" + asig_idS + " and ldap = '" + "877955" + "';";
+        new eliminarDb(context, 0).execute(sentencia);
     }
 
     public static class insertarDb extends AsyncTask<String, Void, String> {

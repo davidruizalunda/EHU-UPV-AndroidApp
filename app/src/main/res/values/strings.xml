@@ -34,6 +34,12 @@
     <string name="sabado">Sábado</string>
     <string name="domingo">Domingo</string>
 
+    <!-- Edit Asignaturas Usuario -->
+    <string name="tusAsignaturas">Tus Asignaturas: </string>
+    <string name="escogeNueva">Escoge una nueva asignatura:</string>
+    <string name="addAsignaturaUsuario">Añadir</string>
+    <string name="removeAsignaturaUsuario">Eliminar</string>
+
     <!-- Docente -->
     <string name="nombreDocente">Nombre</string>
     <string name="nombreDocenteHint">Nombre del profesor</string>

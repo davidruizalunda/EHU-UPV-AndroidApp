@@ -4,9 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+    <Space
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_width="377dp"
+        android:layout_height="63dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -20,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="From"
-                android:textColor="#FFFFFF"
+                android:textColor="#100F0F"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -47,5 +52,10 @@
             android:text="TextView"
             android:textSize="10sp" />
     </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>

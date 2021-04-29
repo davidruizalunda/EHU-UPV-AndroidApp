@@ -21,9 +21,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
+
+import org.w3c.dom.Text;
+
 /*
 Tipo de servidor: IMAP o POP  (Mejor utiliza IMAP)
 Nombre de servidor: ikasle.ehu.eus
@@ -34,15 +39,15 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView textView5;
-    private Dialog popupCorreow, popup_edit_user_asignaturas;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
-    private final int TIEMPO = 5000;
+    private final int TIEMPO = 60000;
     private boolean terminado;
     Handler h = new Handler();
     int cont = 0;
     private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
     private List<Clase> listaClasesUsuario;
-    private Dialog popupAsignaturasUsuarios;
+    private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +56,11 @@ public class HomeActivity extends AppCompatActivity {
        // textView5 = findViewById(R.id.textView5);
         popup_edit_user_asignaturas = new Dialog(this);
         popupCorreow = new Dialog(this);
+        popupAsignaturasUsuarios = new Dialog(this);
         spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
         new seleccionarDb(this, 99, true).execute();
+        Log.d("MAP: ", asignaturasMap.size()+"");
+
     }
     @Override
     public void onStart() {
@@ -82,10 +90,23 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
                 LogicForAdmin logicForAdmin = new LogicForAdmin();
-                Correow[] correows = logicForAdmin.getCorreows(10);
                 ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
+                Log.d("NEWS: ", news.size()+"");
                 h.post(() -> {
-                    updateAdaptersCorreowsNews(correows, news);
+                    updateAdapterNews(news);
+                });
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        Thread thread2 = new Thread(() -> {
+
+            try {
+                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                Correow[] correows = logicForAdmin.getCorreows(10);
+                h.post(() -> {
+                    updateAdapterCorreows(correows);
                 });
 
             }catch (Exception e){
@@ -93,9 +114,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         thread.start();
+        thread2.start();
     }
 
-    public void updateAdaptersCorreowsNews(Correow[] correows, ArrayList<News> news){
+    public void updateAdapterCorreows(Correow[] correows){
             MyMailsListAdapter mailsAdapter=new MyMailsListAdapter(this, correows);
             ListView mailListView = findViewById(R.id.mailListView);
             mailListView.setAdapter(mailsAdapter);
@@ -116,16 +138,18 @@ public class HomeActivity extends AppCompatActivity {
 
                 popupCorreow.show();
             });
+    }
 
-            MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
-            ListView newsListView = findViewById(R.id.newsListView);
-            newsListView.setAdapter(newsAdapter);
+    public void updateAdapterNews(ArrayList<News> news){
+        MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
+        ListView newsListView = findViewById(R.id.newsListView);
+        newsListView.setAdapter(newsAdapter);
 
-            newsListView.setOnItemClickListener((parent, view, position, id) -> {
-                Uri uri = Uri.parse(news.get(position).getLink());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            });
+        newsListView.setOnItemClickListener((parent, view, position, id) -> {
+            Uri uri = Uri.parse(news.get(position).getLink());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
     }
 
     public void onAsignaturasEditButtonClick(View view){
@@ -134,9 +158,31 @@ public class HomeActivity extends AppCompatActivity {
 
         spinnerAsignaturas = popup_edit_user_asignaturas.findViewById(R.id.spinner9);
         spinnerAsignaturasUsuario = popup_edit_user_asignaturas.findViewById(R.id.spinner8);
+        Button buttonAddAsignaturaUsuario = popup_edit_user_asignaturas.findViewById(R.id.add_asignaturaUsuario_button);
+        Button buttonRemoveAsignaturaUsuario = popup_edit_user_asignaturas.findViewById(R.id.remove_asignaturaUsuario_button);
         new seleccionarDb(this, 1, false).execute();
         new seleccionarDb(this, 1, true).execute();
         popup_edit_user_asignaturas.show();
+
+        buttonAddAsignaturaUsuario.setOnClickListener(v -> {
+            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            logicForAdmin.insertIntoUsuario(HomeActivity.this , String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID()));
+            new seleccionarDb(this, 1, false).execute();
+            new seleccionarDb(this, 1, true).execute();
+            new seleccionarDb(this, 99, true).execute();
+        });
+
+        buttonRemoveAsignaturaUsuario.setOnClickListener(v -> {
+            String asig_idS = String.valueOf(listaAsignaturasUsuario.get(spinnerAsignaturasUsuario.getSelectedItemPosition()).getAsig_ID());
+            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            Log.d("ASIG ID", asig_idS);
+            logicForAdmin.eliminarAsignaturaUsuario(this, asig_idS);
+            new seleccionarDb(this, 1, false).execute();
+            new seleccionarDb(this, 1, true).execute();
+            new seleccionarDb(this, 99, true).execute();
+        });
+
+
     }
 
     public void onEgelaButtonClick(View view){
@@ -178,14 +224,36 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void cargarListViewAsignaturas(){
-        Log.d("TAM: ", listaAsignaturasUsuario.size() + "");
-        for(int i=0; i<listaAsignaturasUsuario.size(); i ++){
-            Log.d("ESTO: ", listaAsignaturasUsuario.get(i).getAbreviatura());
+        Log.d("MAP: ", asignaturasMap.size()+"");
+        for(int i=0; i<listaAsignaturasUsuario.size(); i++){
+            asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
         }
-
-        MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaClasesUsuario, listaAsignaturasUsuario);
+        Log.d("MAP: ", asignaturasMap.size()+"");
+        MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaClasesUsuario, asignaturasMap);
         ListView subjectListView = findViewById(R.id.asignaturasListView);
         subjectListView.setAdapter(subjectsAdapter);
+
+        subjectListView.setOnItemClickListener((parent, view, position, id) -> {
+            popupInfoAsignatura(listaClasesUsuario.get(position));
+        });
+    }
+
+    private void popupInfoAsignatura(Clase clase) {
+
+        popupAsignaturasUsuarios.setContentView(R.layout.popup_ver_asignaturas_usuario);
+        popupAsignaturasUsuarios.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView nombreAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.nombreAsignaturaUsuario_textView);
+        TextView horaInicioAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaInicioAsignaturaUsuario_textView);
+        TextView horaFinAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaFinAsignaturaUsuario_textView);
+        TextView dondeAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.dondeAsignaturaUsuario_textView);
+
+        nombreAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getNombreAsignatura());
+        horaInicioAsignaturaUsuario.setText(clase.getHoraInicio());
+        horaFinAsignaturaUsuario.setText(clase.getHoraFin());
+        dondeAsignaturaUsuario.setText(clase.getAula());
+        popupAsignaturasUsuarios.show();
+
     }
 
 
@@ -226,6 +294,7 @@ public class HomeActivity extends AppCompatActivity {
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
                         listaClasesUsuario = logicForAdmin.getListaClases();
                         cargarListViewAsignaturas();
+
                     });
                 }
             }

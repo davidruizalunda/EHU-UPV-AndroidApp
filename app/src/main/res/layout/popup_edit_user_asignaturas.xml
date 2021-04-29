@@ -6,7 +6,7 @@
     android:layout_gravity="center_horizontal"
     android:layout_width="350dp"
     android:layout_height="350dp"
-    android:background="@color/black"
+    android:background="@drawable/basic_layout"
     >
 
     <LinearLayout
@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tus Asignaturas" />
+                android:text="@string/tusAsignaturas"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Escoge una nueva asignatura:" />
+                android:text="@string/escogeNueva"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,18 +84,18 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/remove_asignaturaUsuario_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="@string/removeAsignaturaUsuario" />
 
             <Button
-                android:id="@+id/button12"
+                android:id="@+id/add_asignaturaUsuario_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="@string/addAsignaturaUsuario" />
         </LinearLayout>
 
     </LinearLayout>

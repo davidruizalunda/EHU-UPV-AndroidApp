@@ -4,60 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    >
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/correows_linearLayout"
+        android:layout_width="386dp"
+        android:layout_height="242dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/basic_layout"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="478dp">
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="255dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Correo"
-                android:textSize="24sp" />
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="385dp"
-                android:layout_height="214dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp">
-
-                <ListView
-                    android:id="@+id/mailListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="0dp">
-
-                </ListView>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="358dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="254dp"
-                android:layout_height="345dp"
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="366dp"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="203dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+
+            <ListView
+                android:id="@+id/mailListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -70,120 +67,204 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_marginBottom="0dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.939"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                android:background="@drawable/basic_layout2">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Noticias"
-                    android:textSize="24sp" />
+            </ListView>
 
-                <RelativeLayout
-                    android:layout_width="237dp"
-                    android:layout_height="302dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp">
+        </RelativeLayout>
 
-                    <ListView
-                        android:id="@+id/newsListView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="0dp" />
+    </LinearLayout>
 
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutAsignaturas"
-                android:layout_width="155dp"
-                android:layout_height="249dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="87dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0"
-                        android:text="Asignaturas"
-                        android:textSize="14sp" />
-
-                    <Button
-                        android:id="@+id/button11"
-                        android:layout_width="71dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:onClick="onAsignaturasEditButtonClick"
-                        android:text="EDIT"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="139dp"
-                    android:layout_height="188dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp">
-
-                    <ListView
-                        android:id="@+id/asignaturasListView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutAsignaturas"
+        android:layout_width="156dp"
+        android:layout_height="219dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/basic_layout"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correows_linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="8dp"
-                android:onClick="onEgelaButtonClick"
-                android:scrollbarThumbHorizontal="@color/white"
-                android:scrollbarThumbVertical="@color/white"
-                app:srcCompat="@drawable/logoegelamini" />
+            <Space
+                android:layout_width="14dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0" />
 
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="12dp"
-                android:onClick="onGaurButtonClick"
-                app:srcCompat="@drawable/gaurlogo" />
+            <LinearLayout
+                android:layout_width="93dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOptions"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_weight="0" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="94dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:text="Asignaturas"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="49dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/basic_button"
+                android:onClick="onAsignaturasEditButtonClick"
+                android:text="EDIT"
+                android:textSize="12sp" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="6dp" />
+
+        <RelativeLayout
+            android:layout_width="139dp"
+            android:layout_height="176dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/basic_layout2">
+
+            <ListView
+                android:id="@+id/asignaturasListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="220dp"
+        android:layout_height="280dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/basic_layout"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correows_linearLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="47dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="196dp"
+                android:layout_height="30dp"
+                android:text="Noticias"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="206dp"
+            android:layout_height="242dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+
+            <ListView
+                android:id="@+id/newsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/basic_layout2" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginBottom="44dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:onClick="onEgelaButtonClick"
+            android:scrollbarThumbHorizontal="@color/white"
+            android:scrollbarThumbVertical="@color/white"
+            app:srcCompat="@drawable/logoegelamini" />
+
+        <ImageButton
+            android:id="@+id/imageButton7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="12dp"
+            android:onClick="onGaurButtonClick"
+            app:srcCompat="@drawable/gaurlogo" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onOptions"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="153dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="6dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAsignaturas" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="153dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

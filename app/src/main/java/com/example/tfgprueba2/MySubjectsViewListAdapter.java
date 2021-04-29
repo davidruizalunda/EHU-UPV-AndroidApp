@@ -22,17 +22,14 @@ import java.util.Set;
 public class MySubjectsViewListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
+    private final Map<String, Asignatura> asignaturasMap;
     private final List<Clase> clases;
 
-    public MySubjectsViewListAdapter(Activity context, List<Clase> clases, List<Asignatura> asignaturas) {
+    public MySubjectsViewListAdapter(Activity context, List<Clase> clases, Map<String, Asignatura> asignaturasMap) {
         super(context, R.layout.mysubjectslistview, new String[clases.size()]);
         this.context = context;
-        for(int i=0; i<asignaturas.size(); i++){
-            asignaturasMap.put(String.valueOf(asignaturas.get(i).getAsig_ID()), asignaturas.get(i));
-        }
-
         this.clases = clases;
+        this.asignaturasMap = asignaturasMap;
     }
 
     public View getView(int position,View view,ViewGroup parent) {
