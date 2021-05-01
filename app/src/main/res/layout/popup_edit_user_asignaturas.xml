@@ -10,25 +10,25 @@
     >
 
     <LinearLayout
-        android:layout_width="326dp"
-        android:layout_height="175dp"
+        android:layout_width="316dp"
+        android:layout_height="327dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="37dp"
             android:orientation="horizontal">
 
             <TextView
@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/tusAsignaturas"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -49,12 +50,14 @@
                 android:id="@+id/spinner8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="38dp"
             android:orientation="horizontal">
 
             <TextView
@@ -63,12 +66,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/escogeNueva"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="173dp"
+            android:layout_height="150dp"
             android:orientation="horizontal">
 
             <Spinner

@@ -73,4 +73,7 @@
     <string name="donde">Donde: </string>
     <string name="nuevaClase">Nueva clase</string>
 
+    <string name="noticias">Noticias</string>
+    <string name="correo">Correo</string>
+    <string name="asignaturas">Asignaturas</string>
 </resources>

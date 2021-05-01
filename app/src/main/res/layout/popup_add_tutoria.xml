@@ -6,7 +6,7 @@
     android:layout_gravity="center_horizontal"
     android:layout_width="350dp"
     android:layout_height="350dp"
-    android:background="@color/black"
+    android:background="@drawable/basic_layout"
     >
 
     <LinearLayout
@@ -53,17 +53,18 @@
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="wrap_content"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/HoraInicio" />
+                android:text="@string/HoraInicio"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="164dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/listaDocentes" />
+                android:text="@string/listaDocentes"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -74,10 +75,12 @@
 
             <EditText
                 android:id="@+id/horaInicioTutoria_editTextTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="95dp"
+                android:layout_height="28dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_textview"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="@string/HoraDefault"
                 android:inputType="time"
                 android:textSize="12sp" />
@@ -97,17 +100,18 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:layout_width="111dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/HoraFin" />
+                android:text="@string/HoraFin"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="117dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/dia" />
+                android:text="@string/dia"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,10 +121,12 @@
 
             <EditText
                 android:id="@+id/horaFinTutoria_editTextTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="95dp"
+                android:layout_height="28dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_textview"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="@string/HoraDefault"
                 android:inputType="time"
                 android:textSize="12sp" />
@@ -142,11 +148,15 @@
                 android:layout_width="446dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/basic_layout2"
+                >
 
                 <TextView
                     android:id="@+id/textView23"
                     android:layout_width="match_parent"
+                    android:layout_marginLeft="3dp"
                     android:layout_height="wrap_content"
                     tools:text="@string/listaTutorias" />
 

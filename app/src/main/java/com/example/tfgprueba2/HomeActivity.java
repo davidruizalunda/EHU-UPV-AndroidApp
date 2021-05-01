@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
+    private Button editable1, editable2;
     private boolean terminado;
     Handler h = new Handler();
     int cont = 0;
@@ -53,11 +54,29 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-       // textView5 = findViewById(R.id.textView5);
+
+        editable1 = findViewById(R.id.editable1_button);
+        editable2 = findViewById(R.id.editable2_button);
+        spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
+
         popup_edit_user_asignaturas = new Dialog(this);
         popupCorreow = new Dialog(this);
         popupAsignaturasUsuarios = new Dialog(this);
-        spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
+
+        editable1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+
+        editable2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+
         new seleccionarDb(this, 99, true).execute();
         Log.d("MAP: ", asignaturasMap.size()+"");
 

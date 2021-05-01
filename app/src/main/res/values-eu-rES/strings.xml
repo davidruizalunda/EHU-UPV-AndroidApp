@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">TFGprueba2</string>
+    <string name="ldap_number">LDAP</string>
+    <string name="ldap_password">Pasahitza</string>
+    <string name="login_button">Sartu</string>
+
+    <!-- Generales -->
+
+    <string name="seleccion_actual">Uneko hautapena:</string>
+
+    <!-- Generales botones-->
+    <string name="empty_button">Vaciar campos</string>
+    <string name="remove_button">Ezabatu</string>
+    <string name="add_button">Gehitu</string>
+
+    <!-- Generales listas-->
+    <string name="listaDocentes">Irakasleen zerrenda:</string>
+    <string name="listaAsignaturas">Ikasgaien zerrenda:</string>
+    <string name="listaTutorias">Tutoretzen zerrenda:</string>
+    <string name="listaClases">Klaseen zerrenda:</string>
+
+    <!-- Generales hora-->
+    <string name="HoraDefault">00:00</string>
+    <string name="HoraInicio">Klase hasiera</string>
+    <string name="HoraFin">Klase amaiera</string>
+
+    <!-- Generales día-->
+    <string name="dia">Eguna:</string>
+    <string name="lunes">Astelehena</string>
+    <string name="martes">Asteartea</string>
+    <string name="miercoles">Asteazkena</string>
+    <string name="jueves">Osteguna</string>
+    <string name="viernes">Ostirala</string>
+    <string name="sabado">Larunbata</string>
+    <string name="domingo">Igandea</string>
+
+    <!-- Edit Asignaturas Usuario -->
+    <string name="tusAsignaturas">Zure ikasgaiak: </string>
+    <string name="escogeNueva">Ikasgai berri bat hautatu</string>
+    <string name="addAsignaturaUsuario">Erantsi</string>
+    <string name="removeAsignaturaUsuario">Ezabatu</string>
+
+    <!-- Docente -->
+    <string name="nombreDocente">Izena</string>
+    <string name="nombreDocenteHint">Irakaslearen izena</string>
+
+    <string name="apellidosDocente">Abizena</string>
+    <string name="apellidosDocenteHint">Irakaslearen abizena</string>
+
+    <string name="correoDocente">Posta</string>
+    <string name="correoDocenteHint">Irakaslearen EHU posta</string>
+
+    <string name="despachoDocente">Bulegoa</string>
+    <string name="despachoDocenteHint">Zenbaki/izena bulegoa</string>
+
+    <string name="nuevoDocente">Irakasle berria</string>
+
+    <!-- Asignatura -->
+    <string name="abreviaturaAsignatura">Laburdura</string>
+    <string name="abreviaturaAsignaturaHint">Irakaslearen izena</string>
+
+    <string name="nombreAsignatura">Izena</string>
+    <string name="nombreAsignaturaHint">Ikasgaiaren izena</string>
+
+    <string name="nuevaAsignatura">Ikasgai berria</string>
+
+    <!-- Tutoria -->
+
+    <string name="nuevaTutoria">Tutoretza berria</string>
+
+    <!-- Clase -->
+
+    <string name="donde">Non: </string>
+    <string name="nuevaClase">Klase berria</string>
+
+    <string name="noticias">Berriak</string>
+    <string name="correo">Posta</string>
+    <string name="asignaturas">Ikasgaiak</string>
+</resources>

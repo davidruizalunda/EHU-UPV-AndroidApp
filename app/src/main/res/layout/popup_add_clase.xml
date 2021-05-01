@@ -6,7 +6,7 @@
     android:layout_gravity="center_horizontal"
     android:layout_width="350dp"
     android:layout_height="350dp"
-    android:background="@color/black"
+    android:background="@drawable/basic_layout"
     >
 
     <LinearLayout
@@ -36,7 +36,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/seleccion_actual" />
+                android:text="@string/seleccion_actual"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/seleccionActualClase_textView"
@@ -53,34 +56,46 @@
 
             <TextView
                 android:id="@+id/horaComienzoClase"
-                android:layout_width="wrap_content"
+                android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/HoraInicio" />
+                android:text="@string/HoraInicio"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/spinnerAsignaturasClase"
                 android:layout_width="164dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/listaAsignaturas" />
+                android:text="@string/listaAsignaturas"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="41dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/horaInicioClase_editTextTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="89dp"
+                android:layout_height="31dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_textview"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="@string/HoraDefault"
                 android:inputType="time"
                 android:textSize="12sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <Spinner
                 android:id="@+id/spinner11"
@@ -97,24 +112,31 @@
 
             <TextView
                 android:id="@+id/horaFinClase"
-                android:layout_width="15dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/HoraFin" />
+                android:text="@string/HoraFin"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/donde" />
+                android:text="@string/donde"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/spinnerDiasClase"
-                android:layout_width="56dp"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/dia" />
+                android:text="@string/dia"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,21 +146,30 @@
 
             <EditText
                 android:id="@+id/horaFinClase_editTextTime"
-                android:layout_width="291dp"
-                android:layout_height="wrap_content"
+                android:layout_width="304dp"
+                android:layout_height="31dp"
+
                 android:layout_weight="1"
+                android:background="@drawable/basic_textview"
                 android:ems="10"
+                android:gravity="center"
+                android:hint="00:00"
                 android:inputType="time"
                 android:textSize="12sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <EditText
                 android:id="@+id/dondeClase_editText"
                 android:layout_width="298dp"
-                android:layout_height="wrap_content"
+                android:layout_height="31dp"
                 android:layout_weight="1"
+                android:background="@drawable/basic_textview"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:gravity="center"
                 android:textSize="12sp" />
 
             <Spinner
@@ -157,13 +188,18 @@
                 android:layout_width="446dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/basic_layout2"
+                >
 
                 <TextView
                     android:id="@+id/textlistaClasesClase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/listaClases" />
+                    android:textStyle="bold"
+                    tools:text="@string/listaClases"
+                    android:layout_marginLeft="3dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerlistaClasesClase"
