@@ -34,11 +34,6 @@ public class MyMailsListAdapter extends ArrayAdapter<String> {
         dataText.setText(correows[position].getDate());
         subtitleText.setText(correows[position].getSubject());
 
-        if(correows[position].getContents()!=null) {
-            TextView contentText = (TextView) rowView.findViewById(R.id.content_txtvw);
-            contentText.setText(correows[position].getContents());
-        }
-
         return rowView;
     };
 }

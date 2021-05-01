@@ -2,6 +2,7 @@ package com.example.tfgprueba2;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,10 +14,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,12 +43,16 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView textView5;
-    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios;
+    private ImageView calendario;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
     private Button editable1, editable2;
     private boolean terminado;
     Handler h = new Handler();
+    private ScaleGestureDetector detector;
+    private float xInicial = 0;
+    private float yInicial = 0;
     int cont = 0;
     private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
     private List<Clase> listaClasesUsuario;
@@ -62,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         popup_edit_user_asignaturas = new Dialog(this);
         popupCorreow = new Dialog(this);
         popupAsignaturasUsuarios = new Dialog(this);
+        popupCalendario = new Dialog(this);
 
         editable1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -171,6 +180,19 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    public void onCalendarioButtonClick(View view){
+        popupCalendario.setContentView(R.layout.popup_calendario);
+        popupCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        calendario = popupCalendario.findViewById(R.id.calendario_imageView);
+        /*
+        xInicial = calendario.getScaleX();
+        yInicial = calendario.getScaleY();
+        detector = new ScaleGestureDetector(popupCalendario.getContext(), new ScaleListener(calendario));
+         */
+        popupCalendario.show();
+
+    }
+
     public void onAsignaturasEditButtonClick(View view){
         popup_edit_user_asignaturas.setContentView(R.layout.popup_edit_user_asignaturas);
         popup_edit_user_asignaturas.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -219,12 +241,6 @@ public class HomeActivity extends AppCompatActivity {
     public void onOptions(View view){
         terminado = true;
         Intent home = new Intent(this, Options.class);
-        startActivity(home);
-    }
-
-    public void onPreferences(View view){
-        terminado = true;
-        Intent home = new Intent(this, PreferencesActivity.class);
         startActivity(home);
     }
 

@@ -45,7 +45,9 @@ public class DataAccess {
             Session emailSession = Session.getDefaultInstance(properties);
 
             store = emailSession.getStore("imaps");
-            store.connect("ikasle.ehu.eus", "877955", "0k9Hj88s0");
+            store.connect("ikasle.ehu.eus", ldap, password);
+            this.ldap = ldap;
+            this.password = password;
             return true;
 
         }catch (AuthenticationFailedException e){
@@ -151,7 +153,7 @@ public class DataAccess {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String data;
-                data = URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode("877955", "UTF-8");
+                data = URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode(ldap, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -181,7 +183,7 @@ public class DataAccess {
     }
 
     public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
-        String sentencia = "DELETE FROM usuario WHERE asig_id=" + asig_idS + " and ldap = '" + "877955" + "';";
+        String sentencia = "DELETE FROM usuario WHERE asig_id=" + asig_idS + " and ldap = '" + ldap + "';";
         new eliminarDb(context, 0).execute(sentencia);
     }
 
@@ -284,7 +286,7 @@ public class DataAccess {
                     String asig_IDS = strings[0];
                     Log.d("Isertando usuario: ", asig_IDS);
                     data =
-                            URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode("877955", "UTF-8") + "&" +
+                            URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode(ldap, "UTF-8") + "&" +
                             URLEncoder.encode("asig_ID", "UTF-8") + "=" + URLEncoder.encode(asig_IDS, "UTF-8");
 
                 }else{

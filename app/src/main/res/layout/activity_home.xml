@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    >
 
 
     <LinearLayout
@@ -37,6 +38,7 @@
                 android:layout_width="366dp"
                 android:layout_height="wrap_content"
                 android:text="@string/correo"
+                android:textColor="@color/gray_500"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -113,6 +115,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:text="@string/asignaturas"
+                    android:textColor="@color/gray_500"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -125,6 +128,7 @@
                 android:background="@drawable/basic_button"
                 android:onClick="onAsignaturasEditButtonClick"
                 android:text="EDIT"
+                android:textColor="@color/gray_500"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -151,8 +155,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="220dp"
-        android:layout_height="221dp"
+        android:layout_width="222dp"
+        android:layout_height="254dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -185,13 +189,14 @@
                 android:layout_width="196dp"
                 android:layout_height="30dp"
                 android:text="@string/noticias"
+                android:textColor="@color/gray_500"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="207dp"
-            android:layout_height="190dp"
+            android:layout_width="206dp"
+            android:layout_height="219dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
@@ -200,55 +205,26 @@
             <ListView
                 android:id="@+id/newsListView"
                 android:layout_width="match_parent"
-                android:layout_height="178dp"
+                android:layout_height="205dp"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/basic_layout2" />
 
         </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginBottom="4dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:onClick="onEgelaButtonClick"
-            android:scrollbarThumbHorizontal="@color/white"
-            android:scrollbarThumbVertical="@color/white"
-            app:srcCompat="@drawable/logoegelamini" />
-
-        <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="12dp"
-            android:onClick="onGaurButtonClick"
-            app:srcCompat="@drawable/gaurlogo" />
-
     </LinearLayout>
 
     <Button
         android:id="@+id/editable2_button"
         android:layout_width="220dp"
         android:layout_height="37dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/basic_button2"
         android:text="EDITABLE2"
+        android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editable1_button" />
 
@@ -256,37 +232,28 @@
         android:id="@+id/button10"
         android:layout_width="105dp"
         android:layout_height="37dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
-        android:background="@drawable/basic_button2"
+        android:background="@drawable/gaur_button4"
         android:text="GAUR"
+        android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
 
     <Button
         android:id="@+id/button12"
         android:layout_width="105dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/basic_button2"
+        android:background="@drawable/egela_button3"
+        android:onClick="onEgelaButtonClick"
         android:text="EGELA"
+        android:textColor="@color/gray_400"
         app:layout_constraintEnd_toStartOf="@+id/button10"
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="157dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="16dp"
-        android:onClick="onOptions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAsignaturas"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <Button
         android:id="@+id/editable1_button"
@@ -298,18 +265,33 @@
         android:layout_weight="1"
         android:background="@drawable/basic_button2"
         android:text="EDITABLE1"
+        android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="46dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:background="@drawable/basic_button2"
+        android:onClick="onCalendarioButtonClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button10"
+        app:srcCompat="@drawable/calendario_icono" />
+
     <Button
-        android:id="@+id/button14"
-        android:layout_width="50dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="6dp"
+        android:id="@+id/button13"
+        android:layout_width="46dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
-        android:background="@drawable/basic_button2"
-        android:text="Button"
+        android:onClick="onOptions"
+        android:text="OP"
+        android:background="@drawable/basic_button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button10" />
 

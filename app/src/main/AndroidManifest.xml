@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TFGprueba2">
-        <activity android:name=".PreferencesActivity"></activity>
+
+        <activity android:name=".popupActivity_calendario"></activity>
+        <activity android:name=".PreferencesActivity" />
         <activity android:name=".Options" />
         <activity android:name=".LoginActivity">
             <intent-filter>
