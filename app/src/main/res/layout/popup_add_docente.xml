@@ -36,7 +36,9 @@
                 android:layout_width="2dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/seleccion_actual" />
+                android:text="@string/seleccion_actual"
+                android:textColor="@color/gray_500"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/seleccionActualDocente_textView"
@@ -56,7 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/nombreDocente"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/gray_500"
+                />
 
             <Space
                 android:layout_width="5dp"
@@ -68,7 +72,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/apellidosDocente"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/gray_500"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -87,6 +93,8 @@
                 android:gravity="center"
                 android:hint="@string/nombreDocenteHint"
                 android:inputType="textPersonName"
+                android:textColor="@color/gray_400"
+                android:textColorHint="@color/gray_300"
                 android:textSize="12sp" />
 
             <Space
@@ -104,6 +112,8 @@
                 android:gravity="center"
                 android:hint="@string/apellidosDocenteHint"
                 android:inputType="textPersonName"
+                android:textColor="@color/gray_400"
+                android:textColorHint="@color/gray_300"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -118,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/correoDocente"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
 
             <Space
@@ -130,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/despachoDocente"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -149,6 +161,8 @@
                 android:gravity="center"
                 android:hint="@string/correoDocenteHint"
                 android:inputType="textPersonName"
+                android:textColor="@color/gray_400"
+                android:textColorHint="@color/gray_300"
                 android:textSize="12sp" />
 
             <Space
@@ -166,6 +180,8 @@
                 android:gravity="center"
                 android:hint="@string/despachoDocenteHint"
                 android:inputType="textPersonName"
+                android:textColor="@color/gray_400"
+                android:textColorHint="@color/gray_300"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -188,6 +204,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="@string/listaDocentes"
+                    android:textColor="@color/gray_500"
                     android:textStyle="bold" />
 
                 <Spinner
@@ -208,18 +225,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/empty_button"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/removeDocente_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:text="@string/remove_button" />
 
                 <Button
                     android:id="@+id/addDocente_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:text="@string/add_button" />
             </LinearLayout>
         </LinearLayout>

@@ -33,10 +33,11 @@
 
             <TextView
                 android:id="@+id/seleccionTutoria_textView"
-                android:layout_width="0dp"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/seleccion_actual" />
+                android:text="@string/seleccion_actual"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/seleccionActualTutoria_textView"
@@ -56,6 +57,7 @@
                 android:layout_width="111dp"
                 android:layout_height="wrap_content"
                 android:text="@string/HoraInicio"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
 
             <TextView
@@ -64,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/listaDocentes"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -82,6 +85,8 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="@string/HoraDefault"
+                android:textColorHint="@color/gray_300"
+                android:textColor="@color/gray_400"
                 android:inputType="time"
                 android:textSize="12sp" />
 
@@ -103,6 +108,7 @@
                 android:layout_width="111dp"
                 android:layout_height="wrap_content"
                 android:text="@string/HoraFin"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
 
             <TextView
@@ -111,6 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/dia"
+                android:textColor="@color/gray_500"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -128,6 +135,8 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="@string/HoraDefault"
+                android:textColorHint="@color/gray_300"
+                android:textColor="@color/gray_400"
                 android:inputType="time"
                 android:textSize="12sp" />
 
@@ -157,6 +166,7 @@
                     android:id="@+id/textView23"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="3dp"
+                    android:textColor="@color/gray_500"
                     android:layout_height="wrap_content"
                     tools:text="@string/listaTutorias" />
 
@@ -178,18 +188,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/empty_button"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/removeTutoria_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:text="@string/remove_button" />
 
                 <Button
                     android:id="@+id/addTutoria_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                    android:textColor="@color/gray_400"
+                    android:background="@drawable/basic_button2"
                     android:text="@string/add_button" />
             </LinearLayout>
         </LinearLayout>

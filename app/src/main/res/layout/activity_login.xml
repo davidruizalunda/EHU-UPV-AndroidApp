@@ -24,6 +24,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="4dp"
             android:text="Recordar"
+            android:textColor="@color/gray_400"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -37,6 +38,7 @@
             android:background="@drawable/basic_button2"
             android:onClick="login"
             android:text="@string/login_button"
+            android:textColor="@color/gray_500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ldap_password" />
 
@@ -62,6 +64,8 @@
             android:gravity="center"
             android:hint="@string/ldap_password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ldap_number" />
@@ -72,14 +76,16 @@
             android:layout_height="45dp"
             android:layout_marginTop="16dp"
             android:autofillHints=""
+            android:background="@drawable/basic_textview2"
             android:ems="10"
+            android:gravity="center"
             android:hint="@string/ldap_number"
             android:inputType="number"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/gray_300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/basic_textview2"
-            android:gravity="center"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

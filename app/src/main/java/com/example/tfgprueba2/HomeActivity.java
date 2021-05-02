@@ -42,7 +42,7 @@ Usuario: Tu login LDAP
 Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
-    private TextView textView5;
+    private TextView diaTextView;
     private ImageView calendario;
     private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
@@ -54,9 +54,13 @@ public class HomeActivity extends AppCompatActivity {
     private float xInicial = 0;
     private float yInicial = 0;
     int cont = 0;
+    int dia;
     private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
+    private List<Clase>[] listaClasesPorDia = new List[5];
     private List<Clase> listaClasesUsuario;
     private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
+    private final Map<String, List<Clase>> clasesAlDiaMap = new HashMap<>();
+    private String[] dias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,17 @@ public class HomeActivity extends AppCompatActivity {
         editable1 = findViewById(R.id.editable1_button);
         editable2 = findViewById(R.id.editable2_button);
         spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
+        diaTextView = findViewById(R.id.dia_textView);
+        for (int i=0; i<listaClasesPorDia.length; i++){
+            listaClasesPorDia[i] = new ArrayList<>();
+        }
+        dias = new String[]{
+                this.getResources().getString(R.string.lunes),
+                this.getResources().getString(R.string.martes),
+                this.getResources().getString(R.string.miercoles),
+                this.getResources().getString(R.string.jueves),
+                this.getResources().getString(R.string.viernes)
+        };
 
         popup_edit_user_asignaturas = new Dialog(this);
         popupCorreow = new Dialog(this);
@@ -226,6 +241,26 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public void onSiguienteButtonClick(View view){
+        if(dia == 4){
+            dia = 0;
+        }else{
+            dia++;
+        }
+        diaTextView.setText(dias[dia]);
+        cargarListViewAsignaturas(dia);
+    }
+
+    public void onAnteriorButtonClick(View view){
+        if(dia == 0){
+            dia = 4;
+        }else{
+            dia--;
+        }
+        diaTextView.setText(dias[dia]);
+        cargarListViewAsignaturas(dia);
+    }
+
     public void onEgelaButtonClick(View view){
         Uri uri = Uri.parse("https://egela.ehu.eus/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -258,13 +293,10 @@ public class HomeActivity extends AppCompatActivity {
         spinnerAsignaturasUsuario.setAdapter(asignaturasUsuarioAdapter);
     }
 
-    public void cargarListViewAsignaturas(){
+    public void cargarListViewAsignaturas(int dia){
+        diaTextView.setText(dias[dia]);
         Log.d("MAP: ", asignaturasMap.size()+"");
-        for(int i=0; i<listaAsignaturasUsuario.size(); i++){
-            asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
-        }
-        Log.d("MAP: ", asignaturasMap.size()+"");
-        MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaClasesUsuario, asignaturasMap);
+        MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaClasesPorDia[dia], asignaturasMap);
         ListView subjectListView = findViewById(R.id.asignaturasListView);
         subjectListView.setAdapter(subjectsAdapter);
 
@@ -328,7 +360,17 @@ public class HomeActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
                         listaClasesUsuario = logicForAdmin.getListaClases();
-                        cargarListViewAsignaturas();
+
+
+                        Log.d("MAP: ", asignaturasMap.size()+"");
+                        for(int i=0; i<listaAsignaturasUsuario.size(); i++){
+                            asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
+                        }
+                        for(int x=0; x<listaClasesUsuario.size(); x++){
+                            listaClasesPorDia[Integer.parseInt(listaClasesUsuario.get(x).getDia())].add(listaClasesUsuario.get(x));
+                        }
+
+                        cargarListViewAsignaturas(0);
 
                     });
                 }

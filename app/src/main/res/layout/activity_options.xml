@@ -6,57 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".Options">
 
-    <LinearLayout
-        android:layout_width="412dp"
-        android:layout_height="155dp"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="151dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/basic_button2"
+            android:onClick="onAddDocenteButtonClick"
+            android:text="Añadir docente"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="207dp"
-                android:layout_height="match_parent"
-                android:onClick="onAddDocenteButtonClick"
-                android:text="Añadir docente" />
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/basic_button2"
+            android:onClick="onAddAsignaturaButtonClick"
+            android:text="Añadir Asignatura"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toEndOf="@+id/button3"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="78dp"
-                android:layout_weight="1"
-                android:onClick="onAddAsignaturaButtonClick"
-                android:text="Añadir Asignatura" />
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/basic_button2"
+            android:onClick="onAddTutoriasButtonClick"
+            android:text="Añadir Tutorias"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button3" />
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/basic_button2"
+            android:onClick="onAddClaseButtonClick"
+            android:text="Añadir clase"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button7"
+            app:layout_constraintTop_toBottomOf="@+id/button5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="145dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:onClick="onAddTutoriasButtonClick"
-                android:text="Añadir Tutorias" />
-
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="73dp"
-                android:layout_weight="1"
-                android:onClick="onAddClaseButtonClick"
-                android:text="Añadir clase" />
-        </LinearLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

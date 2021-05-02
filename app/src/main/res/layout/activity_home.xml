@@ -79,7 +79,7 @@
     <LinearLayout
         android:id="@+id/linearLayoutAsignaturas"
         android:layout_width="156dp"
-        android:layout_height="219dp"
+        android:layout_height="236dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="12dp"
@@ -138,7 +138,7 @@
 
         <RelativeLayout
             android:layout_width="139dp"
-            android:layout_height="176dp"
+            android:layout_height="160dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
@@ -151,6 +151,42 @@
                 android:layout_height="match_parent" />
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/basic_button"
+                android:onClick="onAnteriorButtonClick"
+                app:srcCompat="@drawable/flecha_izquierda" />
+
+            <TextView
+                android:id="@+id/dia_textView"
+                android:layout_width="138dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Miércoles"
+                android:textColor="@color/gray_400"
+                android:layout_marginBottom="6dp"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton10"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/basic_button4"
+                android:onClick="onSiguienteButtonClick"
+                app:srcCompat="@drawable/flecha_derecha" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
