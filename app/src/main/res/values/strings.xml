@@ -28,7 +28,7 @@
     <string name="dia">Día:</string>
     <string name="lunes">Lunes</string>
     <string name="martes">Martes</string>
-    <string name="miercoles">Miércoles:</string>
+    <string name="miercoles">Miércoles</string>
     <string name="jueves">Jueves</string>
     <string name="viernes">Viernes</string>
     <string name="sabado">Sábado</string>
@@ -76,4 +76,12 @@
     <string name="noticias">Noticias</string>
     <string name="correo">Correo</string>
     <string name="asignaturas">Asignaturas</string>
+
+    <!-- Editables -->
+    <string name="tituloEditable">Título </string>
+    <string name="tituloEditableHint">Dale un título </string>
+
+    <string name="urlEditable">Enlace</string>
+    <string name="urlEditableHint">URL de la página</string>
+
 </resources>

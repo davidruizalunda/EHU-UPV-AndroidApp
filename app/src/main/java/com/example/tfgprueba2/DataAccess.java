@@ -172,7 +172,6 @@ public class DataAccess {
             bufferedReader.close();
             inputStream.close();
             httpURLConnection.disconnect();
-            Log.d("RESULTADO: ", resultado);
 
             return resultado;
 
@@ -227,7 +226,6 @@ public class DataAccess {
                 String data;
                 if (tabla==0){
                     String correoS = strings[0];
-                    Log.d("Correo: ", strings[0]);
                     String nombreS = strings[1];
                     String apellidosS = strings[2];
                     String despachoS = strings[3];
@@ -268,23 +266,18 @@ public class DataAccess {
                     String horaFinS = strings[1];
                     String profesorS = strings[2];
                     String diaS = strings[3];
-                    Log.d("horaInicioS2: ",horaInicioS);
-                    Log.d("horaFinS2: ",horaFinS);
-                    Log.d("profesorS2: ",profesorS);
-                    Log.d("diaS2: ",diaS);
 
                     data =
                             URLEncoder.encode("horaInicio", "UTF-8") + "=" + URLEncoder.encode(horaInicioS, "UTF-8") + "&" +
                             URLEncoder.encode("horaFin", "UTF-8") + "=" + URLEncoder.encode(horaFinS, "UTF-8") + "&" +
                             URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8") + "&" +
                             URLEncoder.encode("dia", "UTF-8") + "=" + URLEncoder.encode(diaS, "UTF-8");
-                    Log.d("DATA: ", data);
+
 
                 }
                 else if(tabla==4) {
 
                     String asig_IDS = strings[0];
-                    Log.d("Isertando usuario: ", asig_IDS);
                     data =
                             URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode(ldap, "UTF-8") + "&" +
                             URLEncoder.encode("asig_ID", "UTF-8") + "=" + URLEncoder.encode(asig_IDS, "UTF-8");
@@ -347,7 +340,6 @@ public class DataAccess {
 
                 String data;
                 String sentenciaS = strings[0];
-                Log.d("Sentencia: ", strings[0]);
 
                 data = URLEncoder.encode("sentencia", "UTF-8") + "=" + URLEncoder.encode(sentenciaS, "UTF-8");
 

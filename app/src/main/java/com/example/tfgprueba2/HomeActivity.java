@@ -2,11 +2,11 @@ package com.example.tfgprueba2;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,8 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 /*
 Tipo de servidor: IMAP o POP  (Mejor utiliza IMAP)
@@ -44,7 +42,7 @@ Contraseña: Tu contraseña
 public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
     private ImageView calendario;
-    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
     private Button editable1, editable2;
@@ -61,19 +59,30 @@ public class HomeActivity extends AppCompatActivity {
     private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
     private final Map<String, List<Clase>> clasesAlDiaMap = new HashMap<>();
     private String[] dias;
+    private String editable1_title, editable2_title, editable1_url, editable2_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("accesosDirectos", Context.MODE_PRIVATE);
+        editable1_title = sharedPreferences.getString("titulo_editable1", "");
+        editable2_title = sharedPreferences.getString("titulo_editable2", "");
+
+        editable1_url = sharedPreferences.getString("enlace_editable1", "");
+        editable2_url = sharedPreferences.getString("enlace_editable2", "");
+
         editable1 = findViewById(R.id.editable1_button);
         editable2 = findViewById(R.id.editable2_button);
+
+        editable1.setText(editable1_title);
+        editable2.setText(editable2_title);
+
         spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
         diaTextView = findViewById(R.id.dia_textView);
-        for (int i=0; i<listaClasesPorDia.length; i++){
-            listaClasesPorDia[i] = new ArrayList<>();
-        }
+        limpiarArrayListaClasesPorDia();
+
         dias = new String[]{
                 this.getResources().getString(R.string.lunes),
                 this.getResources().getString(R.string.martes),
@@ -86,10 +95,12 @@ public class HomeActivity extends AppCompatActivity {
         popupCorreow = new Dialog(this);
         popupAsignaturasUsuarios = new Dialog(this);
         popupCalendario = new Dialog(this);
+        popupEditable = new Dialog(this);
 
         editable1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                popupEditable(1);
                 return true;
             }
         });
@@ -97,12 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         editable2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                popupEditable(2);
                 return true;
             }
         });
 
         new seleccionarDb(this, 99, true).execute();
-        Log.d("MAP: ", asignaturasMap.size()+"");
 
     }
     @Override
@@ -117,7 +128,6 @@ public class HomeActivity extends AppCompatActivity {
         h.postDelayed(new Runnable() {
             public void run() {
                 if(!terminado){
-                    Log.d("update ", "//////////////////////////////");
                     updateDataCorreowsNews();
                     h.postDelayed(this, TIEMPO);
                 }
@@ -231,7 +241,6 @@ public class HomeActivity extends AppCompatActivity {
         buttonRemoveAsignaturaUsuario.setOnClickListener(v -> {
             String asig_idS = String.valueOf(listaAsignaturasUsuario.get(spinnerAsignaturasUsuario.getSelectedItemPosition()).getAsig_ID());
             LogicForAdmin logicForAdmin = new LogicForAdmin();
-            Log.d("ASIG ID", asig_idS);
             logicForAdmin.eliminarAsignaturaUsuario(this, asig_idS);
             new seleccionarDb(this, 1, false).execute();
             new seleccionarDb(this, 1, true).execute();
@@ -295,7 +304,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public void cargarListViewAsignaturas(int dia){
         diaTextView.setText(dias[dia]);
-        Log.d("MAP: ", asignaturasMap.size()+"");
         MySubjectsViewListAdapter subjectsAdapter=new MySubjectsViewListAdapter(this, listaClasesPorDia[dia], asignaturasMap);
         ListView subjectListView = findViewById(R.id.asignaturasListView);
         subjectListView.setAdapter(subjectsAdapter);
@@ -323,13 +331,87 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void popupEditable(int editable){
+        popupEditable.setContentView(R.layout.popup_editable);
+        popupEditable.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText tituloEditable = popupEditable.findViewById(R.id.tituloEditable_editText);
+        EditText urlEditable = popupEditable.findViewById(R.id.urlEditable_editText);
+        Button editable_Button = popupEditable.findViewById(R.id.addEditable_button);
+
+        if (editable == 1){
+            tituloEditable.setText(editable1_title);
+            urlEditable.setText(editable1_url);
+        }else{
+            tituloEditable.setText(editable2_title);
+            urlEditable.setText(editable2_url);
+        }
+
+        editable_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarEditable(tituloEditable.getText().toString(), urlEditable.getText().toString(), editable);
+                popupEditable.hide();
+            }
+        });
+
+
+
+        popupEditable.show();
+    }
+
+    private void guardarEditable(String titulo_editable, String url_editable, int editable) {
+        SharedPreferences sharedPreferences = getSharedPreferences("accesosDirectos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editable1_title = sharedPreferences.getString("titulo_editable1", "");
+        editable2_title = sharedPreferences.getString("titulo_editable2", "");
+
+        editable1_url = sharedPreferences.getString("enlace_editable1", "");
+        editable2_url = sharedPreferences.getString("enlace_editable2", "");
+
+        if (editable == 1){
+            editor.putString("titulo_editable1", titulo_editable);
+            editor.putString("enlace_editable1", url_editable);
+        }else{
+            editor.putString("titulo_editable2", titulo_editable);
+            editor.putString("enlace_editable2", url_editable);
+        }
+        editor.commit();
+    }
+
+    public void onEditable1ButtonClick(View view){
+        try{
+            Uri uri = Uri.parse(editable1_url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(popupEditable.getContext(), "Introduzca una URL válida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(popupEditable.getContext(), "FORMATO: https://paginaweb.es/", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+    public void onEditable2ButtonClick(View view){
+        try {
+            Uri uri = Uri.parse(editable2_url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(popupEditable.getContext(), "Introduzca una URL válida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(popupEditable.getContext(), "FORMATO: https://paginaweb.es/", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     class seleccionarDb extends AsyncTask<String,String,String> {
         private Context context;
         private int table;
         private boolean usuario;
 
-        public seleccionarDb(Context context, int table, boolean usuario) {
+        public
+        seleccionarDb(Context context, int table, boolean usuario) {
             this.context = context;
             this.table = table;
             this.usuario = usuario;
@@ -358,11 +440,10 @@ public class HomeActivity extends AppCompatActivity {
             }else if(table == 99 && usuario){
                 if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true)){
                     runOnUiThread(() -> {
+                        limpiarArrayListaClasesPorDia();
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
                         listaClasesUsuario = logicForAdmin.getListaClases();
 
-
-                        Log.d("MAP: ", asignaturasMap.size()+"");
                         for(int i=0; i<listaAsignaturasUsuario.size(); i++){
                             asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
                         }
@@ -371,6 +452,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         cargarListViewAsignaturas(0);
+
 
                     });
                 }
@@ -381,7 +463,11 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
+    private void limpiarArrayListaClasesPorDia() {
+        for (int i=0; i<listaClasesPorDia.length; i++){
+            listaClasesPorDia[i] = new ArrayList<>();
+        }
+    }
 
 
 }
