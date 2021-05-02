@@ -76,4 +76,12 @@
     <string name="noticias">Berriak</string>
     <string name="correo">Posta</string>
     <string name="asignaturas">Ikasgaiak</string>
+
+    <!-- Editables -->
+    <string name="tituloEditable">Título: </string>
+    <string name="tituloEditableHint">Dale un título </string>
+
+    <string name="urlEditable">Enlace:</string>
+    <string name="urlEditableHint">URL de la página</string>
+
 </resources>

@@ -160,7 +160,6 @@ public class LogicForAdmin {
                             jsonArrayChild.optString("profesor1"),
                             jsonArrayChild.optString("asig_id")
                     );
-                    Log.d("ASIGNATURA: ", jsonArrayChild.optString("nombre"));
                     listaAsignaturas.add(asignatura);
                 }
             } catch (JSONException e) {
@@ -221,7 +220,6 @@ public class LogicForAdmin {
                             jsonArrayChild.optString("dia")
                     );
                     listaTutorias.add(tutoria);
-                    Log.d("ESTPO:", jsonArray.toString());
                 }
                 return true;
             } catch (JSONException e) {
@@ -255,10 +253,7 @@ public class LogicForAdmin {
     public int asignaturaSpinnerPosition(String asignaturaSeleccionado, List<Asignatura> listaAsignaturas) {
         int i;
         for(i=0; i<listaAsignaturas.size(); i++){
-            Log.d("Comparar esto: ", asignaturaSeleccionado+"");
-            Log.d("Con esto: ", listaAsignaturas.get(i).getAsig_ID()+"");
             if (asignaturaSeleccionado.equals(String.valueOf(listaAsignaturas.get(i).getAsig_ID()))){
-                Log.d("IGUAL: ", asignaturaSeleccionado+"");
                 break;
             }
         }
