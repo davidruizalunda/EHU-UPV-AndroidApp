@@ -23,7 +23,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class RSSReader extends AsyncTask<Void,Void,Void> {
-    private static ArrayList<News> noticias;
+    private ArrayList<News> noticias;
     private Context context;
     private URL url;
 

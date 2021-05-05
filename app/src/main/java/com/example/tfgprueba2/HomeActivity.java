@@ -56,7 +56,12 @@ public class HomeActivity extends AppCompatActivity {
     private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
     private List<Clase>[] listaClasesPorDia = new List[5];
     private List<Clase> listaClasesUsuario;
+    private List<Docente> listaDocentesUsuario;
+    private List<Tutoria> listaTutoriasUsuario;
     private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
+    private final Map<String, Docente> docentesMap = new HashMap<String, Docente>();
+    private final Map<String, ArrayList<Tutoria>> tutoriasMap = new HashMap<String, ArrayList<Tutoria>>();
+
     private final Map<String, List<Clase>> clasesAlDiaMap = new HashMap<>();
     private String[] dias;
     private String editable1_title, editable2_title, editable1_url, editable2_url;
@@ -137,30 +142,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void updateDataCorreowsNews() {
+        LogicForAdmin logicForAdmin = new LogicForAdmin();
         Thread thread = new Thread(() -> {
-            RSSReader lectorRSS = new RSSReader(getApplicationContext());
-            lectorRSS.execute();
 
             try {
-                LogicForAdmin logicForAdmin = new LogicForAdmin();
                 ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
                 Log.d("NEWS: ", news.size()+"");
-                h.post(() -> {
-                    updateAdapterNews(news);
-                });
+                h.post(() -> updateAdapterNews(news));
 
-            }catch (Exception e){
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
         });
         Thread thread2 = new Thread(() -> {
 
             try {
-                LogicForAdmin logicForAdmin = new LogicForAdmin();
                 Correow[] correows = logicForAdmin.getCorreows(10);
-                h.post(() -> {
-                    updateAdapterCorreows(correows);
-                });
+                h.post(() -> updateAdapterCorreows(correows));
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -277,8 +276,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onGaurButtonClick(View view){
-        Intent intent = getPackageManager().getLaunchIntentForPackage("com.app.gaur");
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        Uri uri = Uri.parse("https://gestion.ehu.es/gaur");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
 
@@ -309,7 +308,7 @@ public class HomeActivity extends AppCompatActivity {
         subjectListView.setAdapter(subjectsAdapter);
 
         subjectListView.setOnItemClickListener((parent, view, position, id) -> {
-            popupInfoAsignatura(listaClasesUsuario.get(position));
+            popupInfoAsignatura(listaClasesPorDia[dia].get(position));
         });
     }
 
@@ -322,11 +321,13 @@ public class HomeActivity extends AppCompatActivity {
         TextView horaInicioAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaInicioAsignaturaUsuario_textView);
         TextView horaFinAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaFinAsignaturaUsuario_textView);
         TextView dondeAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.dondeAsignaturaUsuario_textView);
+        TextView docenteAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_textView);
 
         nombreAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getNombreAsignatura());
         horaInicioAsignaturaUsuario.setText(clase.getHoraInicio());
         horaFinAsignaturaUsuario.setText(clase.getHoraFin());
         dondeAsignaturaUsuario.setText(clase.getAula());
+        docenteAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getDocente1());
         popupAsignaturasUsuarios.show();
 
     }
@@ -438,17 +439,34 @@ public class HomeActivity extends AppCompatActivity {
                     });
                 }
             }else if(table == 99 && usuario){
-                if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true)){
+                if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true) && logicForAdmin.obtenerDocentes(true) && logicForAdmin.obtenerTutorias(true)){
                     runOnUiThread(() -> {
                         limpiarArrayListaClasesPorDia();
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
                         listaClasesUsuario = logicForAdmin.getListaClases();
+                        listaDocentesUsuario = logicForAdmin.getListaDocentes();
+                        listaTutoriasUsuario = logicForAdmin.getListaTutorias();
 
                         for(int i=0; i<listaAsignaturasUsuario.size(); i++){
                             asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
                         }
                         for(int x=0; x<listaClasesUsuario.size(); x++){
                             listaClasesPorDia[Integer.parseInt(listaClasesUsuario.get(x).getDia())].add(listaClasesUsuario.get(x));
+                        }
+
+                        Log.d("ESPACIO1: ", listaDocentesUsuario.size()+"");
+                        for(int z=0; z<listaDocentesUsuario.size(); z++){
+                            docentesMap.put(listaDocentesUsuario.get(z).getCorreo_EHU(), listaDocentesUsuario.get(z));
+                        }
+
+                        Log.d("ESPACIO: ", listaTutoriasUsuario.size()+"");
+                        for(int y = 0; y < listaTutoriasUsuario.size(); y ++){
+                            if (tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor()) == null){
+                                Log.d("Rellenando vacio: ", listaTutoriasUsuario.get(y).getProfesor());
+                                tutoriasMap.put(listaTutoriasUsuario.get(y).getProfesor(), new ArrayList<>());
+                            }
+                            tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor()).add(listaTutoriasUsuario.get(y));
+                            Log.d("Rellenando de: ", listaTutoriasUsuario.get(y).getHoraInicio());
                         }
 
                         cargarListViewAsignaturas(0);

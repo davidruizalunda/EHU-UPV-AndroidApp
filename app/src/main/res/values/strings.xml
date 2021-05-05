@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TFGprueba2</string>
+    <string name="app_name">EHU Zurekin</string>
     <string name="ldap_number">LDAP</string>
     <string name="ldap_password">Contraseña</string>
     <string name="login_button">Entrar</string>

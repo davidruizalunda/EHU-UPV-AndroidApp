@@ -273,6 +273,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/gaur_button4"
+        android:onClick="onGaurButtonClick"
         android:text="GAUR"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"

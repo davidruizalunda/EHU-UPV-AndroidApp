@@ -402,7 +402,7 @@ public class Options extends AppCompatActivity {
             // TODO Auto-generated method stub
             LogicForAdmin logicForAdmin = new LogicForAdmin();
             if (tabla == 0){
-                if(logicForAdmin.obtenerDocentes()){
+                if(logicForAdmin.obtenerDocentes(false)){
                     runOnUiThread(() -> {
                         listaDocentes = logicForAdmin.getListaDocentes();
                         cargarSpinnerDocentes();
@@ -416,14 +416,14 @@ public class Options extends AppCompatActivity {
                     });
                 }
             } else if(tabla == 2){
-                if(logicForAdmin.obtenerClases(true)){
+                if(logicForAdmin.obtenerClases(false)){
                     runOnUiThread(() -> {
                         listaClases = logicForAdmin.getListaClases();
                         cargarSpinnerClases();
                     });
                 }
             } else if(tabla == 3){
-                if(logicForAdmin.obtenerTutorias()){
+                if(logicForAdmin.obtenerTutorias(false)){
                     runOnUiThread(() -> {
                         listaTutorias = logicForAdmin.getListaTutorias();
                         cargarSpinnerTutorias();

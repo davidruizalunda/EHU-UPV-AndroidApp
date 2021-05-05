@@ -3,11 +3,8 @@ package com.example.tfgprueba2;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -78,9 +76,9 @@ public class LogicForAdmin {
         return correows;
     }
 
-    public ArrayList<News> getEHUNews(Context context){
-        RSSReader rssReader = new RSSReader(context);
-        rssReader.execute();
+    public ArrayList<News> getEHUNews(Context applicationContext) throws ExecutionException, InterruptedException {
+        RSSReader rssReader = new RSSReader(applicationContext);
+        rssReader.execute().get();
         return rssReader.getNoticias();
     }
 
@@ -114,10 +112,10 @@ public class LogicForAdmin {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean obtenerDocentes(){
+    public boolean obtenerDocentes(boolean usuario){
         listaDocentes.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(0, false);
+        String data=dataAccess.seleccionarTabla(0, usuario);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
@@ -143,7 +141,7 @@ public class LogicForAdmin {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean obtenerAsignaturas(Boolean usuario){
+    public boolean obtenerAsignaturas(boolean usuario){
         listaAsignaturas.clear();
         DataAccess dataAccess = new DataAccess();
         String data=dataAccess.seleccionarTabla(1, usuario);
@@ -202,10 +200,10 @@ public class LogicForAdmin {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean obtenerTutorias(){
+    public boolean obtenerTutorias(boolean usuario){
         listaTutorias.clear();
         DataAccess dataAccess = new DataAccess();
-        String data=dataAccess.seleccionarTabla(3, false);
+        String data=dataAccess.seleccionarTabla(3, usuario);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
