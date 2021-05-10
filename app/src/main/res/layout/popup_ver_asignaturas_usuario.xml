@@ -127,8 +127,17 @@
                 <TextView
                     android:id="@+id/docenteAsignaturaUsuario_textView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:text="TextView" />
+
+                <Button
+                    android:id="@+id/docenteAsignaturaUsuario_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/basic_button2"
+                    android:text="Ver docente"
+                    android:textSize="12sp" />
+
             </LinearLayout>
         </LinearLayout>
 

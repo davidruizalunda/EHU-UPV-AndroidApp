@@ -42,7 +42,7 @@ Contraseña: Tu contraseña
 public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
     private ImageView calendario;
-    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
     private Button editable1, editable2;
@@ -101,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         popupAsignaturasUsuarios = new Dialog(this);
         popupCalendario = new Dialog(this);
         popupEditable = new Dialog(this);
+        popupDocenteAsignaturaUsuario = new Dialog(this);
 
         editable1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -322,6 +323,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView horaFinAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaFinAsignaturaUsuario_textView);
         TextView dondeAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.dondeAsignaturaUsuario_textView);
         TextView docenteAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_textView);
+        Button docenteAsignaturaUsuario_button = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_button);
 
         nombreAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getNombreAsignatura());
         horaInicioAsignaturaUsuario.setText(clase.getHoraInicio());
@@ -329,6 +331,35 @@ public class HomeActivity extends AppCompatActivity {
         dondeAsignaturaUsuario.setText(clase.getAula());
         docenteAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getDocente1());
         popupAsignaturasUsuarios.show();
+
+        docenteAsignaturaUsuario_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupAsignaturasUsuarios.hide();
+                popupInfoDocente(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getDocente1());
+            }
+        });
+
+    }
+
+    private void popupInfoDocente(String correo_EHU) {
+        popupDocenteAsignaturaUsuario.setContentView(R.layout.popup_info_docente);
+        popupDocenteAsignaturaUsuario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Docente docente = docentesMap.get(correo_EHU);
+        ArrayList<Tutoria> tutorias = tutoriasMap.get(correo_EHU);
+
+        TextView nombre = popupDocenteAsignaturaUsuario.findViewById(R.id.nombreDocenteInfo_textView);
+        TextView correo = popupDocenteAsignaturaUsuario.findViewById(R.id.correoDocenteInfo_textView2);
+        TextView despacho = popupDocenteAsignaturaUsuario.findViewById(R.id.despachoDocenteInfo_textView);
+        ListView subjectListView = popupDocenteAsignaturaUsuario.findViewById(R.id.tutoriasListView);
+
+        MyTutoriasViewListAdapter subjectsAdapter=new MyTutoriasViewListAdapter(this, tutoriasMap.get(correo_EHU));
+        subjectListView.setAdapter(subjectsAdapter);
+
+        nombre.setText(docente.getNombre() + " " + docente.getApellidos());
+        correo.setText(docente.getCorreo_EHU());
+        despacho.setText(docente.getDespacho());
+        popupDocenteAsignaturaUsuario.show();
 
     }
 
@@ -348,17 +379,14 @@ public class HomeActivity extends AppCompatActivity {
             urlEditable.setText(editable2_url);
         }
 
-        editable_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                guardarEditable(tituloEditable.getText().toString(), urlEditable.getText().toString(), editable);
-                popupEditable.hide();
-            }
+        popupEditable.show();
+
+        editable_Button.setOnClickListener(v -> {
+            guardarEditable(tituloEditable.getText().toString(), urlEditable.getText().toString(), editable);
+            popupEditable.hide();
         });
 
 
-
-        popupEditable.show();
     }
 
     private void guardarEditable(String titulo_editable, String url_editable, int editable) {

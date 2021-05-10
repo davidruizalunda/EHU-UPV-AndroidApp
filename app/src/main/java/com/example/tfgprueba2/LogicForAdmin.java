@@ -3,6 +3,7 @@ package com.example.tfgprueba2;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -127,7 +128,7 @@ public class LogicForAdmin {
                             jsonArrayChild.optString("correo_EHU"),
                             jsonArrayChild.optString("nombre"),
                             jsonArrayChild.optString("apellidos"),
-                            null
+                            jsonArrayChild.optString("n_despacho")
                     );
                     listaDocentes.add(docente);
                 }
@@ -204,6 +205,7 @@ public class LogicForAdmin {
         listaTutorias.clear();
         DataAccess dataAccess = new DataAccess();
         String data=dataAccess.seleccionarTabla(3, usuario);
+        Log.d("TUTORIA:" ,data);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {
