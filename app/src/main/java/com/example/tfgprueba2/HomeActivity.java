@@ -1,8 +1,5 @@
 package com.example.tfgprueba2;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,24 +9,26 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.os.Bundle;
-import android.widget.Toast;
+import java.util.Objects;
 
 /*
 Tipo de servidor: IMAP o POP  (Mejor utiliza IMAP)
@@ -41,28 +40,26 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
-    private ImageView calendario;
     private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
-    private Button editable1, editable2;
     private boolean terminado;
     Handler h = new Handler();
+    /*
     private ScaleGestureDetector detector;
     private float xInicial = 0;
     private float yInicial = 0;
-    int cont = 0;
+     */
     int dia;
     private List<Asignatura> listaAsignaturas, listaAsignaturasUsuario;
-    private List<Clase>[] listaClasesPorDia = new List[5];
+    private final List<Clase>[] listaClasesPorDia = new List[5];
     private List<Clase> listaClasesUsuario;
     private List<Docente> listaDocentesUsuario;
     private List<Tutoria> listaTutoriasUsuario;
-    private final Map<String, Asignatura> asignaturasMap = new HashMap<String, Asignatura>();
-    private final Map<String, Docente> docentesMap = new HashMap<String, Docente>();
-    private final Map<String, ArrayList<Tutoria>> tutoriasMap = new HashMap<String, ArrayList<Tutoria>>();
+    private final Map<String, Asignatura> asignaturasMap = new HashMap<>();
+    private final Map<String, Docente> docentesMap = new HashMap<>();
+    private final Map<String, ArrayList<Tutoria>> tutoriasMap = new HashMap<>();
 
-    private final Map<String, List<Clase>> clasesAlDiaMap = new HashMap<>();
     private String[] dias;
     private String editable1_title, editable2_title, editable1_url, editable2_url;
 
@@ -78,8 +75,8 @@ public class HomeActivity extends AppCompatActivity {
         editable1_url = sharedPreferences.getString("enlace_editable1", "");
         editable2_url = sharedPreferences.getString("enlace_editable2", "");
 
-        editable1 = findViewById(R.id.editable1_button);
-        editable2 = findViewById(R.id.editable2_button);
+        Button editable1 = findViewById(R.id.editable1_button);
+        Button editable2 = findViewById(R.id.editable2_button);
 
         editable1.setText(editable1_title);
         editable2.setText(editable2_title);
@@ -103,20 +100,14 @@ public class HomeActivity extends AppCompatActivity {
         popupEditable = new Dialog(this);
         popupDocenteAsignaturaUsuario = new Dialog(this);
 
-        editable1.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                popupEditable(1);
-                return true;
-            }
+        editable1.setOnLongClickListener(v -> {
+            popupEditable(1);
+            return true;
         });
 
-        editable2.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                popupEditable(2);
-                return true;
-            }
+        editable2.setOnLongClickListener(v -> {
+            popupEditable(2);
+            return true;
         });
 
         new seleccionarDb(this, 99, true).execute();
@@ -208,8 +199,8 @@ public class HomeActivity extends AppCompatActivity {
     public void onCalendarioButtonClick(View view){
         popupCalendario.setContentView(R.layout.popup_calendario);
         popupCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        calendario = popupCalendario.findViewById(R.id.calendario_imageView);
         /*
+        ImageView calendario = popupCalendario.findViewById(R.id.calendario_imageView);
         xInicial = calendario.getScaleX();
         yInicial = calendario.getScaleY();
         detector = new ScaleGestureDetector(popupCalendario.getContext(), new ScaleListener(calendario));
@@ -308,14 +299,12 @@ public class HomeActivity extends AppCompatActivity {
         ListView subjectListView = findViewById(R.id.asignaturasListView);
         subjectListView.setAdapter(subjectsAdapter);
 
-        subjectListView.setOnItemClickListener((parent, view, position, id) -> {
-            popupInfoAsignatura(listaClasesPorDia[dia].get(position));
-        });
+        subjectListView.setOnItemClickListener((parent, view, position, id) -> popupInfoAsignatura(listaClasesPorDia[dia].get(position)));
     }
 
     private void popupInfoAsignatura(Clase clase) {
 
-        popupAsignaturasUsuarios.setContentView(R.layout.popup_ver_asignaturas_usuario);
+        popupAsignaturasUsuarios.setContentView(R.layout.popup_info_asignaturas);
         popupAsignaturasUsuarios.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView nombreAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.nombreAsignaturaUsuario_textView);
@@ -325,41 +314,45 @@ public class HomeActivity extends AppCompatActivity {
         TextView docenteAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_textView);
         Button docenteAsignaturaUsuario_button = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_button);
 
-        nombreAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getNombreAsignatura());
+        nombreAsignaturaUsuario.setText(Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getNombreAsignatura());
         horaInicioAsignaturaUsuario.setText(clase.getHoraInicio());
         horaFinAsignaturaUsuario.setText(clase.getHoraFin());
         dondeAsignaturaUsuario.setText(clase.getAula());
-        docenteAsignaturaUsuario.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getDocente1());
+        docenteAsignaturaUsuario.setText(Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getDocente1());
         popupAsignaturasUsuarios.show();
 
-        docenteAsignaturaUsuario_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupAsignaturasUsuarios.hide();
-                popupInfoDocente(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getDocente1());
-            }
+        docenteAsignaturaUsuario_button.setOnClickListener(v -> {
+            popupAsignaturasUsuarios.hide();
+            popupInfoDocente(Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getDocente1(), Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getAbreviatura());
         });
 
     }
 
-    private void popupInfoDocente(String correo_EHU) {
+    private void popupInfoDocente(String correo_EHU, String nombreAsignatura) {
         popupDocenteAsignaturaUsuario.setContentView(R.layout.popup_info_docente);
         popupDocenteAsignaturaUsuario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Docente docente = docentesMap.get(correo_EHU);
-        ArrayList<Tutoria> tutorias = tutoriasMap.get(correo_EHU);
 
         TextView nombre = popupDocenteAsignaturaUsuario.findViewById(R.id.nombreDocenteInfo_textView);
         TextView correo = popupDocenteAsignaturaUsuario.findViewById(R.id.correoDocenteInfo_textView2);
         TextView despacho = popupDocenteAsignaturaUsuario.findViewById(R.id.despachoDocenteInfo_textView);
         ListView subjectListView = popupDocenteAsignaturaUsuario.findViewById(R.id.tutoriasListView);
+        Button returnButton = popupDocenteAsignaturaUsuario.findViewById(R.id.returnInfoDocente_button);
 
-        MyTutoriasViewListAdapter subjectsAdapter=new MyTutoriasViewListAdapter(this, tutoriasMap.get(correo_EHU));
+        MyTutoriasViewListAdapter subjectsAdapter=new MyTutoriasViewListAdapter(this, Objects.requireNonNull(tutoriasMap.get(correo_EHU)));
         subjectListView.setAdapter(subjectsAdapter);
 
+        assert docente != null;
         nombre.setText(docente.getNombre() + " " + docente.getApellidos());
         correo.setText(docente.getCorreo_EHU());
         despacho.setText(docente.getDespacho());
+        returnButton.setText("Volve a " + nombreAsignatura);
         popupDocenteAsignaturaUsuario.show();
+
+        returnButton.setOnClickListener(v -> {
+            popupDocenteAsignaturaUsuario.hide();
+            popupAsignaturasUsuarios.show();
+        });
 
     }
 
@@ -493,7 +486,7 @@ public class HomeActivity extends AppCompatActivity {
                                 Log.d("Rellenando vacio: ", listaTutoriasUsuario.get(y).getProfesor());
                                 tutoriasMap.put(listaTutoriasUsuario.get(y).getProfesor(), new ArrayList<>());
                             }
-                            tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor()).add(listaTutoriasUsuario.get(y));
+                            Objects.requireNonNull(tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor())).add(listaTutoriasUsuario.get(y));
                             Log.d("Rellenando de: ", listaTutoriasUsuario.get(y).getHoraInicio());
                         }
 

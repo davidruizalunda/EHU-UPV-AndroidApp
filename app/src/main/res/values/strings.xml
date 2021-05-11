@@ -55,6 +55,11 @@
 
     <string name="nuevoDocente">Nuevo docente</string>
 
+    <!-- Popup Docente -->
+    <string name="correoDeContacto">Correo de contacto</string>
+    <string name="docente">Docente</string>
+    <string name="verDocente">Ver docente</string>
+
     <!-- Asignatura -->
     <string name="abreviaturaAsignatura">Abreviatura</string>
     <string name="abreviaturaAsignaturaHint">Nombre del profesor</string>
@@ -65,11 +70,10 @@
     <string name="nuevaAsignatura">Nueva asignatura</string>
 
     <!-- Tutoria -->
-
+    <string name="tutorias">Tutorias</string>
     <string name="nuevaTutoria">Nueva tutoría</string>
 
     <!-- Clase -->
-
     <string name="donde">Donde: </string>
     <string name="nuevaClase">Nueva clase</string>
 

@@ -55,6 +55,11 @@
 
     <string name="nuevoDocente">Irakasle berria</string>
 
+    <!-- Popup Docente -->
+    <string name="correoDeContacto">Correo de contacto</string>
+    <string name="docente">Docente</string>
+    <string name="verDocente">Ver docente</string>
+
     <!-- Asignatura -->
     <string name="abreviaturaAsignatura">Laburdura</string>
     <string name="abreviaturaAsignaturaHint">Irakaslearen izena</string>
@@ -65,7 +70,7 @@
     <string name="nuevaAsignatura">Ikasgai berria</string>
 
     <!-- Tutoria -->
-
+    <string name="tutorias">Tutorias</string>
     <string name="nuevaTutoria">Tutoretza berria</string>
 
     <!-- Clase -->

@@ -9,8 +9,8 @@
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="335dp"
+        android:layout_height="341dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="51dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,8 +35,11 @@
                 android:layout_width="0dp"
                 android:layout_height="138dp"
                 android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="30sp" />
+                android:gravity="center"
+                android:textColor="@color/gray_500"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -53,14 +56,18 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hora Comienzo"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:text="@string/HoraInicio"
+                    android:textColor="@color/gray_400"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/horaInicioAsignaturaUsuario_textView"
                     android:layout_width="match_parent"
                     android:layout_height="47dp"
-                    android:text="TextView"
+                    android:gravity="center"
+                    android:textColor="@color/gray_300"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -74,14 +81,18 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hora fin"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:text="@string/HoraFin"
+                    android:textColor="@color/gray_400"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/horaFinAsignaturaUsuario_textView"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:text="TextView"
+                    android:layout_height="47dp"
+                    android:gravity="center"
+                    android:textColor="@color/gray_300"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -89,26 +100,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="94dp"
+            android:layout_height="62dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="104dp"
+                android:layout_width="164dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Donde:"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:text="@string/donde"
+                    android:textColor="@color/gray_400"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dondeAsignaturaUsuario_textView"
                     android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:text="TextView"
-                    android:textSize="18sp" />
+                    android:layout_height="37dp"
+                    android:gravity="center"
+                    android:textColor="@color/gray_300"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -121,25 +136,36 @@
                     android:id="@+id/textView13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Docente:"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:text="@string/docente"
+                    android:textColor="@color/gray_400"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/docenteAsignaturaUsuario_textView"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="TextView" />
-
-                <Button
-                    android:id="@+id/docenteAsignaturaUsuario_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:background="@drawable/basic_button2"
-                    android:text="Ver docente"
-                    android:textSize="12sp" />
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:textColor="@color/gray_300"
+                    android:textIsSelectable="true" />
 
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/docenteAsignaturaUsuario_button"
+        android:layout_width="145dp"
+        android:layout_height="38dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="362dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/basic_button4"
+        android:text="@string/verDocente"
+        android:textSize="12sp" />
 </RelativeLayout>
