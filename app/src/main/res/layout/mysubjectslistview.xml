@@ -31,7 +31,6 @@
                 android:layout_height="53dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ISO"
                 android:textColor="@color/gray_500"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -48,7 +47,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="5dp"
                     android:gravity="center"
-                    android:text="TextView"
                     android:textColor="@color/gray_400"
                     android:textSize="12sp" />
 

@@ -13,7 +13,6 @@
         android:theme="@style/Theme.TFGprueba2">
 
         <activity android:name=".popupActivity_calendario"></activity>
-        <activity android:name=".PreferencesActivity" />
         <activity android:name=".Options" />
         <activity android:name=".LoginActivity">
             <intent-filter>

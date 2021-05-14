@@ -23,9 +23,9 @@
             android:layout_marginTop="6dp"
             android:background="@drawable/basic_button2"
             android:onClick="onAddDocenteButtonClick"
-            android:text="Añadir docente"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/add_docente" />
 
         <Button
             android:id="@+id/button5"
@@ -38,7 +38,7 @@
             android:layout_marginRight="12dp"
             android:background="@drawable/basic_button2"
             android:onClick="onAddAsignaturaButtonClick"
-            android:text="Añadir Asignatura"
+            android:text="@string/add_asignatura"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toEndOf="@+id/button3"
@@ -53,7 +53,7 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/basic_button2"
             android:onClick="onAddTutoriasButtonClick"
-            android:text="Añadir Tutorias"
+            android:text="@string/add_tutoria"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button3" />
 
@@ -68,7 +68,7 @@
             android:layout_marginRight="12dp"
             android:background="@drawable/basic_button2"
             android:onClick="onAddClaseButtonClick"
-            android:text="Añadir clase"
+            android:text="@string/add_clase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button7"
             app:layout_constraintTop_toBottomOf="@+id/button5" />

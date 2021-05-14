@@ -3,13 +3,18 @@
     <string name="ldap_number">LDAP</string>
     <string name="ldap_password">Pasahitza</string>
     <string name="login_button">Sartu</string>
+    <string name="recordar_check">Gogoratu</string>
+    <string name="edit_asignatura">EDIT</string>
+    <string name="egela">EGELA</string>
+    <string name="gaur">GAUR</string>
+    <string name="irACorreo">Correow-ra joan</string>
 
     <!-- Generales -->
 
     <string name="seleccion_actual">Uneko hautapena:</string>
 
     <!-- Generales botones-->
-    <string name="empty_button">Vaciar campos</string>
+    <string name="empty_button">Eremuak hustu</string>
     <string name="remove_button">Ezabatu</string>
     <string name="add_button">Gehitu</string>
 
@@ -41,6 +46,8 @@
     <string name="removeAsignaturaUsuario">Ezabatu</string>
 
     <!-- Docente -->
+    <string name="add_docente">Irakaslea gehitu</string>
+
     <string name="nombreDocente">Izena</string>
     <string name="nombreDocenteHint">Irakaslearen izena</string>
 
@@ -56,11 +63,12 @@
     <string name="nuevoDocente">Irakasle berria</string>
 
     <!-- Popup Docente -->
-    <string name="correoDeContacto">Correo de contacto</string>
-    <string name="docente">Docente</string>
-    <string name="verDocente">Ver docente</string>
+    <string name="correoDeContacto">Kontaktu posta</string>
+    <string name="docente">Irakaslea</string>
+    <string name="verDocente">Irakasleak ikusi</string>
 
     <!-- Asignatura -->
+    <string name="add_asignatura">Ikasgahia gehitu </string>
     <string name="abreviaturaAsignatura">Laburdura</string>
     <string name="abreviaturaAsignaturaHint">Irakaslearen izena</string>
 
@@ -70,11 +78,12 @@
     <string name="nuevaAsignatura">Ikasgai berria</string>
 
     <!-- Tutoria -->
-    <string name="tutorias">Tutorias</string>
+    <string name="add_tutoria">Tutoretza gehitu</string>
+    <string name="tutorias">Tutoretzak</string>
     <string name="nuevaTutoria">Tutoretza berria</string>
 
     <!-- Clase -->
-
+    <string name="add_clase">Klasea gehitu </string>
     <string name="donde">Non: </string>
     <string name="nuevaClase">Klase berria</string>
 
@@ -83,10 +92,11 @@
     <string name="asignaturas">Ikasgaiak</string>
 
     <!-- Editables -->
-    <string name="tituloEditable">Título: </string>
-    <string name="tituloEditableHint">Dale un título </string>
+    <string name="editable">Editatzeko mantendu</string>
+    <string name="tituloEditable">Titulua: </string>
+    <string name="tituloEditableHint">Titulua eman </string>
 
-    <string name="urlEditable">Enlace:</string>
-    <string name="urlEditableHint">URL de la página</string>
+    <string name="urlEditable">Esteka:</string>
+    <string name="urlEditableHint">orriaren URL</string>
 
 </resources>

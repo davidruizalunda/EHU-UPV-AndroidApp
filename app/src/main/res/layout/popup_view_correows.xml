@@ -43,8 +43,7 @@
                     android:layout_height="35dp"
                     android:layout_weight="1"
                     android:background="@drawable/basic_button"
-                    android:text="Button"
-                    android:textSize="8sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/date_popup"

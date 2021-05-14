@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         editable1.setText(editable1_title);
         editable2.setText(editable2_title);
 
-        spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
+        //spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
         diaTextView = findViewById(R.id.dia_textView);
         limpiarArrayListaClasesPorDia();
 

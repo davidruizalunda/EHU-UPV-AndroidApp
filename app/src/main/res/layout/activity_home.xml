@@ -170,11 +170,10 @@
                 android:id="@+id/dia_textView"
                 android:layout_width="138dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Miércoles"
                 android:textColor="@color/gray_400"
-                android:layout_marginBottom="6dp"
                 android:textSize="12sp" />
 
             <ImageButton
@@ -260,7 +259,7 @@
         android:layout_marginRight="12dp"
         android:background="@drawable/basic_button2"
         android:onClick="onEditable2ButtonClick"
-        android:text="EDITABLE2"
+        android:text="@string/editable"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editable1_button" />
@@ -274,7 +273,7 @@
         android:layout_marginRight="12dp"
         android:background="@drawable/gaur_button4"
         android:onClick="onGaurButtonClick"
-        android:text="GAUR"
+        android:text="@string/gaur"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
@@ -288,7 +287,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/egela_button3"
         android:onClick="onEgelaButtonClick"
-        android:text="EGELA"
+        android:text="@string/egela"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toStartOf="@+id/button10"
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
@@ -303,7 +302,7 @@
         android:layout_weight="1"
         android:background="@drawable/basic_button2"
         android:onClick="onEditable1ButtonClick"
-        android:text="EDITABLE1"
+        android:text="@string/editable"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

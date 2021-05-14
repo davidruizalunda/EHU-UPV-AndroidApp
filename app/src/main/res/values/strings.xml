@@ -3,9 +3,13 @@
     <string name="ldap_number">LDAP</string>
     <string name="ldap_password">Contraseña</string>
     <string name="login_button">Entrar</string>
+    <string name="recordar_check">Recordar</string>
+    <string name="edit_asignatura">EDIT</string>
+    <string name="egela">EGELA</string>
+    <string name="gaur">GAUR</string>
+    <string name="irACorreo">Ir a Correow</string>
 
     <!-- Generales -->
-
     <string name="seleccion_actual">Selección actual:</string>
 
     <!-- Generales botones-->
@@ -35,12 +39,14 @@
     <string name="domingo">Domingo</string>
 
     <!-- Edit Asignaturas Usuario -->
-    <string name="tusAsignaturas">Tus Asignaturas: </string>
+    <string name="tusAsignaturas">Tus asignaturas:</string>
     <string name="escogeNueva">Escoge una nueva asignatura:</string>
     <string name="addAsignaturaUsuario">Añadir</string>
     <string name="removeAsignaturaUsuario">Eliminar</string>
 
     <!-- Docente -->
+    <string name="add_docente">Añadir docente</string>
+
     <string name="nombreDocente">Nombre</string>
     <string name="nombreDocenteHint">Nombre del profesor</string>
 
@@ -61,8 +67,9 @@
     <string name="verDocente">Ver docente</string>
 
     <!-- Asignatura -->
+    <string name="add_asignatura">Añadir asignatura </string>
     <string name="abreviaturaAsignatura">Abreviatura</string>
-    <string name="abreviaturaAsignaturaHint">Nombre del profesor</string>
+    <string name="abreviaturaAsignaturaHint">Abreviatura de la asignatura</string>
 
     <string name="nombreAsignatura">Nombre</string>
     <string name="nombreAsignaturaHint">Nombre de la asignatura</string>
@@ -70,10 +77,12 @@
     <string name="nuevaAsignatura">Nueva asignatura</string>
 
     <!-- Tutoria -->
+    <string name="add_tutoria">Añadir tutoría</string>
     <string name="tutorias">Tutorias</string>
     <string name="nuevaTutoria">Nueva tutoría</string>
 
     <!-- Clase -->
+    <string name="add_clase">Añadir clase </string>
     <string name="donde">Donde: </string>
     <string name="nuevaClase">Nueva clase</string>
 
@@ -82,6 +91,7 @@
     <string name="asignaturas">Asignaturas</string>
 
     <!-- Editables -->
+    <string name="editable">Mantener para editar</string>
     <string name="tituloEditable">Título </string>
     <string name="tituloEditableHint">Dale un título </string>
 
