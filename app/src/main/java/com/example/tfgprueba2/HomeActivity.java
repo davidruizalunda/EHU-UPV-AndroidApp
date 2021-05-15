@@ -1,10 +1,12 @@
 package com.example.tfgprueba2;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -309,9 +313,15 @@ public class HomeActivity extends AppCompatActivity {
         TextView horaFinAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.horaFinAsignaturaUsuario_textView);
         TextView dondeAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.dondeAsignaturaUsuario_textView);
         TextView docenteAsignaturaUsuario = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_textView);
+        TextView url1 = popupAsignaturasUsuarios.findViewById(R.id.url1_textView);
+        url1.setPaintFlags(url1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        TextView url2 = popupAsignaturasUsuarios.findViewById(R.id.url2_textView);
+        url2.setPaintFlags(url2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         Button docenteAsignaturaUsuario_button = popupAsignaturasUsuarios.findViewById(R.id.docenteAsignaturaUsuario_button);
 
         nombreAsignaturaUsuario.setText(Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getNombreAsignatura());
+        url1.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getUrl1());
+        url2.setText(asignaturasMap.get(String.valueOf(clase.getAsig_id())).getUrl2());
         horaInicioAsignaturaUsuario.setText(clase.getHoraInicio());
         horaFinAsignaturaUsuario.setText(clase.getHoraFin());
         dondeAsignaturaUsuario.setText(clase.getAula());
@@ -321,6 +331,27 @@ public class HomeActivity extends AppCompatActivity {
         docenteAsignaturaUsuario_button.setOnClickListener(v -> {
             popupAsignaturasUsuarios.hide();
             popupInfoDocente(Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getDocente1(), Objects.requireNonNull(asignaturasMap.get(String.valueOf(clase.getAsig_id()))).getAbreviatura());
+        });
+
+        url1.setOnClickListener(v -> {
+            try{
+                Uri uri = Uri.parse(url1.getText().toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }catch(ActivityNotFoundException e){
+                Toast.makeText(popupAsignaturasUsuarios.getContext(), "URL no añadida", Toast.LENGTH_SHORT);
+            }
+
+        });
+
+        url2.setOnClickListener(v -> {
+            try{
+                Uri uri = Uri.parse(url2.getText().toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }catch(ActivityNotFoundException e){
+                Toast.makeText(popupAsignaturasUsuarios.getContext(), "URL no añadida", Toast.LENGTH_SHORT);
+            }
         });
 
     }

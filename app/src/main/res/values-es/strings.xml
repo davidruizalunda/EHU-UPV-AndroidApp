@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">EHU Zurekin</string>
+    <string name="ldap_number">LDAP</string>
+    <string name="ldap_password">Contraseña</string>
+    <string name="login_button">Entrar</string>
+    <string name="recordar_check">Recordar</string>
+    <string name="edit_asignatura">EDIT</string>
+    <string name="egela">EGELA</string>
+    <string name="gaur">GAUR</string>
+    <string name="irACorreo">Ir a Correow</string>
+
+    <!-- Generales -->
+    <string name="seleccion_actual">Selección actual:</string>
+
+    <!-- Generales botones-->
+    <string name="empty_button">Vaciar campos</string>
+    <string name="remove_button">Eliminar</string>
+    <string name="add_button">Añadir</string>
+
+    <!-- Generales listas-->
+    <string name="listaDocentes">Lista de docentes:</string>
+    <string name="listaAsignaturas">Lista de asignaturas:</string>
+    <string name="listaTutorias">Lista de tutorias:</string>
+    <string name="listaClases">Lista de clases:</string>
+
+    <!-- Generales hora-->
+    <string name="HoraDefault">00:00</string>
+    <string name="HoraInicio">Hora comienzo</string>
+    <string name="HoraFin">Hora fin</string>
+
+    <!-- Generales día-->
+    <string name="dia">Día:</string>
+    <string name="lunes">Lunes</string>
+    <string name="martes">Martes</string>
+    <string name="miercoles">Miércoles</string>
+    <string name="jueves">Jueves</string>
+    <string name="viernes">Viernes</string>
+    <string name="sabado">Sábado</string>
+    <string name="domingo">Domingo</string>
+
+    <!-- Edit Asignaturas Usuario -->
+    <string name="tusAsignaturas">Tus asignaturas:</string>
+    <string name="escogeNueva">Escoge una nueva asignatura:</string>
+    <string name="addAsignaturaUsuario">Añadir</string>
+    <string name="removeAsignaturaUsuario">Eliminar</string>
+
+    <!-- Docente -->
+    <string name="add_docente">Añadir docente</string>
+
+    <string name="nombreDocente">Nombre</string>
+    <string name="nombreDocenteHint">Nombre del profesor</string>
+
+    <string name="apellidosDocente">Apellidos</string>
+    <string name="apellidosDocenteHint">Apellidos del profesor</string>
+
+    <string name="correoDocente">Correo</string>
+    <string name="correoDocenteHint">Correo de la EHU</string>
+
+    <string name="despachoDocente">Despacho</string>
+    <string name="despachoDocenteHint">Número/nombre Despacho</string>
+
+    <string name="nuevoDocente">Nuevo docente</string>
+
+    <string name="seleccionaDocente"> Selecciona un docente </string>
+
+    <!-- Popup Docente -->
+    <string name="correoDeContacto">Correo de contacto</string>
+    <string name="docente">Docente</string>
+    <string name="verDocente">Ver docente</string>
+
+    <!-- Asignatura -->
+    <string name="add_asignatura">Añadir asignatura </string>
+    <string name="abreviaturaAsignatura">Abreviatura</string>
+    <string name="abreviaturaAsignaturaHint">Abreviatura de la asignatura</string>
+
+    <string name="nombreAsignatura">Nombre</string>
+    <string name="nombreAsignaturaHint">Nombre de la asignatura</string>
+
+    <string name="nuevaAsignatura">Nueva asignatura</string>
+
+    <string name="seleccionaAsignatura"> Selecciona una asignatura </string>
+
+    <string name= "url1"> URL 1: </string>
+    <string name= "url2"> URL 2: </string>
+    <string name= "urlHint"> Añade una URL (Opcional) </string>
+    <string name= "noURL">URL no añadida</string>
+
+    <!-- Tutoria -->
+    <string name="add_tutoria">Añadir tutoría</string>
+    <string name="tutorias">Tutorias</string>
+    <string name="nuevaTutoria">Nueva tutoría</string>
+
+    <!-- Clase -->
+    <string name="add_clase">Añadir clase </string>
+    <string name="donde">Donde: </string>
+    <string name="nuevaClase">Nueva clase</string>
+
+    <string name="noticias">Noticias</string>
+    <string name="correo">Correo</string>
+    <string name="asignaturas">Asignaturas</string>
+
+    <!-- Editables -->
+    <string name="editable">Mantener para editar</string>
+    <string name="tituloEditable">Título </string>
+    <string name="tituloEditableHint">Dale un título </string>
+
+    <string name="urlEditable">Enlace</string>
+    <string name="urlEditableHint">URL de la página</string>
+
+</resources>

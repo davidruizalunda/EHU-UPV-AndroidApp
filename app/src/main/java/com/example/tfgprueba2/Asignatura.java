@@ -7,12 +7,32 @@ public class Asignatura {
     private String abreviatura;
     private String nombreAsignatura;
     private String docente1;
+    private String url1;
+    private String url2;
 
-    public Asignatura(String abreviatura, String nombreAsignatura, String docente1, String asig_ID) {
+    public Asignatura(String asig_ID, String abreviatura, String nombreAsignatura, String docente1, String url1, String url2) {
+        this.asig_ID = Integer.parseInt(asig_ID);
         this.abreviatura = abreviatura;
         this.nombreAsignatura = nombreAsignatura;
         this.docente1 = docente1;
-        this.asig_ID = Integer.parseInt(asig_ID);
+        this.url1 = url1;
+        this.url2 = url2;
+    }
+
+    public String getUrl1() {
+        return url1;
+    }
+
+    public void setUrl1(String url1) {
+        this.url1 = url1;
+    }
+
+    public String getUrl2() {
+        return url2;
+    }
+
+    public void setUrl2(String url2) {
+        this.url2 = url2;
     }
 
     public int getAsig_ID() {

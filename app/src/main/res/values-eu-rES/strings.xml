@@ -62,13 +62,15 @@
 
     <string name="nuevoDocente">Irakasle berria</string>
 
+    <string name="seleccionaDocente"> Aukeratu irakasle bat</string>
+
     <!-- Popup Docente -->
     <string name="correoDeContacto">Kontaktu posta</string>
     <string name="docente">Irakaslea</string>
     <string name="verDocente">Irakasleak ikusi</string>
 
     <!-- Asignatura -->
-    <string name="add_asignatura">Ikasgahia gehitu </string>
+    <string name="add_asignatura">Ikasgaia gehitu </string>
     <string name="abreviaturaAsignatura">Laburdura</string>
     <string name="abreviaturaAsignaturaHint">Irakaslearen izena</string>
 
@@ -76,6 +78,13 @@
     <string name="nombreAsignaturaHint">Ikasgaiaren izena</string>
 
     <string name="nuevaAsignatura">Ikasgai berria</string>
+
+    <string name="seleccionaAsignatura"> Aukeratu ikasgai bat</string>
+
+    <string name= "url1"> URL 1: </string>
+    <string name= "url2"> URL 2: </string>
+    <string name= "urlHint"> Gehitu URL bat (Hautazkoa)  </string>
+    <string name= "noURL">URLa ez da gehitu</string>
 
     <!-- Tutoria -->
     <string name="add_tutoria">Tutoretza gehitu</string>

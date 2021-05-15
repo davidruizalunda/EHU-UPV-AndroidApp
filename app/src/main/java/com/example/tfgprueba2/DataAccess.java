@@ -241,11 +241,15 @@ public class DataAccess {
                     String abreviaturaS = strings[0];
                     String nombreS = strings[1];
                     String profesorS = strings[2];
+                    String url1S = strings[3];
+                    String url2S = strings[4];
 
                     data =
                             URLEncoder.encode("abreviatura", "UTF-8") + "=" + URLEncoder.encode(abreviaturaS, "UTF-8") + "&" +
                             URLEncoder.encode("nombre", "UTF-8") + "=" + URLEncoder.encode(nombreS, "UTF-8") + "&" +
-                            URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8");
+                            URLEncoder.encode("profesor", "UTF-8") + "=" + URLEncoder.encode(profesorS, "UTF-8")  + "&" +
+                            URLEncoder.encode("url1", "UTF-8") + "=" + URLEncoder.encode(url1S, "UTF-8")  + "&" +
+                            URLEncoder.encode("url2", "UTF-8") + "=" + URLEncoder.encode(url2S, "UTF-8") ;
                 }
                 else if(tabla==2){
                     String horaInicioS = strings[0];

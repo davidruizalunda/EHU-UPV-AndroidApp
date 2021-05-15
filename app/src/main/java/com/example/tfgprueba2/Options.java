@@ -135,6 +135,8 @@ public class Options extends AppCompatActivity {
 
         EditText abreviatura = popupAsignatura.findViewById(R.id.abreviaturaAsignatura_editText);
         EditText nombre = popupAsignatura.findViewById(R.id.nombreAsignatura_editText);
+        EditText url1 = popupAsignatura.findViewById(R.id.url1_editText);
+        EditText url2 = popupAsignatura.findViewById(R.id.url2_editText);
         TextView seleccion = popupAsignatura.findViewById(R.id.seleccionActualAsignatura_textView);
 
         spinerNombres = popupAsignatura.findViewById(R.id.spinner10);
@@ -171,6 +173,8 @@ public class Options extends AppCompatActivity {
             abreviatura.setText("");
             nombre.setText("");
             seleccion.setText(R.string.nuevaAsignatura);
+            url1.setText("");
+            url2.setText("");
         });
 
         removeAsignatura_button.setOnClickListener(v -> {
@@ -179,6 +183,8 @@ public class Options extends AppCompatActivity {
             new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
             abreviatura.setText("");
             nombre.setText("");
+            url1.setText("");
+            url2.setText("");
             new seleccionarDb(0).execute();
             new seleccionarDb(1).execute();
         });
@@ -187,7 +193,9 @@ public class Options extends AppCompatActivity {
             String abreviaturaS = abreviatura.getText().toString();
             String nombreS = nombre.getText().toString();
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
-            new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS);
+            String url1S  = url1.getText().toString();
+            String url2S = url2.getText().toString();
+            new DataAccess.insertarDb(Options.this, 1).execute(abreviaturaS,nombreS,profesorS, url1S, url2S);
             new seleccionarDb(0).execute();
             new seleccionarDb(1).execute();
         });

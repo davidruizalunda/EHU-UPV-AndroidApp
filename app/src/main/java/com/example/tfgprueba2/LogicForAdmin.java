@@ -154,10 +154,12 @@ public class LogicForAdmin {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
                     Asignatura asignatura=new Asignatura(
+                            jsonArrayChild.optString("asig_id"),
                             jsonArrayChild.optString("abreviatura"),
                             jsonArrayChild.optString("nombre"),
                             jsonArrayChild.optString("profesor1"),
-                            jsonArrayChild.optString("asig_id")
+                            jsonArrayChild.optString("url1"),
+                            jsonArrayChild.optString("url2")
                     );
                     listaAsignaturas.add(asignatura);
                 }

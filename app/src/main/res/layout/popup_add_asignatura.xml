@@ -4,7 +4,7 @@
     android:layout_marginTop="48dp"
     android:layout_gravity="center_horizontal"
     android:layout_width="350dp"
-    android:layout_height="350dp"
+    android:layout_height="429dp"
     android:background="@drawable/basic_layout"
     >
 
@@ -125,14 +125,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/listaDocentes"
+            android:text="@string/seleccionaDocente"
             android:textColor="@color/gray_500"
             android:textStyle="bold" />
     </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="35dp"
             android:orientation="horizontal">
 
             <Spinner
@@ -143,69 +143,124 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:layout_width="446dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/basic_layout2"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView23"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/url1"
+                    android:textColor="@color/gray_500"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/url1_editText"
+                    android:layout_width="283dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/basic_textview2"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:hint="@string/urlHint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:textColor="@color/gray_500"
-                android:text="@string/listaAsignaturas" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/url2"
+                    android:textColor="@color/gray_500"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/url2_editText"
+                    android:layout_width="283dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/basic_textview2"
+                    android:gravity="center"
+                    android:hint="@string/urlHint"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/emptyAsignatura_button"
+            <LinearLayout
+                android:layout_width="446dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/basic_layout2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/listaAsignaturas"
+                    android:textColor="@color/gray_500" />
+
+                <Spinner
+                    android:id="@+id/spinner6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/basic_button2"
-                android:textColor="@color/gray_400"
-                android:layout_marginBottom="6dp"
-                android:text="@string/empty_button"
-                android:textSize="12sp" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/removeAsignatura_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/basic_button2"
-                android:textColor="@color/gray_400"
-                android:layout_marginBottom="6dp"
-                android:text="@string/remove_button" />
+                <Button
+                    android:id="@+id/emptyAsignatura_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/basic_button2"
+                    android:text="@string/empty_button"
+                    android:textColor="@color/gray_400"
+                    android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/addAsignatura_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/basic_button2"
-                android:textColor="@color/gray_400"
-                android:text="@string/add_button" />
+                <Button
+                    android:id="@+id/removeAsignatura_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/basic_button2"
+                    android:text="@string/remove_button"
+                    android:textColor="@color/gray_400" />
 
+                <Button
+                    android:id="@+id/addAsignatura_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/basic_button2"
+                    android:text="@string/add_button"
+                    android:textColor="@color/gray_400" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

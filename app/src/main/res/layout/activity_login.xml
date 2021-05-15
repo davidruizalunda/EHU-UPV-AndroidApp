@@ -134,11 +134,15 @@
                     android:layout_height="32dp"
                     app:srcCompat="@drawable/bandera_i" />
 
-                <ImageView
-                    android:id="@+id/imageView4"
+                <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    app:srcCompat="@drawable/default_language" />
+                    android:layout_height="33dp"
+                    android:text="AUTO"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </LinearLayout>
 
