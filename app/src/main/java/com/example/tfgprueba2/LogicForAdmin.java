@@ -205,7 +205,6 @@ public class LogicForAdmin {
         listaTutorias.clear();
         DataAccess dataAccess = new DataAccess();
         String data=dataAccess.seleccionarTabla(3, usuario);
-        Log.d("TUTORIA:" ,data);
         if(!data.equalsIgnoreCase("")){
             JSONObject json;
             try {

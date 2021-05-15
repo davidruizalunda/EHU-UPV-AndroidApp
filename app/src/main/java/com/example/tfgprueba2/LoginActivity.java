@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Locale locale = null;
     private boolean logeado = false;
+    private boolean changed = false;
     private ImageView loadingGif;
     Handler h = new Handler();
 
@@ -47,39 +47,34 @@ public class LoginActivity extends AppCompatActivity {
         try{
             Integer idioma = getIntent().getExtras().getInt("idioma");
             cargarRadioGroup(idioma);
+
         }catch(NullPointerException e){
-            cargarRadioGroup(sharedPreferences.getInt("idioma", 0));
+            cambiarLocalidad(sharedPreferences.getInt("idioma", 2));
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId)
-            {
-                case R.id.es_radioButton:
-                    locale = new Locale("es", "ES");
-                    break;
-                case R.id.eu_radioButton:
-                    locale = new Locale("eu", "EU");
-                    break;
-                case R.id.en_radioButton:
-                    locale = new Locale("en", "EN");
-                    break;
-                default:
-                    locale = Locale.getDefault();
-            }
-            cambiarIdioma(locale);
+            cambiarLocalidad(checkedIdToId(checkedId));
         });
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    public int checkedIdToId(int checkedId) {
+        switch (checkedId)
+        {
+            case R.id.es_radioButton:
+                return 1;
+            case R.id.eu_radioButton:
+                return 2;
+            case R.id.en_radioButton:
+                return 3;
+            default:
+                return 0;
+        }
     }
 
     public void cargarRadioGroup(int id){
         switch (id){
             case 1:
-                Log.d("HEY: ", "listen");
                 radioGroup.check(R.id.es_radioButton);
                 break;
             case 2:
@@ -93,30 +88,37 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void cambiarLocalidad(int id){
+        switch (id)
+        {
+            case 1:
+                locale = new Locale("es", "ES");
+                break;
+            case 2:
+                locale = new Locale("eu", "EU");
+                break;
+            case 3:
+                locale = new Locale("en", "EN");
+                break;
+            default:
+                locale = Locale.getDefault();
+        }
+        cambiarIdioma(locale);
+        refrescar(id);
+    }
+
     public void cambiarIdioma(Locale locale){
         if (locale != null){
-            Log.d("HOLA:", "hola");
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.locale = locale;
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
-        Intent refrescar = new Intent(getApplicationContext(), LoginActivity.class);
+    }
 
-        switch (radioGroup.getCheckedRadioButtonId())
-        {
-            case R.id.es_radioButton:
-                refrescar.putExtra("idioma", 1);
-                break;
-            case R.id.eu_radioButton:
-                refrescar.putExtra("idioma", 2);
-                break;
-            case R.id.en_radioButton:
-                refrescar.putExtra("idioma", 3);
-                break;
-            default:
-                refrescar.putExtra("idioma", 0);
-        }
+    public void refrescar(int id){
+        Intent refrescar = new Intent(getApplicationContext(), LoginActivity.class);
+        refrescar.putExtra("idioma", id);
         startActivity(refrescar);
         finish();
     }
@@ -128,20 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("ldap", ldap.getText().toString());
             editor.putString("password", password.getText().toString());
             editor.putBoolean("recordar", true);
-
-            switch (radioGroup.getCheckedRadioButtonId()){
-                case R.id.es_radioButton:
-                    editor.putInt("idioma", 1);
-                    break;
-                case R.id.eu_radioButton:
-                    editor.putInt("idioma", 2);
-                    break;
-                case R.id.en_radioButton:
-                    editor.putInt("idioma", 3);
-                    break;
-                default:
-                    editor.putInt("idioma", 0);
-            }
+            editor.putInt("idioma", checkedIdToId(radioGroup.getCheckedRadioButtonId()));
 
         }else{
             editor.putString("ldap", "");
@@ -168,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
             h.post(() -> {
                 if(logeado){
                     loadingGif.setBackground(null);
-                    Intent home = new Intent(view.getContext(), HomeActivity.class); //En vez de Intent home = new Intent(this, HomeActivity.class);
+                    Intent home = new Intent(view.getContext(), HomeActivity.class);
                     startActivity(home);
 
 

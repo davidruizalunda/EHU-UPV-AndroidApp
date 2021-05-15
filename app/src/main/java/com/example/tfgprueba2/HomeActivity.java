@@ -139,7 +139,6 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
                 ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
-                Log.d("NEWS: ", news.size()+"");
                 h.post(() -> updateAdapterNews(news));
 
             }
@@ -224,7 +223,6 @@ public class HomeActivity extends AppCompatActivity {
         buttonAddAsignaturaUsuario.setOnClickListener(v -> {
             LogicForAdmin logicForAdmin = new LogicForAdmin();
             logicForAdmin.insertIntoUsuario(HomeActivity.this , String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID()));
-            new seleccionarDb(this, 1, false).execute();
             new seleccionarDb(this, 1, true).execute();
             new seleccionarDb(this, 99, true).execute();
         });
@@ -233,7 +231,6 @@ public class HomeActivity extends AppCompatActivity {
             String asig_idS = String.valueOf(listaAsignaturasUsuario.get(spinnerAsignaturasUsuario.getSelectedItemPosition()).getAsig_ID());
             LogicForAdmin logicForAdmin = new LogicForAdmin();
             logicForAdmin.eliminarAsignaturaUsuario(this, asig_idS);
-            new seleccionarDb(this, 1, false).execute();
             new seleccionarDb(this, 1, true).execute();
             new seleccionarDb(this, 99, true).execute();
         });
@@ -338,7 +335,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView despacho = popupDocenteAsignaturaUsuario.findViewById(R.id.despachoDocenteInfo_textView);
         ListView subjectListView = popupDocenteAsignaturaUsuario.findViewById(R.id.tutoriasListView);
         Button returnButton = popupDocenteAsignaturaUsuario.findViewById(R.id.returnInfoDocente_button);
-
+        System.out.println("TUTORIAS MAP NUEVO: " + tutoriasMap.get(correo_EHU));
         MyTutoriasViewListAdapter subjectsAdapter=new MyTutoriasViewListAdapter(this, Objects.requireNonNull(tutoriasMap.get(correo_EHU)));
         subjectListView.setAdapter(subjectsAdapter);
 
@@ -463,6 +460,10 @@ public class HomeActivity extends AppCompatActivity {
                 if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true) && logicForAdmin.obtenerDocentes(true) && logicForAdmin.obtenerTutorias(true)){
                     runOnUiThread(() -> {
                         limpiarArrayListaClasesPorDia();
+                        tutoriasMap.clear();
+                        if(listaAsignaturasUsuario!=null){
+                            listaAsignaturasUsuario.clear();
+                        }
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
                         listaClasesUsuario = logicForAdmin.getListaClases();
                         listaDocentesUsuario = logicForAdmin.getListaDocentes();
@@ -475,19 +476,19 @@ public class HomeActivity extends AppCompatActivity {
                             listaClasesPorDia[Integer.parseInt(listaClasesUsuario.get(x).getDia())].add(listaClasesUsuario.get(x));
                         }
 
-                        Log.d("ESPACIO1: ", listaDocentesUsuario.size()+"");
                         for(int z=0; z<listaDocentesUsuario.size(); z++){
                             docentesMap.put(listaDocentesUsuario.get(z).getCorreo_EHU(), listaDocentesUsuario.get(z));
                         }
 
-                        Log.d("ESPACIO: ", listaTutoriasUsuario.size()+"");
-                        for(int y = 0; y < listaTutoriasUsuario.size(); y ++){
-                            if (tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor()) == null){
-                                Log.d("Rellenando vacio: ", listaTutoriasUsuario.get(y).getProfesor());
-                                tutoriasMap.put(listaTutoriasUsuario.get(y).getProfesor(), new ArrayList<>());
+                        for (int y1 = 0 ; y1 < listaDocentesUsuario.size(); y1 ++){
+                            if (tutoriasMap.get(listaDocentesUsuario.get(y1).getCorreo_EHU()) == null){
+
+                                tutoriasMap.put(listaDocentesUsuario.get(y1).getCorreo_EHU(), new ArrayList<>());
                             }
+                        }
+
+                        for(int y = 0; y < listaTutoriasUsuario.size(); y ++){
                             Objects.requireNonNull(tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor())).add(listaTutoriasUsuario.get(y));
-                            Log.d("Rellenando de: ", listaTutoriasUsuario.get(y).getHoraInicio());
                         }
 
                         cargarListViewAsignaturas(0);
@@ -507,6 +508,7 @@ public class HomeActivity extends AppCompatActivity {
             listaClasesPorDia[i] = new ArrayList<>();
         }
     }
+
 
 
 }
