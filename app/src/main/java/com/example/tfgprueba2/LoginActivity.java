@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.os.Bundle;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText ldap, password;
     private CheckBox recordarCheckBox;
     private RadioGroup radioGroup;
+    private TextView textView4;
     private Locale locale = null;
     private boolean logeado = false;
     private boolean changed = false;
@@ -43,15 +45,20 @@ public class LoginActivity extends AppCompatActivity {
         ldap.setText(sharedPreferences.getString("ldap", ""));
         password.setText(sharedPreferences.getString("password", ""));
         recordarCheckBox.setChecked(sharedPreferences.getBoolean("recordar", false));
-
+        cargarRadioGroup(sharedPreferences.getInt("idioma", 0));
+        System.out.println(changed);
         try{
+            changed = getIntent().getExtras().getBoolean("changed");
             Integer idioma = getIntent().getExtras().getInt("idioma");
             cargarRadioGroup(idioma);
-
         }catch(NullPointerException e){
-            cambiarLocalidad(sharedPreferences.getInt("idioma", 2));
+            e.printStackTrace();
         }
 
+        if (!changed){
+            changed = true;
+            cambiarLocalidad(sharedPreferences.getInt("idioma", 0));
+        }
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             cambiarLocalidad(checkedIdToId(checkedId));
         });
@@ -119,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     public void refrescar(int id){
         Intent refrescar = new Intent(getApplicationContext(), LoginActivity.class);
         refrescar.putExtra("idioma", id);
+        refrescar.putExtra("changed", changed);
         startActivity(refrescar);
         finish();
     }
