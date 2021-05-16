@@ -375,12 +375,12 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/tareaAdd_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="6dp"
                 android:background="@drawable/basic_textview2"
                 android:gravity="center"
                 android:hint="@string/add_tareaHint"
@@ -394,27 +394,30 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/esLink_checkBox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:text="Link" />
+                android:text="Link"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinner4"
+                android:id="@+id/abreviaturas_spinner"
                 android:layout_width="87dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <Button
                 android:id="@+id/button4"
-                android:layout_width="wrap_content"
+                android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/basic_button4"
-                android:text="Añadir"
-                android:textColor="@color/gray_500" />
+                android:onClick="onAddTask"
+                android:text="+"
+                android:textColor="@color/gray_500"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

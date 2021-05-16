@@ -14,10 +14,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -45,8 +45,8 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
-    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario, popup_rss;
-    private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario, popup_rss, popup_tareas;
+    private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas, spinnerAbreviaturasAsignatura;
     private final int TIEMPO = 60000;
     private boolean terminado;
     Handler h = new Handler();
@@ -64,6 +64,10 @@ public class HomeActivity extends AppCompatActivity {
     private final Map<String, Asignatura> asignaturasMap = new HashMap<>();
     private final Map<String, Docente> docentesMap = new HashMap<>();
     private final Map<String, ArrayList<Tutoria>> tutoriasMap = new HashMap<>();
+
+    private CheckBox esLinkCheckBox;
+    private Boolean esLink;
+    private EditText tareaElegida;
 
     private String[] dias;
     private String editable1_title, editable2_title, editable1_url, editable2_url;
@@ -87,6 +91,8 @@ public class HomeActivity extends AppCompatActivity {
         editable1.setText(editable1_title);
         editable2.setText(editable2_title);
 
+        spinnerAbreviaturasAsignatura = findViewById(R.id.abreviaturas_spinner);
+
         //spinnerAsignaturasUsuario = findViewById(R.id.spinner7);
         diaTextView = findViewById(R.id.dia_textView);
         limpiarArrayListaClasesPorDia();
@@ -106,6 +112,7 @@ public class HomeActivity extends AppCompatActivity {
         popupEditable = new Dialog(this);
         popupDocenteAsignaturaUsuario = new Dialog(this);
         popup_rss = new Dialog(this);
+        popup_tareas = new Dialog(this);
 
         editable1.setOnLongClickListener(v -> {
             popupEditable(1);
@@ -187,16 +194,10 @@ public class HomeActivity extends AppCompatActivity {
             });
     }
 
-    public void updateAdapterNews(ArrayList<News> news){
-        MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
-        ListView newsListView = findViewById(R.id.newsListView);
-        newsListView.setAdapter(newsAdapter);
-
-        newsListView.setOnItemClickListener((parent, view, position, id) -> {
-            Uri uri = Uri.parse(news.get(position).getLink());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
+    public void updateAdapterTasks(ArrayList<News> news){
+        MyNewsListAdapter tasksAdapter=new MyNewsListAdapter(this, news);
+        //ListView tasksListView = findViewById(R.id.taksListView);
+        //tasksListView.setAdapter(tasksAdapter);
     }
 
     public void onRssButtonClick(View view){
@@ -220,6 +221,41 @@ public class HomeActivity extends AppCompatActivity {
 
         popup_rss.show();
     }
+
+    public void onAddTask(View view){
+
+        String asignaturaTarea = spinnerAbreviaturasAsignatura.getSelectedItem().toString();
+        esLinkCheckBox = findViewById(R.id.esLink_checkBox);
+        esLink = esLinkCheckBox.isChecked();
+        tareaElegida = findViewById(R.id.tareaAdd_editText);
+        String tareaTexto = tareaElegida.getText().toString();
+
+        popup_tareas.setContentView(R.layout.popup_confirmar_tarea);
+        popup_tareas.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView tareaElegida = popup_tareas.findViewById(R.id.tareaElegida_textView);
+        TextView tareaAsignaturaElegida = popup_tareas.findViewById(R.id.asignaturaTareaElegida_textView);
+        TextView esEnlace = popup_tareas.findViewById(R.id.esLinkTareaElegida_textView);
+
+        tareaElegida.setText(tareaTexto);
+        tareaAsignaturaElegida.setText(asignaturaTarea);
+        if(esLink){
+            esEnlace.setText("Si");
+        }else{
+            esEnlace.setText("No");
+        }
+
+        popup_tareas.show();
+    }
+
+    public void onAddTask_confirmar(View view){
+
+    }
+
+    public void onAddTask_cancelar(View view){
+        popup_tareas.hide();
+    }
+
 
     public void updateAdapterNews2(ArrayList<News> news){
         MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
@@ -320,6 +356,17 @@ public class HomeActivity extends AppCompatActivity {
         asignaturasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         asignaturasAdapter.notifyDataSetChanged();
         spinnerAsignaturas.setAdapter(asignaturasAdapter);
+    }
+
+    private void cargarSpinnerAsignaturasAbreviaturas() {
+        ArrayList<String> abreviaturasAsignaturas = new ArrayList<>();
+        for (int i = 0; i < listaAsignaturasUsuario.size(); i ++){
+            abreviaturasAsignaturas.add(listaAsignaturasUsuario.get(i).getAbreviatura());
+        }
+        ArrayAdapter<String> asignaturasAbreviaturaAdapter = new ArrayAdapter<>(this , android.R.layout.simple_spinner_item, abreviaturasAsignaturas);
+        asignaturasAbreviaturaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        asignaturasAbreviaturaAdapter.notifyDataSetChanged();
+        spinnerAbreviaturasAsignatura.setAdapter(asignaturasAbreviaturaAdapter);
     }
 
     private void cargarSpinnerAsignaturasUsuario() {
@@ -531,9 +578,12 @@ public class HomeActivity extends AppCompatActivity {
                             listaAsignaturasUsuario.clear();
                         }
                         listaAsignaturasUsuario = logicForAdmin.getListaAsignaturas();
+                        cargarSpinnerAsignaturasAbreviaturas();
+
                         listaClasesUsuario = logicForAdmin.getListaClases();
                         listaDocentesUsuario = logicForAdmin.getListaDocentes();
                         listaTutoriasUsuario = logicForAdmin.getListaTutorias();
+
 
                         for(int i=0; i<listaAsignaturasUsuario.size(); i++){
                             asignaturasMap.put(String.valueOf(listaAsignaturasUsuario.get(i).getAsig_ID()), listaAsignaturasUsuario.get(i));
