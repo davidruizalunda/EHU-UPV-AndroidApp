@@ -100,6 +100,10 @@
     <string name="correo">Mail</string>
     <string name="asignaturas">Subjects</string>
 
+    <!-- Tarea -->
+    <string name="tareas">Tareas</string>
+    <string name="add_tareaHint">¿Alguna tarea?</string>
+
     <!-- Editables -->
     <string name="editable">Hold button to edit</string>
     <string name="tituloEditable">Title </string>

@@ -10,9 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.TFGprueba2">
 
-        <activity android:name=".popupActivity_calendario"></activity>
         <activity android:name=".Options" />
         <activity android:name=".LoginActivity">
             <intent-filter>

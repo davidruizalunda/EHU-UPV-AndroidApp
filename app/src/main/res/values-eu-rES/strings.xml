@@ -100,6 +100,10 @@
     <string name="correo">Posta</string>
     <string name="asignaturas">Ikasgaiak</string>
 
+    <!-- Tarea -->
+    <string name="tareas">Tareas</string>
+    <string name="add_tareaHint">¿Alguna tarea?</string>
+
     <!-- Editables -->
     <string name="editable">Editatzeko mantendu</string>
     <string name="tituloEditable">Titulua: </string>

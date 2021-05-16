@@ -2,6 +2,7 @@
 package com.example.tfgprueba2;
 
 import android.app.Dialog;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ public class Options extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
@@ -258,9 +260,10 @@ public class Options extends AppCompatActivity {
             String horaInicio = horaInicioClase.getText().toString();
             String horaFin = horaFinClase.getText().toString();
             String aulaS = aula.getText().toString();
+            int diaS = spinnerDias.getSelectedItemPosition();
             int asig_idS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID();
 
-            String sentencia = "DELETE FROM clase WHERE horaInicio='" + horaInicio + "' AND aula ='" + aulaS + "'AND asig_id=" + asig_idS + ";";
+            String sentencia = "DELETE FROM clase WHERE horaInicio='" + horaInicio + "' AND aula ='" + aulaS + "'AND dia ='" + diaS + "' AND asig_id=" + asig_idS + ";";
             new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
             horaInicioClase.setText("");
             horaFinClase.setText("");

@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -44,7 +45,7 @@ Contraseña: Tu contraseña
 */
 public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
-    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario;
+    private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario, popup_rss;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas;
     private final int TIEMPO = 60000;
     private boolean terminado;
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -103,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         popupCalendario = new Dialog(this);
         popupEditable = new Dialog(this);
         popupDocenteAsignaturaUsuario = new Dialog(this);
+        popup_rss = new Dialog(this);
 
         editable1.setOnLongClickListener(v -> {
             popupEditable(1);
@@ -140,10 +143,7 @@ public class HomeActivity extends AppCompatActivity {
     public void updateDataCorreowsNews() {
         LogicForAdmin logicForAdmin = new LogicForAdmin();
         Thread thread = new Thread(() -> {
-
             try {
-                ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
-                h.post(() -> updateAdapterNews(news));
 
             }
             catch (Exception e){
@@ -198,6 +198,41 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    public void onRssButtonClick(View view){
+        LogicForAdmin logicForAdmin = new LogicForAdmin();
+        popup_rss.setContentView(R.layout.popup_view_rss);
+        popup_rss.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Thread thread = new Thread(() -> {
+            try {
+                ArrayList<News> news = logicForAdmin.getEHUNews(getApplicationContext());
+                h.post(() -> updateAdapterNews2(news));
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+
+
+
+        popup_rss.show();
+    }
+
+    public void updateAdapterNews2(ArrayList<News> news){
+        MyNewsListAdapter newsAdapter=new MyNewsListAdapter(this, news);
+        ListView newsListView = popup_rss.findViewById(R.id.newsListView);
+        newsListView.setAdapter(newsAdapter);
+
+        newsListView.setOnItemClickListener((parent, view, position, id) -> {
+            Uri uri = Uri.parse(news.get(position).getLink());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+    }
+
 
     public void onCalendarioButtonClick(View view){
         popupCalendario.setContentView(R.layout.popup_calendario);

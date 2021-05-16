@@ -99,6 +99,10 @@
     <string name="correo">Correo</string>
     <string name="asignaturas">Asignaturas</string>
 
+    <!-- Tarea -->
+    <string name="tareas">Tareas</string>
+    <string name="add_tareaHint">¿Alguna tarea?</string>
+
     <!-- Editables -->
     <string name="editable">Mantener para editar</string>
     <string name="tituloEditable">Título </string>
