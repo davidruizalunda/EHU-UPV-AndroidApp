@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:layout_width="350dp"
-    android:layout_height="200dp"
+    android:layout_height="230dp"
     android:background="@drawable/basic_layout"
     >
 
@@ -19,7 +19,7 @@
         android:layout_marginBottom="0dp"
         android:background="@drawable/basic_button4"
         android:onClick="onAddTask_confirmar"
-        android:text="Button" />
+        android:text="@string/add_button" />
 
     <Button
         android:id="@+id/cancelarTarea_button"
@@ -33,7 +33,7 @@
         android:layout_marginBottom="0dp"
         android:background="@drawable/basic_button"
         android:onClick="onAddTask_cancelar"
-        android:text="Button" />
+        android:text="@string/cancel_button" />
 
     <TextView
         android:id="@+id/textView25"
@@ -50,7 +50,7 @@
         android:layout_marginEnd="17dp"
         android:layout_marginRight="17dp"
         android:gravity="center"
-        android:text="¿Estas seguro de añadir esta tarea?"
+        android:text="@string/confirmacionTextTareaElegida"
         android:textStyle="bold" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:layout_marginEnd="17dp"
         android:layout_marginRight="17dp"
         android:gravity="center"
-        android:text="TextView" />
+        android:hint="@string/confirmacionTextTareaElegidaHint" />
 
     <TextView
         android:id="@+id/textView27"
@@ -79,21 +79,21 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
-        android:layout_marginTop="105dp"
-        android:text="Asignatura:"
+        android:layout_marginTop="95dp"
+        android:text="@string/confirmacionAsignaturaElegida"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/asignaturaTareaElegida_textView"
-        android:layout_width="87dp"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="102dp"
         android:layout_marginLeft="102dp"
-        android:layout_marginTop="105dp"
-        android:text="TextView" />
+        android:layout_marginTop="95dp"
+        android:hint="@string/ningunaAsignaturaTarea" />
 
     <TextView
         android:id="@+id/textView29"
@@ -102,10 +102,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="95dp"
         android:layout_marginEnd="59dp"
         android:layout_marginRight="59dp"
-        android:text="¿Es un enlace?"
+        android:text="@string/confirmacionEsEnlace"
         android:textStyle="bold" />
 
     <TextView
@@ -115,8 +115,48 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp" />
+
+    <TextView
+        android:id="@+id/introduceURLTareaElegida_textView"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Si" />
+        android:layout_marginBottom="87dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="@string/introduceURLTarea"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/introduceURLTareaElegida_editText"
+        android:layout_width="match_parent"
+        android:layout_height="21dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginBottom="62dp"
+        android:background="@drawable/basic_textview2"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/introduceURLTareaHint"
+        android:visibility="invisible"
+        android:inputType="textUri"
+        android:textSize="12sp" />
 </RelativeLayout>

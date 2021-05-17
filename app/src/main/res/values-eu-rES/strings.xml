@@ -17,6 +17,7 @@
     <string name="empty_button">Eremuak hustu</string>
     <string name="remove_button">Ezabatu</string>
     <string name="add_button">Gehitu</string>
+    <string name="cancel_button">Utzi</string>
 
     <!-- Generales listas-->
     <string name="listaDocentes">Irakasleen zerrenda:</string>
@@ -101,8 +102,17 @@
     <string name="asignaturas">Ikasgaiak</string>
 
     <!-- Tarea -->
-    <string name="tareas">Tareas</string>
-    <string name="add_tareaHint">¿Alguna tarea?</string>
+    <string name="tareas">Zereginak</string>
+    <string name="add_tareaHint">Etxeko lanak?/Link titulua</string>
+    <string name="confirmacionTextTareaElegida">Ziur zaude zeregin hau gehitu nahi duzula?</string>
+    <string name="confirmacionTextTareaElegidaHint">Deskribatu zeregin bat</string>
+    <string name="confirmacionAsignaturaElegida">Ikasgaia: </string>
+    <string name="ningunaAsignaturaTarea">Ezer ez</string>
+    <string name="confirmacionEsEnlace">¿Esteka da? </string>
+    <string name="confirmacionSi">Bai </string>
+    <string name="confirmacionNo">Ez </string>
+    <string name="introduceURLTarea">URLa gehitu</string>
+    <string name="introduceURLTareaHint">Formatua: https://weborria.com</string>
 
     <!-- Editables -->
     <string name="editable">Editatzeko mantendu</string>

@@ -17,6 +17,7 @@
     <string name="empty_button">Empty fields</string>
     <string name="remove_button">Remove</string>
     <string name="add_button">Add</string>
+    <string name="cancel_button">Cancel</string>
 
     <!-- Generales listas-->
     <string name="listaDocentes">Teachers list:</string>
@@ -101,9 +102,17 @@
     <string name="asignaturas">Subjects</string>
 
     <!-- Tarea -->
-    <string name="tareas">Tareas</string>
-    <string name="add_tareaHint">¿Alguna tarea?</string>
-
+    <string name="tareas">Tasks</string>
+    <string name="add_tareaHint">Some task?/Link Title</string>
+    <string name="confirmacionTextTareaElegida">Are you sure to add this task?</string>
+    <string name="confirmacionTextTareaElegidaHint">Describe a task</string>
+    <string name="confirmacionAsignaturaElegida">Subject: </string>
+    <string name="ningunaAsignaturaTarea">None</string>
+    <string name="confirmacionEsEnlace">Is it a link? </string>
+    <string name="confirmacionSi">Yes </string>
+    <string name="confirmacionNo">No </string>
+    <string name="introduceURLTarea">Enter the URL</string>
+    <string name="introduceURLTareaHint">Format: https://webpage.com</string>
     <!-- Editables -->
     <string name="editable">Hold button to edit</string>
     <string name="tituloEditable">Title </string>

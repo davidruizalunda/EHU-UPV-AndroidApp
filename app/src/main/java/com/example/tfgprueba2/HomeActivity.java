@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Clase> listaClasesUsuario;
     private List<Docente> listaDocentesUsuario;
     private List<Tutoria> listaTutoriasUsuario;
+    private List<Tarea> listaTareasUsuario;
     private final Map<String, Asignatura> asignaturasMap = new HashMap<>();
     private final Map<String, Docente> docentesMap = new HashMap<>();
     private final Map<String, ArrayList<Tutoria>> tutoriasMap = new HashMap<>();
@@ -68,6 +70,9 @@ public class HomeActivity extends AppCompatActivity {
     private CheckBox esLinkCheckBox;
     private Boolean esLink;
     private EditText tareaElegida;
+    private String tareaTexto;
+    private int asignaturaID;
+    private EditText introduceUrlEditText;
 
     private String[] dias;
     private String editable1_title, editable2_title, editable1_url, editable2_url;
@@ -224,11 +229,12 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onAddTask(View view){
 
+        asignaturaID = listaAsignaturasUsuario.get(spinnerAbreviaturasAsignatura.getSelectedItemPosition()).getAsig_ID();
         String asignaturaTarea = spinnerAbreviaturasAsignatura.getSelectedItem().toString();
         esLinkCheckBox = findViewById(R.id.esLink_checkBox);
         esLink = esLinkCheckBox.isChecked();
         tareaElegida = findViewById(R.id.tareaAdd_editText);
-        String tareaTexto = tareaElegida.getText().toString();
+        tareaTexto = tareaElegida.getText().toString();
 
         popup_tareas.setContentView(R.layout.popup_confirmar_tarea);
         popup_tareas.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -236,19 +242,42 @@ public class HomeActivity extends AppCompatActivity {
         TextView tareaElegida = popup_tareas.findViewById(R.id.tareaElegida_textView);
         TextView tareaAsignaturaElegida = popup_tareas.findViewById(R.id.asignaturaTareaElegida_textView);
         TextView esEnlace = popup_tareas.findViewById(R.id.esLinkTareaElegida_textView);
+        TextView introduceUrl = popup_tareas.findViewById(R.id.introduceURLTareaElegida_textView);
+        introduceUrlEditText = popup_tareas.findViewById(R.id.introduceURLTareaElegida_editText);
 
         tareaElegida.setText(tareaTexto);
-        tareaAsignaturaElegida.setText(asignaturaTarea);
+        tareaAsignaturaElegida.setText(asignaturaTarea.split(":")[0]);
         if(esLink){
-            esEnlace.setText("Si");
+            esEnlace.setText(R.string.confirmacionSi);
+            introduceUrl.setVisibility(View.VISIBLE);
+            introduceUrlEditText.setVisibility(View.VISIBLE);
         }else{
-            esEnlace.setText("No");
+            esEnlace.setText(R.string.confirmacionNo);
+            introduceUrl.setVisibility(View.GONE);
+            introduceUrlEditText.setVisibility(View.GONE);
         }
 
         popup_tareas.show();
     }
 
     public void onAddTask_confirmar(View view){
+        if(tareaTexto.compareTo("") != 0){
+            if(esLink){
+                if(introduceUrlEditText.toString().compareTo("") != 0){
+                    new DataAccess.insertarDb(this, 5).execute(tareaTexto, String.valueOf(asignaturaID), String.valueOf(esLink), introduceUrlEditText.getText().toString());
+                    new seleccionarDb(this, 99, true).execute();
+                    popup_tareas.hide();
+                }else{
+                    Toast.makeText(this, "Introduce una URL", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                new DataAccess.insertarDb(this, 5).execute(tareaTexto, String.valueOf(asignaturaID), String.valueOf(esLink), "");
+                new seleccionarDb(this, 99, true).execute();
+                popup_tareas.hide();
+            }
+        }else{
+            Toast.makeText(this, "Introduce una descripción", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -359,11 +388,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void cargarSpinnerAsignaturasAbreviaturas() {
-        ArrayList<String> abreviaturasAsignaturas = new ArrayList<>();
-        for (int i = 0; i < listaAsignaturasUsuario.size(); i ++){
-            abreviaturasAsignaturas.add(listaAsignaturasUsuario.get(i).getAbreviatura());
-        }
-        ArrayAdapter<String> asignaturasAbreviaturaAdapter = new ArrayAdapter<>(this , android.R.layout.simple_spinner_item, abreviaturasAsignaturas);
+        ArrayAdapter<Asignatura> asignaturasAbreviaturaAdapter = new ArrayAdapter<>(this , android.R.layout.simple_spinner_item, listaAsignaturasUsuario);
         asignaturasAbreviaturaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         asignaturasAbreviaturaAdapter.notifyDataSetChanged();
         spinnerAbreviaturasAsignatura.setAdapter(asignaturasAbreviaturaAdapter);
@@ -383,6 +408,14 @@ public class HomeActivity extends AppCompatActivity {
         subjectListView.setAdapter(subjectsAdapter);
 
         subjectListView.setOnItemClickListener((parent, view, position, id) -> popupInfoAsignatura(listaClasesPorDia[dia].get(position)));
+    }
+
+    public void cargarListViewTareas(){
+        MyTasksViewListAdapter tasksAdapter=new MyTasksViewListAdapter(this, listaTareasUsuario, asignaturasMap);
+        ListView tasksListView = findViewById(R.id.tareasListView);
+        tasksListView.setAdapter(tasksAdapter);
+
+        tasksListView.setOnItemClickListener((parent, view, position, id) -> popupInfoAsignatura(listaClasesPorDia[dia].get(position)));
     }
 
     private void popupInfoAsignatura(Clase clase) {
@@ -570,7 +603,7 @@ public class HomeActivity extends AppCompatActivity {
                     });
                 }
             }else if(table == 99 && usuario){
-                if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true) && logicForAdmin.obtenerDocentes(true) && logicForAdmin.obtenerTutorias(true)){
+                if(logicForAdmin.obtenerAsignaturas(true) && logicForAdmin.obtenerClases(true) && logicForAdmin.obtenerDocentes(true) && logicForAdmin.obtenerTutorias(true) && logicForAdmin.obtenerTareas(true)){
                     runOnUiThread(() -> {
                         limpiarArrayListaClasesPorDia();
                         tutoriasMap.clear();
@@ -583,6 +616,7 @@ public class HomeActivity extends AppCompatActivity {
                         listaClasesUsuario = logicForAdmin.getListaClases();
                         listaDocentesUsuario = logicForAdmin.getListaDocentes();
                         listaTutoriasUsuario = logicForAdmin.getListaTutorias();
+                        listaTareasUsuario = logicForAdmin.getListaTareas();
 
 
                         for(int i=0; i<listaAsignaturasUsuario.size(); i++){
@@ -607,6 +641,7 @@ public class HomeActivity extends AppCompatActivity {
                             Objects.requireNonNull(tutoriasMap.get(listaTutoriasUsuario.get(y).getProfesor())).add(listaTutoriasUsuario.get(y));
                         }
 
+                        cargarListViewTareas();
                         cargarListViewAsignaturas(0);
 
 

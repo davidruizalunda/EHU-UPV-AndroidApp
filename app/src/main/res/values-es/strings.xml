@@ -16,6 +16,7 @@
     <string name="empty_button">Vaciar campos</string>
     <string name="remove_button">Eliminar</string>
     <string name="add_button">Añadir</string>
+    <string name="cancel_button">Cancelar</string>
 
     <!-- Generales listas-->
     <string name="listaDocentes">Lista de docentes:</string>
@@ -101,7 +102,16 @@
 
     <!-- Tarea -->
     <string name="tareas">Tareas</string>
-    <string name="add_tareaHint">¿Alguna tarea?</string>
+    <string name="add_tareaHint">¿Alguna tarea?/Titulo link</string>
+    <string name="confirmacionTextTareaElegida">¿Estas seguro de añadir esta tarea?</string>
+    <string name="confirmacionTextTareaElegidaHint">Describe una tarea</string>
+    <string name="confirmacionAsignaturaElegida">Asignatura: </string>
+    <string name="ningunaAsignaturaTarea">Ninguna</string>
+    <string name="confirmacionEsEnlace">¿Es un enlace? </string>
+    <string name="confirmacionSi">Si </string>
+    <string name="confirmacionNo">No </string>
+    <string name="introduceURLTarea">Introduce la URL</string>
+    <string name="introduceURLTareaHint">Formato: https://paginaweb.com</string>
 
     <!-- Editables -->
     <string name="editable">Mantener para editar</string>

@@ -27,6 +27,7 @@ public class LogicForAdmin {
     private final List<Asignatura> listaAsignaturas = new ArrayList<>();
     private final List<Clase> listaClases = new ArrayList<>();
     private final List<Tutoria> listaTutorias = new ArrayList<>();
+    private final List<Tarea> listaTareas = new ArrayList<>();
 
     public List<Docente> getListaDocentes() {
             return listaDocentes;
@@ -42,6 +43,10 @@ public class LogicForAdmin {
 
     public List<Tutoria> getListaTutorias() {
         return listaTutorias;
+    }
+
+    public List<Tarea> getListaTareas() {
+        return listaTareas;
     }
 
     public Correow[] getCorreows(int numMails) throws MessagingException, IOException {
@@ -221,6 +226,35 @@ public class LogicForAdmin {
                             jsonArrayChild.optString("dia")
                     );
                     listaTutorias.add(tutoria);
+                }
+                return true;
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean obtenerTareas(boolean usuario){
+        listaTareas.clear();
+        DataAccess dataAccess = new DataAccess();
+        String data=dataAccess.seleccionarTabla(5, usuario);
+        if(!data.equalsIgnoreCase("")){
+            JSONObject json;
+            try {
+                json = new JSONObject(data);
+                JSONArray jsonArray = json.optJSONArray("tareas");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonArrayChild = jsonArray.getJSONObject(i);
+                    Tarea tarea = new Tarea(
+                            jsonArrayChild.optString("tarea"),
+                            jsonArrayChild.optInt("asig_id"),
+                            jsonArrayChild.optBoolean("esLink"),
+                            jsonArrayChild.optString("link")
+                    );
+                    listaTareas.add(tarea);
                 }
                 return true;
             } catch (JSONException e) {

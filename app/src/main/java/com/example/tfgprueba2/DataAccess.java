@@ -138,6 +138,8 @@ public class DataAccess {
             sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarClases.php";
         }else  if (tabla == 3) {
             sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarTutorias.php";
+        }else  if (tabla == 5) {
+            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarTareas.php";
         }else{
             sele_url = "";
         }
@@ -210,6 +212,8 @@ public class DataAccess {
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTutoria.php";
             }else if(tabla==4){//Insertar en Usuario
                 insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarUsuario.php";
+            }else if(tabla==5){//Insertar en Tarea
+                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTarea.php";
             }else{
                 insertar_url = "";
             }
@@ -280,11 +284,23 @@ public class DataAccess {
 
                 }
                 else if(tabla==4) {
-
                     String asig_IDS = strings[0];
                     data =
                             URLEncoder.encode("ldap", "UTF-8") + "=" + URLEncoder.encode(ldap, "UTF-8") + "&" +
                             URLEncoder.encode("asig_ID", "UTF-8") + "=" + URLEncoder.encode(asig_IDS, "UTF-8");
+
+                }else if(tabla==5) {
+                    String tareaTextoS = strings[0];
+                    String asignaturaIDS = strings[1];
+                    String esLinkS = strings[2];
+                    String urlLinkS = strings[3];
+
+                    data =
+                            URLEncoder.encode("tarea", "UTF-8") + "=" + URLEncoder.encode(tareaTextoS, "UTF-8") + "&" +
+                            URLEncoder.encode("asig_id", "UTF-8") + "=" + URLEncoder.encode(asignaturaIDS, "UTF-8") + "&" +
+                            URLEncoder.encode("eslink", "UTF-8") + "=" + URLEncoder.encode(esLinkS, "UTF-8") + "&" +
+                            URLEncoder.encode("link", "UTF-8") + "=" + URLEncoder.encode(urlLinkS, "UTF-8");
+
 
                 }else{
                     data = "";

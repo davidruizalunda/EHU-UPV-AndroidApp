@@ -70,6 +70,6 @@ public class Asignatura {
     @NonNull
     @Override
     public String toString() {
-        return nombreAsignatura;
+        return abreviatura + ": " + nombreAsignatura;
     }
 }
