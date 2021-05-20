@@ -22,7 +22,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-public class LogicForAdmin {
+public class Logic {
     private final List<Docente> listaDocentes = new ArrayList<>();
     private final List<Asignatura> listaAsignaturas = new ArrayList<>();
     private final List<Clase> listaClases = new ArrayList<>();

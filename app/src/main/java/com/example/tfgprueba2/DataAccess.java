@@ -32,7 +32,7 @@ import javax.mail.Store;
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
-    private static String ldap, password;
+    private static String ldap;
 
     public boolean login(String ldap, String password) {
         try {
@@ -46,8 +46,7 @@ public class DataAccess {
 
             store = emailSession.getStore("imaps");
             store.connect("ikasle.ehu.eus", ldap, password);
-            this.ldap = ldap;
-            this.password = password;
+            DataAccess.ldap = ldap;
             return true;
 
         }catch (AuthenticationFailedException e){
@@ -185,7 +184,7 @@ public class DataAccess {
 
     public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
         String sentencia = "DELETE FROM usuario WHERE asig_id=" + asig_idS + " and ldap = '" + ldap + "';";
-        new eliminarDb(context, 0).execute(sentencia);
+        new eliminarDb(context).execute(sentencia);
     }
 
     public static class insertarDb extends AsyncTask<String, Void, String> {
@@ -338,11 +337,9 @@ public class DataAccess {
     public static class eliminarDb extends AsyncTask<String, Void, String> {
 
         private final WeakReference<Context> context;
-        private final int tabla;
 
-        public eliminarDb(Context context, int tabla) {
+        public eliminarDb(Context context) {
             this.context = new WeakReference<>(context);
-            this.tabla = tabla;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)

@@ -96,7 +96,7 @@ public class Options extends AppCompatActivity {
             removeButton.setOnClickListener(v -> {
                 String correoS = correo_EHU.getText().toString();
                 String sentencia = "DELETE FROM docente WHERE correo_ehu='" + correoS + "';";
-                new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+                new DataAccess.eliminarDb(Options.this).execute(sentencia);
                 correo_EHU.setText("");
                 nombre.setText("");
                 apellidos.setText("");
@@ -160,7 +160,7 @@ public class Options extends AppCompatActivity {
 
 
                 String docenteSeleccionado = listaAsignaturas.get(position).getDocente1();
-                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                Logic logicForAdmin = new Logic();
                 spinerNombres.setSelection(logicForAdmin.finDocenteSpinnerPosition(docenteSeleccionado, listaDocentes));
                 seleccion.setText(spinnerAsignaturas.getSelectedItem().toString());
 
@@ -182,7 +182,7 @@ public class Options extends AppCompatActivity {
         removeAsignatura_button.setOnClickListener(v -> {
             String asig_idS = String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID());
             String sentencia = "DELETE FROM asignatura WHERE asig_id=" + asig_idS + ";";
-            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            new DataAccess.eliminarDb(Options.this).execute(sentencia);
             abreviatura.setText("");
             nombre.setText("");
             url1.setText("");
@@ -233,7 +233,7 @@ public class Options extends AppCompatActivity {
                 horaFinClase.setText(listaClases.get(position).getHoraFin());
                 aula.setText(listaClases.get(position).getAula());
 
-                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                Logic logicForAdmin = new Logic();
 
                 String diaSeleccionado = listaClases.get(position).getDia();
                 spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
@@ -258,13 +258,12 @@ public class Options extends AppCompatActivity {
 
         removeClase_button.setOnClickListener(v -> {
             String horaInicio = horaInicioClase.getText().toString();
-            String horaFin = horaFinClase.getText().toString();
             String aulaS = aula.getText().toString();
             int diaS = spinnerDias.getSelectedItemPosition();
             int asig_idS = listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID();
 
             String sentencia = "DELETE FROM clase WHERE horaInicio='" + horaInicio + "' AND aula ='" + aulaS + "'AND dia ='" + diaS + "' AND asig_id=" + asig_idS + ";";
-            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            new DataAccess.eliminarDb(Options.this).execute(sentencia);
             horaInicioClase.setText("");
             horaFinClase.setText("");
             aula.setText("");
@@ -312,7 +311,7 @@ public class Options extends AppCompatActivity {
                 horaInicioTutoria.setText(listaTutorias.get(position).getHoraInicio());
                 horaFinTutoria.setText(listaTutorias.get(position).getHoraFin());
 
-                LogicForAdmin logicForAdmin = new LogicForAdmin();
+                Logic logicForAdmin = new Logic();
 
                 String diaSeleccionado = listaTutorias.get(position).getDia();
                 spinnerDias.setSelection(Integer.parseInt(diaSeleccionado));
@@ -336,12 +335,11 @@ public class Options extends AppCompatActivity {
 
         removeTutoria_button.setOnClickListener(v -> {
             String horaInicio = horaInicioTutoria.getText().toString();
-            String horaFin = horaFinTutoria.getText().toString();
             String profesorS = listaDocentes.get(spinerNombres.getSelectedItemPosition()).getCorreo_EHU();
             String diaS = String.valueOf(spinnerDias.getSelectedItemPosition());
 
             String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
-            new DataAccess.eliminarDb(Options.this, 0).execute(sentencia);
+            new DataAccess.eliminarDb(Options.this).execute(sentencia);
             horaInicioTutoria.setText("");
             horaFinTutoria.setText("");
             new seleccionarDb(0).execute();
@@ -411,7 +409,7 @@ public class Options extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
-            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            Logic logicForAdmin = new Logic();
             if (tabla == 0){
                 if(logicForAdmin.obtenerDocentes(false)){
                     runOnUiThread(() -> {

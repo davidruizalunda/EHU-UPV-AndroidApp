@@ -1,22 +1,21 @@
 package com.example.tfgprueba2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.os.Bundle;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
@@ -24,8 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText ldap, password;
     private CheckBox recordarCheckBox;
     private RadioGroup radioGroup;
-    private TextView textView4;
-    private Locale locale = null;
     private boolean logeado = false;
     private boolean changed = false;
     private ImageView loadingGif;
@@ -51,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         System.out.println(changed);
         try{
             changed = getIntent().getExtras().getBoolean("changed");
-            Integer idioma = getIntent().getExtras().getInt("idioma");
+            int idioma = getIntent().getExtras().getInt("idioma");
             cargarRadioGroup(idioma);
         }catch(NullPointerException e){
             e.printStackTrace();
@@ -61,12 +58,11 @@ public class LoginActivity extends AppCompatActivity {
             changed = true;
             cambiarLocalidad(sharedPreferences.getInt("idioma", 0));
         }
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            cambiarLocalidad(checkedIdToId(checkedId));
-        });
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> cambiarLocalidad(checkedIdToId(checkedId)));
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     public int checkedIdToId(int checkedId) {
         switch (checkedId)
         {
@@ -98,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void cambiarLocalidad(int id){
+        Locale locale;
         switch (id)
         {
             case 1:
@@ -133,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    @SuppressLint("ApplySharedPref")
     public void guardarDatos(){
         SharedPreferences sharedPreferences = getSharedPreferences("credencialesEHUusuario", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,8 +26,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,7 +150,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void updateDataCorreowsNews() {
-        LogicForAdmin logicForAdmin = new LogicForAdmin();
+        Logic logicForAdmin = new Logic();
         Thread thread = new Thread(() -> {
             try {
 
@@ -206,7 +203,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onRssButtonClick(View view){
-        LogicForAdmin logicForAdmin = new LogicForAdmin();
+        Logic logicForAdmin = new Logic();
         popup_rss.setContentView(R.layout.popup_view_rss);
         popup_rss.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -325,7 +322,7 @@ public class HomeActivity extends AppCompatActivity {
         popup_edit_user_asignaturas.show();
 
         buttonAddAsignaturaUsuario.setOnClickListener(v -> {
-            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            Logic logicForAdmin = new Logic();
             logicForAdmin.insertIntoUsuario(HomeActivity.this , String.valueOf(listaAsignaturas.get(spinnerAsignaturas.getSelectedItemPosition()).getAsig_ID()));
             new seleccionarDb(this, 1, true).execute();
             new seleccionarDb(this, 99, true).execute();
@@ -333,7 +330,7 @@ public class HomeActivity extends AppCompatActivity {
 
         buttonRemoveAsignaturaUsuario.setOnClickListener(v -> {
             String asig_idS = String.valueOf(listaAsignaturasUsuario.get(spinnerAsignaturasUsuario.getSelectedItemPosition()).getAsig_ID());
-            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            Logic logicForAdmin = new Logic();
             logicForAdmin.eliminarAsignaturaUsuario(this, asig_idS);
             new seleccionarDb(this, 1, true).execute();
             new seleccionarDb(this, 99, true).execute();
@@ -586,7 +583,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
-            LogicForAdmin logicForAdmin = new LogicForAdmin();
+            Logic logicForAdmin = new Logic();
             if(table == 1 && !usuario){
                 if(logicForAdmin.obtenerAsignaturas(false)){
                     runOnUiThread(() -> {
