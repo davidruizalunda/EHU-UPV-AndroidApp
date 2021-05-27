@@ -102,7 +102,7 @@ public class RSSReader extends AsyncTask<Void,Void,Void> {
 
     public Document obtenerDatos(){
         try{
-            url = new URL("https://www.ehu.eus/es/campusa/noticias/-/asset_publisher/MICMqglnC3fZ/rss");
+            url = new URL(privateData.getRSS());
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET"); //GET POS
             InputStream inputStream = connection.getInputStream();

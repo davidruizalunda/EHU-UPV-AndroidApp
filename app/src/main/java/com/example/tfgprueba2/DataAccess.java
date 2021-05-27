@@ -67,7 +67,7 @@ public class DataAccess {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Properties properties = new Properties();
-            properties.put("mail.imap.host", privateData.getImapHost());
+            properties.put("mail.imap.host", privateData.getImapHostLink());
             properties.put("mail.imap.port", "993");
             properties.put("mail.imap.starttls.enable", "true");
             Session emailSession = Session.getDefaultInstance(properties);
@@ -128,15 +128,15 @@ public class DataAccess {
     public String seleccionarTabla(int tabla, Boolean usuario){
         String sele_url;
         if (tabla == 0) {
-            sele_url = privateData.getSeleccionarDocentes();
+            sele_url = privateData.getSeleccionarDocentesLink();
         } else if (tabla == 1) {
-            sele_url = privateData.getSeleccionarAsignaturas();
+            sele_url = privateData.getSeleccionarAsignaturasLink();
         }else  if (tabla == 2) {
-            sele_url = privateData.getSeleccionarClases();
+            sele_url = privateData.getSeleccionarClasesLink();
         }else  if (tabla == 3) {
-            sele_url = privateData.getSeleccionarTutorias();
+            sele_url = privateData.getSeleccionarTutoriasLink();
         }else  if (tabla == 5) {
-            sele_url = privateData.getSeleccionarTareas();
+            sele_url = privateData.getSeleccionarTareasLink();
         }else{
             sele_url = "";
         }
@@ -255,17 +255,17 @@ public class DataAccess {
             String insertar_url;
 
             if(tabla==0){ //Insertar en docente
-                insertar_url = privateData.getInsertarDocentes();
+                insertar_url = privateData.getInsertarDocentesLink();
             }else if(tabla==1){ //Insertar en Asignatura
-                insertar_url = privateData.getInsertarAsignaturas();
+                insertar_url = privateData.getInsertarAsignaturasLink();
             }else if(tabla==2){//Insertar en Clase
-                insertar_url = privateData.getInsertarClases();
+                insertar_url = privateData.getInsertarClasesLink();
             }else if(tabla==3){//Insertar en Tutoria
-                insertar_url = privateData.getInsertarTutorias();
+                insertar_url = privateData.getInsertarTutoriasLink();
             }else if(tabla==4){//Insertar en Usuario
-                insertar_url = privateData.getInsertarUsuarios();
+                insertar_url = privateData.getInsertarUsuariosLink();
             }else if(tabla==5){//Insertar en Tarea
-                insertar_url = privateData.getInsertarTutorias();
+                insertar_url = privateData.getInsertarTutoriasLink();
             }else{
                 insertar_url = "";
             }
@@ -398,7 +398,7 @@ public class DataAccess {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         protected String doInBackground(String... strings) {
             String eliminar_url;
-            eliminar_url = privateData.getImapHost();
+            eliminar_url = privateData.getImapHostLink();
             String resultado;
             try{
                 URL url = new URL(eliminar_url);
