@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
-    >
+    tools:context=".HomeActivity">
 
 
     <LinearLayout
         android:id="@+id/correows_linearLayout"
-        android:layout_width="386dp"
-        android:layout_height="242dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
@@ -55,7 +54,7 @@
             <ListView
                 android:id="@+id/mailListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="190dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -67,7 +66,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="13dp"
                 android:background="@drawable/basic_layout2">
 
             </ListView>
@@ -78,8 +77,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutAsignaturas"
-        android:layout_width="156dp"
-        android:layout_height="236dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="12dp"
@@ -190,8 +189,10 @@
 
     <Button
         android:id="@+id/editable2_button"
-        android:layout_width="220dp"
-        android:layout_height="37dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
@@ -200,12 +201,13 @@
         android:text="@string/editable"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/editable1_button" />
 
     <Button
-        android:id="@+id/button10"
-        android:layout_width="105dp"
-        android:layout_height="37dp"
+        android:id="@+id/gaur_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
@@ -217,23 +219,28 @@
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
 
     <Button
-        android:id="@+id/button12"
-        android:layout_width="105dp"
-        android:layout_height="37dp"
+        android:id="@+id/egela_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
         android:background="@drawable/egela_button3"
         android:onClick="onEgelaButtonClick"
         android:text="@string/egela"
         android:textColor="@color/gray_400"
-        app:layout_constraintEnd_toStartOf="@+id/button10"
+        app:layout_constraintEnd_toStartOf="@+id/gaur_button"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/editable2_button" />
 
     <Button
         android:id="@+id/editable1_button"
-        android:layout_width="220dp"
-        android:layout_height="37dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
@@ -243,19 +250,20 @@
         android:text="@string/editable"
         android:textColor="@color/gray_400"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/tareas_linearLayout" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/calendario_imageButton"
         android:layout_width="46dp"
         android:layout_height="37dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="184dp"
-        android:layout_marginRight="184dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/basic_button2"
         android:onClick="onCalendarioButtonClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button12"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/egela_button"
         app:srcCompat="@drawable/calendario_icono" />
 
     <Button
@@ -264,7 +272,7 @@
         android:layout_height="37dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/basic_button3"
@@ -272,7 +280,7 @@
         android:text="OP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButton3"
-        app:layout_constraintTop_toBottomOf="@+id/button10" />
+        app:layout_constraintTop_toBottomOf="@+id/gaur_button" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -280,19 +288,19 @@
         android:layout_height="37dp"
         android:layout_marginStart="11dp"
         android:layout_marginLeft="11dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/basic_button2"
         android:onClick="onRssButtonClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
-        app:layout_constraintTop_toBottomOf="@+id/button12"
+        app:layout_constraintStart_toEndOf="@+id/calendario_imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/egela_button"
         app:srcCompat="@drawable/rss_icono" />
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="157dp"
-        android:layout_height="202dp"
+        android:layout_width="156dp"
+        android:layout_height="188dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="13dp"
@@ -302,14 +310,17 @@
 
     <LinearLayout
         android:id="@+id/tareas_linearLayout"
-        android:layout_width="221dp"
+        android:layout_width="0dp"
         android:layout_height="253dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/basic_layout"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutAsignaturas"
         app:layout_constraintTop_toBottomOf="@+id/correows_linearLayout">
 
         <LinearLayout
@@ -334,39 +345,51 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="158dp"
+            android:layout_height="156dp"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
-                android:layout_width="206dp"
-                android:layout_height="151dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ListView
-                    android:id="@+id/tareasListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:background="@drawable/basic_layout2">
+                <RelativeLayout
+                    android:id="@+id/relativeLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                </ListView>
+                    <ListView
+                        android:id="@+id/tareasListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/basic_layout2">
 
-            </RelativeLayout>
+                    </ListView>
+
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -411,7 +434,7 @@
             <Button
                 android:id="@+id/button4"
                 android:layout_width="28dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/basic_button4"
                 android:onClick="onAddTask"

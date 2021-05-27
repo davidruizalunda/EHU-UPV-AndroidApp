@@ -28,18 +28,46 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
-
+/**
+ * Funciones de acceso a los datos.
+ *
+ * Data: 21/05/2021
+ * @author David Ruiz Alunda
+ * @version 1.0
+ */
 public class DataAccess {
     private static Store store;
     private static Folder emailFolder;
     private static String ldap;
 
+    /** ////////////////////INFO////////////////////
+     * Las diferentes tablas de la base de datos se numeran de esta forma:
+     * 0: Docentes
+     * 1: Asignatura
+     * 2: Clase
+     * 3: Tutoria
+     * 4: Usuario
+     * 5: Tarea
+     * /////////////////////////////////////////////
+     */
+
+    /**
+     * Función de comprobación y logueo de un alumno.
+     *
+     * nombre del servidor: ikasle.ehu.eus
+     * puerto: imap 993 o pop 995
+     * protocolo SSL
+     *
+     * @param ldap ldap del alumno
+     * @param password contraseña del alumno
+     * @return si todo sale correctamente devolverá true.
+     */
     public boolean login(String ldap, String password) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Properties properties = new Properties();
-            properties.put("mail.imap.host", "ikasle.ehu.eus");
+            properties.put("mail.imap.host", privateData.getImapHost());
             properties.put("mail.imap.port", "993");
             properties.put("mail.imap.starttls.enable", "true");
             Session emailSession = Session.getDefaultInstance(properties);
@@ -62,6 +90,10 @@ public class DataAccess {
 
     }
 
+    /**
+     * Función que una vez abierta la conexión devuelve los correos.
+     * @return devuelve una array de mensajes.
+     */
     public Message[] getMessages() {
         try{
             emailFolder = store.getFolder("INBOX");
@@ -76,6 +108,9 @@ public class DataAccess {
         }
     }
 
+    /**
+     * Cierra la carpeta de correo abierta.
+     */
     public void closeFolderCorreow() throws MessagingException {
         if (emailFolder != null && emailFolder.isOpen()){
             emailFolder.close(true);
@@ -83,62 +118,25 @@ public class DataAccess {
         }
     }
 
-    /*
-    public void seleccionarDocentes(RequestQueue requestQueue, Spinner spinner, Context context){
-        ArrayList<Docente> listaDocentes1 = new ArrayList<>();
-        String url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONArray jsonArray = response.getJSONArray("docentes");
-                    System.out.println("Data: " + jsonArray);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Docente docente = new Docente(jsonObject.optString("correo_EHU"), "no importa", "no importa", "no importa");
-                        listaDocentes1.add(docente);
-
-                        for(int x=0 ; x < listaDocentes1.size(); x++){
-                            System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                for(int x=0 ; x < listaDocentes1.size(); x++){
-                    System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x+x);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-        System.out.println("//////////SASDASDA////////");
-        for(int x=0 ; x < listaDocentes1.size(); x++){
-            System.out.println(listaDocentes1.get(x).getCorreo_EHU() + " " + x+x);
-        }
-    }
-
+    /**
+     * Método para obtener la información de las entidades de la bd
+     * @param tabla tabla a la que se quiere acceder para obtener sus datos
+     * @param usuario booleano por si se quiere acceder solo a la infomación de el usuario logeado.
+     * @return la data obtenida
      */
-
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String seleccionarTabla(int tabla, Boolean usuario){
         String sele_url;
         if (tabla == 0) {
-            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarDocentes.php";
+            sele_url = privateData.getSeleccionarDocentes();
         } else if (tabla == 1) {
-            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarAsignaturas.php";
+            sele_url = privateData.getSeleccionarAsignaturas();
         }else  if (tabla == 2) {
-            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarClases.php";
+            sele_url = privateData.getSeleccionarClases();
         }else  if (tabla == 3) {
-            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarTutorias.php";
+            sele_url = privateData.getSeleccionarTutorias();
         }else  if (tabla == 5) {
-            sele_url = "https://ehu-upv-androidapp-database.000webhostapp.com/seleccionarTareas.php";
+            sele_url = privateData.getSeleccionarTareas();
         }else{
             sele_url = "";
         }
@@ -182,16 +180,71 @@ public class DataAccess {
         }
     }
 
+    /**
+     * Método para eliminar una Asignatura de usuario
+     * @param context contexto de la aplicación
+     * @param asig_idS id de la asignatura a eliminar
+     */
     public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
         String sentencia = "DELETE FROM usuario WHERE asig_id=" + asig_idS + " and ldap = '" + ldap + "';";
         new eliminarDb(context).execute(sentencia);
     }
 
+    /**
+     * Método para eliminar un docente
+     * @param context contexto de la aplicación
+     */
+    public void eliminarDocente(Context context, String correoS) {
+        String sentencia = "DELETE FROM docente WHERE correo_ehu='" + correoS + "';";
+        new eliminarDb(context).execute(sentencia);
+    }
+
+    /**
+     * Método para eliminar una asignatura
+     * @param context contexto de la aplicación
+     * @param asig_idS id de la asignatura a eliminar
+     */
+    public void eliminarAsignatura(Context context, String asig_idS) {
+        String sentencia = "DELETE FROM asignatura WHERE asig_id=" + asig_idS + ";";
+        new eliminarDb(context).execute(sentencia);
+    }
+
+    /**
+     * Método para eliminar una clase
+     * @param context contexto de la aplicación
+     * @param horaInicio
+     * @param diaS
+     * @param asig_idS id de la asignatura a eliminar
+     */
+    public void eliminarClase(Context context, String horaInicio, String aulaS, String diaS, String asig_idS) {
+        String sentencia = "DELETE FROM clase WHERE horaInicio='" + horaInicio + "' AND aula ='" + aulaS + "'AND dia ='" + diaS + "' AND asig_id=" + asig_idS + ";";
+        new eliminarDb(context).execute(sentencia);
+    }
+
+    /**
+     * Método para eliminar una tutoría
+     * @param context contexto de la aplicación
+     */
+    public void eliminarTutoria(Context context, String horaInicio, String profesorS, String diaS) {
+        String sentencia = "DELETE FROM tutoria WHERE horaInicio='" + horaInicio + "' AND profesor ='" + profesorS + "'AND dia='" + diaS + "';";
+        new DataAccess.eliminarDb(context).execute(sentencia);
+    }
+
+
+
+    /**
+     * Método para poblar la base de datos
+     */
     public static class insertarDb extends AsyncTask<String, Void, String> {
 
         private final WeakReference<Context> context;
         private final int tabla;
 
+        /**
+         * Constructora
+         * @param context contexto de la aplicación
+         * @param tabla tabla de la bd a la que se quiere insertar
+         */
         public insertarDb(Context context, int tabla) {
             this.context = new WeakReference<>(context);
             this.tabla = tabla;
@@ -202,17 +255,17 @@ public class DataAccess {
             String insertar_url;
 
             if(tabla==0){ //Insertar en docente
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarDocente.php";
+                insertar_url = privateData.getInsertarDocentes();
             }else if(tabla==1){ //Insertar en Asignatura
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarAsignatura.php";
+                insertar_url = privateData.getInsertarAsignaturas();
             }else if(tabla==2){//Insertar en Clase
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarClase.php";
+                insertar_url = privateData.getInsertarClases();
             }else if(tabla==3){//Insertar en Tutoria
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTutoria.php";
+                insertar_url = privateData.getInsertarTutorias();
             }else if(tabla==4){//Insertar en Usuario
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarUsuario.php";
+                insertar_url = privateData.getInsertarUsuarios();
             }else if(tabla==5){//Insertar en Tarea
-                insertar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/insertarTarea.php";
+                insertar_url = privateData.getInsertarTutorias();
             }else{
                 insertar_url = "";
             }
@@ -345,7 +398,7 @@ public class DataAccess {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         protected String doInBackground(String... strings) {
             String eliminar_url;
-            eliminar_url = "https://ehu-upv-androidapp-database.000webhostapp.com/eliminar.php";
+            eliminar_url = privateData.getImapHost();
             String resultado;
             try{
                 URL url = new URL(eliminar_url);

@@ -251,7 +251,7 @@ public class Logic {
                     Tarea tarea = new Tarea(
                             jsonArrayChild.optString("tarea"),
                             jsonArrayChild.optInt("asig_id"),
-                            jsonArrayChild.optBoolean("esLink"),
+                            jsonArrayChild.optInt("eslink") == 1,
                             jsonArrayChild.optString("link")
                     );
                     listaTareas.add(tarea);
@@ -264,6 +264,42 @@ public class Logic {
         }
         return false;
     }
+
+    /**
+     * Método para eliminar una Asignatura de usuario
+     * @param context contexto de la aplicación
+     * @param asig_idS id de la asignatura a eliminar
+     */
+    public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarAsignaturaUsuario(context, asig_idS);
+    }
+
+
+    public void eliminarDocente(Context context, String correoS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarDocente(context, correoS);
+    }
+
+
+    public void eliminarAsignatura(Context context, String asig_idS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarAsignatura(context, asig_idS);
+    }
+
+
+    public void eliminarClase(Context context, String horaInicio, String aulaS, String diaS, String asig_idS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarClase(context, horaInicio, aulaS, diaS, asig_idS);
+    }
+
+
+    public void eliminarTutoria(Context context, String horaInicio, String profesorS, String diaS) {
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.eliminarTutoria(context, horaInicio, profesorS, diaS);
+    }
+
+
 
     public int finDocenteSpinnerPosition(String docenteSeleccionado, List<Docente> listaDocentesCargada) {
         int i;
@@ -299,8 +335,4 @@ public class Logic {
         new DataAccess.insertarDb(activity, 4).execute(asig_ID);
     }
 
-    public void eliminarAsignaturaUsuario(Context context, String asig_idS) {
-        DataAccess dataAccess = new DataAccess();
-        dataAccess.eliminarAsignaturaUsuario(context, asig_idS);
-    }
 }

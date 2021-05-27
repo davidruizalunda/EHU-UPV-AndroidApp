@@ -19,6 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
+/**
+ * Esta es la clase login enlazada con el activity activity_login.
+ * Data: 21/05/2021
+ * @author David Ruiz Alunda
+ * @version 1.0
+ */
+
 public class LoginActivity extends AppCompatActivity {
     private EditText ldap, password;
     private CheckBox recordarCheckBox;
@@ -26,8 +33,19 @@ public class LoginActivity extends AppCompatActivity {
     private boolean logeado = false;
     private boolean changed = false;
     private ImageView loadingGif;
-    Handler h = new Handler();
+    private Handler h = new Handler();
 
+    /** ////////////////////INFO////////////////////
+     *  Métodos para logearse y funciones para cambiar el idioma seleccionado (seleccionar el radio button y cambiar el idioma).
+     *  Se usarán estos números (id) para distinguir los idiomas.
+     *  ids:
+     *  0 - Idioma del sistema
+     *  1 - Español
+     *  2 - Euskera
+     *  3 - Inglés
+     *
+     *  ////////////////////////////////////////////
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -40,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         recordarCheckBox = findViewById(R.id.recordar_checkBox);
         radioGroup = findViewById(R.id.radioGroup);
 
+        /**
+         *   Aquí se obtienen, si los hay, los datos persistentes en memoria relacionados con las credenciales.
+         */
         SharedPreferences sharedPreferences = getSharedPreferences("credencialesEHUusuario", Context.MODE_PRIVATE);
         ldap.setText(sharedPreferences.getString("ldap", ""));
         password.setText(sharedPreferences.getString("password", ""));
@@ -62,6 +83,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *  Convierte el id del radiobutton en el id con el que trabajamos en login.
+     *  @param checkedId Es el id relacionado con el radiobutton del idioma.
+     *  @return El número de id de idioma(ver ids).
+     */
     @SuppressLint("NonConstantResourceId")
     public int checkedIdToId(int checkedId) {
         switch (checkedId)
@@ -77,6 +103,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Selecciona un radiobutton.
+     *  @param id Es el id relacionado con el idioma (ver ids).
+     */
     public void cargarRadioGroup(int id){
         switch (id){
             case 1:
@@ -93,6 +123,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     *  Dado un id de idioma (ver ids) cambia la localidad de la aplicación.
+     *  Al cambiar la localidad se cambia el idioma teniendo en cuenta los archivos .xml de strings.
+     *  @param id Es el id relacionado con el idioma (ver ids).
+     */
     public void cambiarLocalidad(int id){
         Locale locale;
         switch (id)
@@ -113,6 +149,10 @@ public class LoginActivity extends AppCompatActivity {
         refrescar(id);
     }
 
+    /**
+     *  Dado un objeto locale cambia la localidad de la aplicación y por tanto el idioma.
+     *  @param locale objeto locale instanciado con un idioma.
+     */
     public void cambiarIdioma(Locale locale){
         if (locale != null){
             Locale.setDefault(locale);
@@ -122,6 +162,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Refresca el activity. Pasa el id para que cuando se refresque se mantenga seleccionado el radiobutton
+     *  @param id Es el id relacionado con el idioma (ver ids).
+     */
     public void refrescar(int id){
         Intent refrescar = new Intent(getApplicationContext(), LoginActivity.class);
         refrescar.putExtra("idioma", id);
@@ -130,6 +174,9 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     *  Guarda las credenciales persistentemente en memoria. Esto lo hará solo cuando el checbox de recordar esté seleccionado.
+     */
     @SuppressLint("ApplySharedPref")
     public void guardarDatos(){
         SharedPreferences sharedPreferences = getSharedPreferences("credencialesEHUusuario", Context.MODE_PRIVATE);
@@ -149,6 +196,14 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     *  Método principal de la clase login.
+     *  Crea 2 hilos (thread):
+     *
+     *  thread1 se encarga de la animación del círculo de progreso.
+     *  thread2 se encarga de verificar las credenciales del usuario.
+     *
+     */
     public void login(View view) {
         guardarDatos();
 

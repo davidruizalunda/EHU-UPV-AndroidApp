@@ -1,7 +1,13 @@
 package com.example.tfgprueba2;
 
 import androidx.annotation.NonNull;
-
+/**
+ * Este es el objeto Asignatura.
+ *
+ * Data: 21/05/2021
+ * @author David Ruiz Alunda
+ * @version 1.0
+ */
 public class Asignatura {
     private int asig_ID;
     private String abreviatura;
@@ -10,6 +16,16 @@ public class Asignatura {
     private String url1;
     private String url2;
 
+
+    /**
+     * Constructor de Asignatura
+     * @param asig_ID id de la asignatura
+     * @param abreviatura abreviatura del nombre de la asignatura (generalmente las iniciales de cada palabra)
+     * @param nombreAsignatura nombre completo de la asignatura
+     * @param docente1 profesor principal que imparte la asignatura
+     * @param url1 una url opcional
+     * @param url2 una url opcional
+     */
     public Asignatura(String asig_ID, String abreviatura, String nombreAsignatura, String docente1, String url1, String url2) {
         this.asig_ID = Integer.parseInt(asig_ID);
         this.abreviatura = abreviatura;

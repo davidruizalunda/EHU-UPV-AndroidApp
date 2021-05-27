@@ -1,13 +1,27 @@
 package com.example.tfgprueba2;
 
 import androidx.annotation.NonNull;
-
+/**
+ * Este es el objeto Tutoria.
+ *
+ * Data: 21/05/2021
+ * @author David Ruiz Alunda
+ * @version 1.0
+ */
 public class Tutoria {
     private String horaInicio;
     private String horaFin;
     private String profesor;
     private String dia;
 
+    /**
+     * Constructora de Tutoria
+     *
+     * @param horaInicio hora de comienzo de las tutorías de un profesor
+     * @param horaFin hora de fin de las tutorías de un profesor
+     * @param profesor correo del profesor
+     * @param dia dia de este periodo de tutorías
+     */
     public Tutoria(String horaInicio, String horaFin, String profesor, String dia) {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;

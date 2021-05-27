@@ -14,7 +14,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -45,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView diaTextView;
     private Dialog popupCorreow, popup_edit_user_asignaturas, popupAsignaturasUsuarios, popupCalendario, popupEditable, popupDocenteAsignaturaUsuario, popup_rss, popup_tareas;
     private Spinner spinnerAsignaturasUsuario, spinnerAsignaturas, spinnerAbreviaturasAsignatura;
-    private final int TIEMPO = 60000;
+    private final int TIEMPO = 120000;
     private boolean terminado;
     Handler h = new Handler();
     /*
@@ -412,7 +414,16 @@ public class HomeActivity extends AppCompatActivity {
         ListView tasksListView = findViewById(R.id.tareasListView);
         tasksListView.setAdapter(tasksAdapter);
 
-        tasksListView.setOnItemClickListener((parent, view, position, id) -> popupInfoAsignatura(listaClasesPorDia[dia].get(position)));
+        tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(listaTareasUsuario.get(position).isEsEnlace()){
+                    Uri uri = Uri.parse(listaTareasUsuario.get(position).getUrl());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void popupInfoAsignatura(Clase clase) {

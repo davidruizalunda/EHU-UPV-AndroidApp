@@ -1,5 +1,16 @@
 package com.example.tfgprueba2;
-
+/**
+ * Esta es el objeto Correow.
+ *
+ * from:  Remitente del mail
+ * subject: Asunto del mail
+ * date: Fecha del mail
+ * contents: Cuerpo del mail (contenido).
+ *
+ * Data: 21/05/2021
+ * @author David Ruiz Alunda
+ * @version 1.0
+ */
 public class Correow {
     private String from;
     private String subject;
